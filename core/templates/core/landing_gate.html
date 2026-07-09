@@ -6,7 +6,7 @@
 {% block extra_css %}
 <style>
     /* =========================================
-       HERO SECTION (Orbital UI)
+       HERO SECTION (Clean Vector Style)
     ========================================= */
     .hero {
         position: relative;
@@ -18,171 +18,197 @@
         max-width: 1400px;
         margin: 0 auto;
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1.1fr 0.9fr;
         align-items: center;
-        gap: 40px;
+        gap: 60px;
     }
 
+    /* Top Badge */
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--secondary-light); /* Light blue */
+        color: var(--secondary); /* Brand blue */
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 25px;
+    }
+
+    /* Headline & Typing Effect */
     .hero-content h1 {
         font-size: clamp(2.5rem, 4vw, 3.8rem);
         font-weight: 900;
         color: var(--text-dark);
-        line-height: 1.15;
+        line-height: 1.2;
         margin-bottom: 20px;
     }
-    .hero-content h1 span.brand { color: var(--primary); }
-    .hero-content h1 span.ai { color: var(--secondary); }
     
+    .typing-wrapper {
+        color: var(--secondary); /* Brand Blue */
+        display: inline-block;
+        position: relative;
+    }
+    .typing-wrapper::after {
+        content: '|';
+        position: absolute;
+        right: -8px;
+        color: var(--secondary);
+        animation: blink 0.8s infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* Subtitle */
     .hero-sub {
         font-size: 1.1rem;
         color: var(--text-muted);
-        margin-bottom: 35px;
+        margin-bottom: 30px;
         line-height: 1.6;
-        max-width: 500px;
+        max-width: 600px;
     }
+    .hero-sub strong { color: var(--secondary); }
 
-    .hero-btn {
+    /* Feature Pills */
+    .hero-features {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 40px;
+    }
+    .h-feature-pill {
         display: inline-flex;
-        background: var(--primary);
-        color: white;
-        padding: 16px 36px;
-        border-radius: 8px;
-        font-weight: 800;
-        font-size: 16px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        transition: transform 0.3s;
-    }
-    .hero-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255, 118, 5, 0.3); }
-
-    /* Orbital Design */
-    .hero-visual {
-        position: relative;
-        height: 600px;
-        display: flex;
         align-items: center;
-        justify-content: center;
-    }
-    .orbit-circle-1, .orbit-circle-2 {
-        position: absolute;
-        border: 2px dashed rgba(11, 67, 133, 0.2);
-        border-radius: 50%;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    .orbit-circle-1 { width: 350px; height: 350px; animation: spin 40s linear infinite; }
-    .orbit-circle-2 { width: 550px; height: 550px; animation: spin 60s linear infinite reverse; }
-
-    @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
-
-    .center-avatar {
-        position: relative;
-        z-index: 10;
-        width: 250px;
-        height: 250px;
-        border-radius: 50%;
-        background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .center-avatar img {
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        object-fit: cover;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        border: 4px solid white;
-    }
-    .chat-bubble {
-        position: absolute;
-        background: var(--secondary);
-        color: white;
-        padding: 10px 16px;
-        border-radius: 12px;
+        gap: 8px;
+        background: #FFFFFF;
+        border: 1px solid var(--border);
+        padding: 8px 16px;
+        border-radius: 50px;
         font-size: 13px;
         font-weight: 700;
-        box-shadow: 0 10px 20px rgba(11, 67, 133, 0.2);
-        z-index: 20;
+        color: var(--text-main);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.02);
     }
-    .chat-bubble::after {
-        content: ''; position: absolute;
-        width: 0; height: 0;
-        border-style: solid;
-    }
-    .cb-1 { bottom: 20px; right: -40px; }
-    .cb-1::after { border-width: 10px 10px 0 0; border-color: var(--secondary) transparent transparent transparent; bottom: -10px; left: 20px; }
-    
-    .cb-2 { top: 20px; left: -60px; background: #FFFFFF; color: var(--text-dark); border: 1px solid var(--border); box-shadow: 0 10px 20px rgba(0,0,0,0.05);}
-    .cb-2::after { border-width: 0 10px 10px 0; border-color: transparent var(--border) transparent transparent; bottom: -11px; right: 20px; }
+    .h-feature-pill i { color: var(--text-muted); }
 
-    /* Orbital Nodes */
-    .orbit-node {
-        position: absolute;
-        width: 16px; height: 16px;
-        border-radius: 50%;
-        background: var(--primary);
+    /* Action Buttons */
+    .hero-actions {
+        display: flex;
+        gap: 16px;
     }
-    .orbit-node.blue { background: var(--secondary); }
-    .node-1 { top: 0; left: 50%; transform: translate(-50%, -50%); }
-    .node-2 { bottom: 15%; right: 5%; }
-    .node-3 { top: 20%; left: 0; transform: translate(-50%, -50%); }
+    .hero-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 32px;
+        border-radius: 8px;
+        font-weight: 800;
+        font-size: 15px;
+        transition: all 0.3s;
+    }
+    .btn-primary {
+        background: #0066FF; /* Bright Blue */
+        color: white;
+        border: none;
+        box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+    }
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 102, 255, 0.4);
+    }
+    .btn-outline {
+        background: #FFFFFF;
+        color: var(--text-dark);
+        border: 1px solid var(--border);
+    }
+    .btn-outline:hover {
+        background: var(--bg-base);
+        border-color: #CBD5E1;
+    }
+
+    /* Right Side Illustration */
+    .hero-visual {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .hero-visual img {
+        width: 100%;
+        max-width: 550px;
+        height: auto;
+    }
+
+    /* =========================================
+       SIMPLE STATS BAR (Below Hero)
+    ========================================= */
+    .stats-bar {
+        background: #F8FAFC; /* Very light gray */
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 40px 24px;
+    }
+    .stats-bar-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+    .sb-item {
+        text-align: center;
+    }
+    .sb-item h3 {
+        font-size: 32px;
+        font-weight: 900;
+        color: #0066FF;
+        margin-bottom: 4px;
+    }
+    .sb-item p {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
 
     /* =========================================
        SOFTWARE CATEGORIES (Grid with Pills)
     ========================================= */
     .categories-sec {
         padding: 100px 24px;
-        background: var(--bg-base); /* F8FAFC */
+        background: #FFFFFF;
         text-align: center;
     }
-    .cat-title {
-        font-size: 32px;
-        font-weight: 900;
-        color: var(--text-dark);
-        margin-bottom: 10px;
-    }
-    .cat-sub {
-        font-size: 16px; color: var(--text-muted); margin-bottom: 50px;
-    }
+    .cat-title { font-size: 32px; font-weight: 900; color: var(--text-dark); margin-bottom: 10px; }
+    .cat-sub { font-size: 16px; color: var(--text-muted); margin-bottom: 50px; }
 
     .cat-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-        max-width: 1250px;
-        margin: 0 auto;
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+        max-width: 1250px; margin: 0 auto;
     }
 
     .cat-card {
-        background: #FFFFFF;
-        border-radius: 12px;
-        padding: 24px;
-        border: 1px solid var(--border);
-        text-align: left;
-        position: relative;
-        overflow: hidden;
+        background: #FFFFFF; border-radius: 12px; padding: 24px;
+        border: 1px solid var(--border); text-align: left;
+        position: relative; overflow: hidden;
         transition: transform 0.3s, box-shadow 0.3s;
     }
     .cat-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.05);
         border-color: var(--primary-light);
     }
     
     .cat-card h4 { font-size: 22px; font-weight: 800; color: var(--text-dark); margin-bottom: 15px; }
     
-    .cat-pills {
-        display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; position: relative; z-index: 2;
-    }
+    .cat-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; position: relative; z-index: 2; }
     .cat-pill {
-        background: #FFFFFF;
-        border: 1px solid var(--border);
-        color: var(--text-muted);
-        padding: 6px 14px;
-        border-radius: 50px;
-        font-size: 12px;
-        font-weight: 600;
+        background: #FFFFFF; border: 1px solid var(--border); color: var(--text-muted);
+        padding: 6px 14px; border-radius: 50px; font-size: 12px; font-weight: 600;
     }
 
     .cat-explore {
@@ -202,45 +228,12 @@
         position: absolute; right: 0; top: 50%; transform: translateY(-50%);
         width: 140px; height: 140px; border-radius: 50%;
     }
-    .cat-circle-bg.yellow { background: #FEF3C7; } /* Soft Yellow */
-    .cat-circle-bg.pink { background: #FCE7F3; } /* Soft Pink */
-    .cat-circle-bg.blue { background: #E0F2FE; } /* Soft Blue */
-    .cat-circle-bg.orange { background: #FFEDD5; } /* Soft Orange */
+    .cat-circle-bg.yellow { background: #FEF3C7; } 
+    .cat-circle-bg.pink { background: #FCE7F3; } 
+    .cat-circle-bg.blue { background: #E0F2FE; } 
+    .cat-circle-bg.orange { background: #FFEDD5; } 
+    .cat-illustration i { font-size: 40px; position: relative; z-index: 2; }
 
-    .cat-illustration i {
-        font-size: 40px; position: relative; z-index: 2;
-    }
-
-    /* =========================================
-       TRUST / STATS BLOCKS (Pastel Style)
-    ========================================= */
-    .stats-sec {
-        padding: 80px 24px 100px;
-        background: #FFFFFF;
-        text-align: center;
-    }
-    .stats-title { font-size: 32px; font-weight: 900; color: var(--text-dark); margin-bottom: 10px; }
-    .stats-sub { font-size: 16px; color: var(--text-muted); margin-bottom: 60px; }
-
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        max-width: 1200px;
-        margin: 0 auto 50px;
-    }
-    .stat-block {
-        padding: 40px 20px;
-        border-radius: 16px;
-        display: flex; flex-direction: column; justify-content: center;
-    }
-    .stat-block h3 { font-size: 36px; font-weight: 900; color: var(--text-dark); margin-bottom: 5px; }
-    .stat-block p { font-size: 15px; color: var(--text-main); font-weight: 500; }
-    
-    .stat-yellow { background: #FFF7ED; } /* Light Orange tint */
-    .stat-pink { background: #FEF2F2; }
-    .stat-blue { background: #F0F9FF; } /* Light Blue tint */
-    .stat-purple { background: #F5F3FF; }
 
     /* =========================================
        WHATSAPP WIDGET
@@ -265,13 +258,15 @@
 
     @media (max-width: 1024px) {
         .hero-container { grid-template-columns: 1fr; text-align: center; }
-        .hero-sub { margin: 0 auto 35px; }
+        .hero-badge { margin: 0 auto 25px; }
+        .hero-sub { margin: 0 auto 30px; }
+        .hero-features { justify-content: center; }
+        .hero-actions { justify-content: center; }
+        .hero-visual { justify-content: center; margin-top: 40px; }
         .cat-grid { grid-template-columns: repeat(2, 1fr); }
-        .stats-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 640px) {
-        .cat-grid, .stats-grid { grid-template-columns: 1fr; }
-        .hero-visual { height: 400px; transform: scale(0.7); }
+        .cat-grid { grid-template-columns: 1fr; }
         .whatsapp-bubble { display: none; }
     }
 </style>
@@ -279,42 +274,72 @@
 
 {% block wrapper %}
 
-    <!-- HERO SECTION (Orbital UI) -->
+    <!-- HERO SECTION (Clean Vector Style) -->
     <section class="hero">
         <div class="hero-container">
             <div class="hero-content" data-aos="fade-right">
-                <h1>India's Most <span class="brand">Trusted</span> & <span class="ai">Advanced</span> Tech Platform</h1>
-                <p class="hero-sub">Unlock your potential by joining Easy Learn Academy. We fuse cutting-edge AI tools with robust Software Engineering curriculums to make you industry-ready.</p>
-                <a href="{% url 'login' %}" class="hero-btn">Get Started</a>
+                
+                <div class="hero-badge">
+                    <i class="fa-solid fa-graduation-cap"></i> ALL TECH STACKS SUPPORTED
+                </div>
+                
+                <h1>Start your preparation<br>with Easy Learn:<br>
+                    <span class="typing-wrapper" id="typing-text">Job Placements.</span>
+                </h1>
+                
+                <p class="hero-sub">
+                    <strong>Interactive Courses</strong>, Top notch Assessments,<br>
+                    High yield Mock Tests and best Placements at one click away
+                </p>
+                
+                <div class="hero-features">
+                    <div class="h-feature-pill"><i class="fa-solid fa-video"></i> Mock Interview</div>
+                    <div class="h-feature-pill"><i class="fa-solid fa-clipboard-list"></i> Test Series</div>
+                    <div class="h-feature-pill"><i class="fa-solid fa-book-open"></i> Live Courses</div>
+                    <div class="h-feature-pill"><i class="fa-solid fa-briefcase"></i> Job Placements</div>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="{% url 'login' %}" class="hero-btn btn-primary">
+                        <i class="fa-solid fa-rocket"></i> Get Started
+                    </a>
+                    <a href="#courses" class="hero-btn btn-outline">
+                        <i class="fa-solid fa-play"></i> Learn More
+                    </a>
+                </div>
             </div>
             
             <div class="hero-visual" data-aos="fade-left">
-                <!-- Orbital Rings -->
-                <div class="orbit-circle-1">
-                    <div class="orbit-node node-1"></div>
-                </div>
-                <div class="orbit-circle-2">
-                    <div class="orbit-node blue node-2"></div>
-                    <div class="orbit-node node-3"></div>
-                </div>
-                
-                <!-- Center Avatar -->
-                <div class="center-avatar">
-                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Tech Mentor">
-                    
-                    <div class="chat-bubble cb-1">
-                        Easy Learn is where you master code with AI guidance
-                    </div>
-                    <div class="chat-bubble cb-2">
-                        How do I build a Full-Stack App?
-                    </div>
-                </div>
+                <!-- Clean vector illustration of a student at a desk -->
+                <img src="https://cdni.iconscout.com/illustration/premium/thumb/online-learning-4493392-3759979.png" alt="Student Learning">
             </div>
         </div>
     </section>
 
+    <!-- SIMPLE STATS BAR -->
+    <div class="stats-bar">
+        <div class="stats-bar-container" data-aos="fade-up">
+            <div class="sb-item">
+                <h3>15+</h3>
+                <p>Tech Stacks</p>
+            </div>
+            <div class="sb-item">
+                <h3>500+</h3>
+                <p>Enrolled Students</p>
+            </div>
+            <div class="sb-item">
+                <h3>5+</h3>
+                <p>Expert Trainers</p>
+            </div>
+            <div class="sb-item">
+                <h3>10k+</h3>
+                <p>Mocks Done</p>
+            </div>
+        </div>
+    </div>
+
     <!-- SOFTWARE CATEGORIES GRID -->
-    <section class="categories-sec">
+    <section class="categories-sec" id="courses">
         <h2 class="cat-title" data-aos="fade-up">Tech & Software Categories</h2>
         <p class="cat-sub" data-aos="fade-up" data-aos-delay="100">We prepare students for 10+ core tech domains. Scroll down to find your path.</p>
         
@@ -417,37 +442,51 @@
         </div>
     </section>
 
-    <!-- TRUST / STATS BLOCKS -->
-    <section class="stats-sec">
-        <h2 class="stats-title" data-aos="fade-up">A Platform Trusted by Students Nationwide</h2>
-        <p class="stats-sub" data-aos="fade-up" data-aos-delay="100">Don't Just Take Our Word for It. Delve into the Numbers and Witness the Excellence!</p>
-
-        <div class="stats-grid" data-aos="fade-up" data-aos-delay="200">
-            <div class="stat-block stat-yellow">
-                <h3>75,000+</h3>
-                <p>Happy Students</p>
-            </div>
-            <div class="stat-block stat-pink">
-                <h3>5,000+</h3>
-                <p>AI Projects Deployed</p>
-            </div>
-            <div class="stat-block stat-blue">
-                <h3>2,000+</h3>
-                <p>Campus Workshops</p>
-            </div>
-            <div class="stat-block stat-purple">
-                <h3>100%</h3>
-                <p>Placement Support</p>
-            </div>
-        </div>
-        
-        <a href="{% url 'login' %}" class="hero-btn" data-aos="zoom-in">Join The Academy</a>
-    </section>
-
     <!-- WHATSAPP WIDGET -->
     <a href="https://wa.me/917996255693?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20training%20programs." target="_blank" class="whatsapp-widget">
         <div class="whatsapp-bubble">Chat with us 👋</div>
         <div class="whatsapp-icon"><i class="fa-brands fa-whatsapp"></i></div>
     </a>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Simple Typing Effect Script
+    const words = ["Job Placements.", "Full Stack Apps.", "Mock Interviews.", "Live Courses."];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingElement = document.getElementById("typing-text");
+
+    function typeEffect() {
+        const currentWord = words[wordIndex];
+        
+        if (isDeleting) {
+            typingElement.textContent = currentWord.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typingElement.textContent = currentWord.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        let typeSpeed = isDeleting ? 50 : 100;
+
+        if (!isDeleting && charIndex === currentWord.length) {
+            typeSpeed = 2000; // Pause at end of word
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            wordIndex = (wordIndex + 1) % words.length;
+            typeSpeed = 500; // Pause before typing new word
+        }
+
+        setTimeout(typeEffect, typeSpeed);
+    }
+
+    // Start typing effect on load
+    document.addEventListener("DOMContentLoaded", function() {
+        setTimeout(typeEffect, 1000);
+    });
+</script>
 {% endblock %}
