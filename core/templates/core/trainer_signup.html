@@ -25,7 +25,7 @@
         font-weight: 800;
         margin-bottom: 12px;
         letter-spacing: -0.5px;
-        color: var(--primary);
+        color: #FFF;
     }
 
     .signup-subtitle {
@@ -47,7 +47,7 @@
 
     .section-num-title {
         font-size: 18px;
-        color: var(--primary);
+        color: #FFF;
         font-weight: 800;
         margin-bottom: 20px;
         display: flex;
@@ -61,7 +61,7 @@
         justify-content: center;
         width: 28px;
         height: 28px;
-        background: var(--accent);
+        background: var(--primary);
         color: white;
         border-radius: 50%;
         font-size: 13px;
@@ -94,10 +94,10 @@
         display: flex;
         align-items: flex-start;
         gap: 12px;
-        background: var(--primary-light);
+        background: rgba(255,255,255,0.03);
         padding: 16px;
         border-radius: var(--radius-md);
-        border: 1px solid rgba(11, 67, 133, 0.1);
+        border: 1px solid var(--border);
     }
 
     .terms-text input {
@@ -167,11 +167,11 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Quoted Rate Payment Structure</label>
-                            <div style="display: flex; gap: 15px; margin-top: 10px; padding: 12px; background: var(--bg-base); border-radius: 8px; border: 1px solid var(--border);">
-                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--text-dark);">
+                            <div style="display: flex; gap: 15px; margin-top: 10px; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid var(--border);">
+                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #FFF;">
                                     <input type="radio" name="quoted_type" value="Daily" checked> Daily Rate
                                 </label>
-                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--text-dark);">
+                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #FFF;">
                                     <input type="radio" name="quoted_type" value="Monthly"> Monthly Quoted Rate
                                 </label>
                             </div>

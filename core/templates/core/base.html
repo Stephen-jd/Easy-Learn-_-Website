@@ -18,32 +18,34 @@
     
     <style>
         :root {
-            /* Clean White Theme based on Logo */
-            --bg-white: #FFFFFF;
-            --bg-base: #F8FAFC;
-            --bg-card: #FFFFFF;
+            /* Premium Dark Theme */
+            --bg-base: #13171F; /* Deepest Navy/Grey */
+            --bg-card: #1A202A; /* Slightly lighter for cards */
+            --bg-elevated: #222936; /* Hover states or popouts */
             
-            --primary: #0B4385; /* Logo Blue */
-            --primary-light: #EBF3FF;
+            --primary: #2980b9; /* Bright Blue */
+            --primary-light: rgba(41, 128, 185, 0.15);
+            --primary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            
             --accent: #FF7605; /* Logo Orange */
-            --accent-light: #FFF1E5;
+            --accent-light: rgba(255, 118, 5, 0.15);
             
-            --text-main: #1E293B;
-            --text-muted: #64748B;
-            --border: #E2E8F0;
+            --text-main: #F1F5F9; /* Very light gray, almost white */
+            --text-muted: #94A3B8; /* Slate gray for secondary text */
+            --border: #2E3643; /* Subtle dark border */
             
             --font-main: 'Inter', sans-serif;
             --font-head: 'Plus Jakarta Sans', sans-serif;
 
             /* Status Accents */
-            --status-active-bg: #E0F2FE;
-            --status-active-color: #0369A1;
-            --status-completed-bg: #DCFCE7;
-            --status-completed-color: #15803D;
-            --status-pending-bg: #FEF3C7;
-            --status-pending-color: #B45309;
-            --status-paid-bg: #ECFDF5;
-            --status-paid-color: #047857;
+            --status-active-bg: rgba(56, 189, 248, 0.1);
+            --status-active-color: #38BDF8;
+            --status-completed-bg: rgba(52, 211, 153, 0.1);
+            --status-completed-color: #34D399;
+            --status-pending-bg: rgba(251, 191, 36, 0.1);
+            --status-pending-color: #FBBF24;
+            --status-paid-bg: rgba(16, 185, 129, 0.1);
+            --status-paid-color: #10B981;
             
             --radius-sm: 6px;
             --radius-md: 12px;
@@ -60,6 +62,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
         h1, h2, h3, h4, h5, h6 { font-family: var(--font-head); color: var(--text-main); }
@@ -67,7 +70,8 @@
 
         /* ------------------ NAVIGATION BAR ------------------ */
         .navbar {
-            background-color: var(--bg-white);
+            background-color: rgba(19, 23, 31, 0.9);
+            backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
             position: sticky; top: 0; z-index: 100;
         }
@@ -79,28 +83,30 @@
 
         .nav-brand { display: flex; align-items: center; gap: 12px; }
         .nav-brand img { height: 40px; object-fit: contain; }
-        .brand-text { font-family: var(--font-head); font-weight: 800; font-size: 1.5rem; color: var(--primary); letter-spacing: -0.5px; }
+        .brand-text { font-family: var(--font-head); font-weight: 800; font-size: 1.5rem; color: #FFFFFF; letter-spacing: -0.5px; }
         .brand-text span { color: var(--accent); }
 
         .nav-menu { display: flex; align-items: center; gap: 20px; list-style: none; }
-        .nav-link { color: var(--text-main); font-size: 14px; font-weight: 600; transition: color 0.2s ease; padding: 8px 12px; }
-        .nav-link:hover { color: var(--primary); }
+        .nav-link { color: var(--text-muted); font-size: 14px; font-weight: 600; transition: color 0.2s ease; padding: 8px 12px; }
+        .nav-link:hover, .nav-link.active { color: #FFFFFF; }
 
         .nav-btn {
             background: var(--primary); color: white !important;
             padding: 8px 20px; border-radius: 8px; font-weight: 700; transition: all 0.3s;
+            border: 1px solid transparent;
         }
-        .nav-btn:hover { background: #083467; transform: translateY(-2px); }
+        .nav-btn:hover { background: #1B5C87; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(41, 128, 185, 0.3); }
 
         .nav-btn-secondary {
-            background: var(--accent); color: white !important;
+            background: transparent; color: var(--text-main) !important;
+            border: 1px solid var(--border);
             padding: 8px 20px; border-radius: 8px; font-weight: 700; transition: all 0.3s;
         }
-        .nav-btn-secondary:hover { background: #E06300; transform: translateY(-2px); }
+        .nav-btn-secondary:hover { border-color: var(--primary); color: var(--primary) !important; transform: translateY(-2px); }
 
         .user-pill {
             display: flex; align-items: center; gap: 8px;
-            background: var(--bg-base); border: 1px solid var(--border);
+            background: var(--bg-card); border: 1px solid var(--border);
             padding: 6px 14px; border-radius: 50px; font-size: 14px; font-weight: 600; color: var(--primary);
         }
 
@@ -112,24 +118,22 @@
         /* ------------------ FLOATING ALERTS ------------------ */
         .alert-container { margin-bottom: 24px; }
         .alert {
-            padding: 16px 20px; border-radius: var(--radius-md); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; font-weight: 500; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.05); animation: slideIn 0.3s ease-out; background: var(--bg-white);
+            padding: 16px 20px; border-radius: var(--radius-md); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; font-weight: 500; border: 1px solid var(--border); box-shadow: 0 4px 6px rgba(0,0,0,0.1); background: var(--bg-card);
         }
-        .alert-success { border-left: 4px solid #10B981; }
+        .alert-success { border-left: 4px solid #34D399; }
         .alert-error, .alert-danger { border-left: 4px solid #EF4444; }
-        .alert-warning { border-left: 4px solid #F59E0B; }
+        .alert-warning { border-left: 4px solid #FBBF24; }
         .alert-info { border-left: 4px solid var(--primary); }
         .alert-close { background: none; border: none; color: inherit; cursor: pointer; font-size: 16px; }
 
-        @keyframes slideIn { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
         /* ------------------ REUSABLE PREMIUM UI COMPONENTS ------------------ */
         .glass-card {
-            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: all 0.3s ease;
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s ease;
         }
-        .glass-card:hover { box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-color: #CBD5E1; }
+        .glass-card:hover { border-color: #3F4A5E; }
 
         .section-header { margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        .section-title { font-size: 28px; font-weight: 800; color: var(--primary); }
+        .section-title { font-size: 28px; font-weight: 800; color: #FFFFFF; }
 
         /* Premium Buttons */
         .btn {
@@ -137,44 +141,45 @@
             padding: 12px 24px; font-size: 14px; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; transition: all 0.3s ease; text-decoration: none;
         }
         .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: #083467; transform: translateY(-2px); }
+        .btn-primary:hover { background: #1B5C87; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(41,128,185,0.4); }
         .btn-secondary { background: var(--accent); color: white; }
-        .btn-secondary:hover { background: #E06300; transform: translateY(-2px); }
-        .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
-        .btn-outline:hover { background: var(--primary-light); }
+        .btn-secondary:hover { background: #E06300; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,118,5,0.4); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
+        .btn-outline:hover { background: var(--bg-elevated); border-color: var(--primary); color: var(--primary); }
 
         /* Responsive Premium Tables */
-        .table-responsive { width: 100%; overflow-x: auto; border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--bg-white); }
+        .table-responsive { width: 100%; overflow-x: auto; border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--bg-card); }
         .premium-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .premium-table th { background: var(--bg-base); color: var(--primary); padding: 16px 20px; font-weight: 700; font-size: 14px; border-bottom: 2px solid var(--border); text-transform: uppercase; letter-spacing: 0.5px; }
+        .premium-table th { background: var(--bg-elevated); color: var(--text-muted); padding: 16px 20px; font-weight: 700; font-size: 13px; border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.5px; }
         .premium-table td { padding: 16px 20px; font-size: 14px; border-bottom: 1px solid var(--border); color: var(--text-main); }
         .premium-table tbody tr { transition: background 0.2s; }
-        .premium-table tbody tr:hover { background: var(--bg-base); }
+        .premium-table tbody tr:hover { background: rgba(255,255,255,0.02); }
 
         /* Status Badges */
         .badge { display: inline-flex; padding: 4px 10px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
-        .badge-active { background: var(--status-active-bg); color: var(--status-active-color); }
-        .badge-completed { background: var(--status-completed-bg); color: var(--status-completed-color); }
-        .badge-pending { background: var(--status-pending-bg); color: var(--status-pending-color); }
-        .badge-paid { background: var(--status-paid-bg); color: var(--status-paid-color); }
+        .badge-active { background: var(--status-active-bg); color: var(--status-active-color); border: 1px solid rgba(56,189,248,0.2); }
+        .badge-completed { background: var(--status-completed-bg); color: var(--status-completed-color); border: 1px solid rgba(52,211,153,0.2); }
+        .badge-pending { background: var(--status-pending-bg); color: var(--status-pending-color); border: 1px solid rgba(251,191,36,0.2); }
+        .badge-paid { background: var(--status-paid-bg); color: var(--status-paid-color); border: 1px solid rgba(16,185,129,0.2); }
 
         /* Form Controls for Internal Pages */
         .form-control {
-            width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); font-family: inherit; font-size: 15px; background: var(--bg-white); color: var(--text-main); transition: all 0.2s;
+            width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); font-family: inherit; font-size: 15px; background: var(--bg-elevated); color: #FFF; transition: all 0.2s;
         }
-        .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
-        .form-label { display: block; font-weight: 700; font-size: 14px; color: var(--text-main); margin-bottom: 8px; }
+        .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(41,128,185,0.2); }
+        .form-label { display: block; font-weight: 600; font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
 
         /* ------------------ FOOTER ------------------ */
-        .footer { background: var(--bg-white); border-top: 1px solid var(--border); padding: 60px 24px 20px 24px; margin-top: auto; }
+        .footer { background: var(--bg-card); border-top: 1px solid var(--border); padding: 60px 24px 20px 24px; margin-top: auto; }
         .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 30px; }
-        .footer-logo { font-family: var(--font-head); font-size: 24px; font-weight: 800; color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .footer-logo { font-family: var(--font-head); font-size: 24px; font-weight: 800; color: #FFFFFF; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .footer-logo span { color: var(--accent); }
         .footer-desc { font-size: 14px; line-height: 1.6; color: var(--text-muted); }
-        .footer-title { color: var(--text-main); font-size: 16px; font-family: var(--font-head); margin-bottom: 20px; font-weight: 800; }
+        .footer-title { color: #FFFFFF; font-size: 16px; font-family: var(--font-head); margin-bottom: 20px; font-weight: 800; }
         .footer-links { list-style: none; }
         .footer-links li { margin-bottom: 10px; }
         .footer-links a { color: var(--text-muted); font-size: 14px; transition: color 0.2s; font-weight: 500; }
-        .footer-links a:hover { color: var(--accent); }
+        .footer-links a:hover { color: var(--primary); }
         .footer-bottom { max-width: 1400px; margin: 0 auto; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; font-size: 13px; color: var(--text-muted); }
 
         @media (max-width: 768px) {
@@ -218,7 +223,8 @@
         </div>
     </nav>
 
-    <!-- Main Content Container -->
+    <!-- Main Content Container (Only used for internal pages) -->
+    {% block wrapper %}
     <main class="main-content">
         <!-- Alerts & Notifications -->
         {% if messages %}
@@ -238,6 +244,7 @@
         {% block content %}
         {% endblock %}
     </main>
+    {% endblock %}
 
     <!-- Footer -->
     <footer class="footer">
@@ -248,7 +255,7 @@
                     EasyLearn<span>.</span>
                 </div>
                 <p class="footer-desc">
-                    Silicon Valley standard tech bootcamps directly in college campuses.
+                    Silicon Valley standard tech bootcamps directly in college campuses. Providing immersive AR/VR based coding experiences.
                 </p>
             </div>
             <div>
@@ -276,7 +283,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Easy Learn Academy. Clean White Theme.</p>
+            <p>&copy; 2026 Easy Learn Academy. Premium Dark Platform.</p>
         </div>
     </footer>
 

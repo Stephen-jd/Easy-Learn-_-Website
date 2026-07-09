@@ -1,381 +1,549 @@
+{% extends 'core/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy Learn Academy | Next-Gen Software Training</title>
+
+{% block title %}Easy Learn Academy | Next-Gen Software Training{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* =========================================
+       HERO SECTION
+    ========================================= */
+    .hero { 
+        padding: 120px 0 60px; 
+        background: radial-gradient(circle at center top, #1A222E 0%, var(--bg-base) 100%);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
     
-    <link rel="icon" type="image/png" href="{% static 'core/images/logo.png' %}">
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(41, 128, 185, 0.15);
+        border: 1px solid rgba(41, 128, 185, 0.3);
+        color: var(--primary);
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        letter-spacing: 0.5px;
+    }
+
+    .hero h1 { 
+        font-size: clamp(3rem, 5vw, 4.5rem); 
+        font-weight: 900; 
+        line-height: 1.15; 
+        margin-bottom: 24px; 
+        color: #FFFFFF; 
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .hero h1 span { 
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
     
-    <!-- Fonts & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    .hero-sub { 
+        font-size: 1.2rem; 
+        color: var(--text-muted); 
+        margin-bottom: 40px; 
+        max-width: 600px; 
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.7; 
+    }
+
+    .hero-actions {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 60px;
+    }
+
+    .btn-hero {
+        padding: 16px 36px;
+        font-size: 16px;
+        border-radius: 12px;
+        font-weight: 800;
+    }
+
+    /* =========================================
+       COMPANIES MARQUEE
+    ========================================= */
+    .companies-sec {
+        padding: 60px 0;
+        background: var(--bg-card);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        text-align: center;
+    }
+    .companies-title {
+        font-size: 32px;
+        font-weight: 800;
+        color: #38BDF8; /* Glowing light blue */
+        margin-bottom: 10px;
+    }
+    .companies-sub {
+        color: var(--text-muted);
+        font-size: 15px;
+        margin-bottom: 40px;
+    }
     
-    <style>
-        :root {
-            /* Clean White Theme based on Logo */
-            --bg-white: #FFFFFF;
-            --bg-light: #F8FAFC;
-            --bg-card: #FFFFFF;
-            
-            --primary: #0B4385; /* Logo Blue */
-            --primary-light: #EBF3FF;
-            --accent: #FF7605; /* Logo Orange */
-            --accent-light: #FFF1E5;
-            
-            --text-dark: #1E293B;
-            --text-main: #334155;
-            --text-muted: #64748B;
-            --border: #E2E8F0;
-            
-            --font-main: 'Inter', sans-serif;
-            --font-head: 'Plus Jakarta Sans', sans-serif;
-        }
+    .marquee-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+    .company-logo {
+        background: #FFFFFF;
+        padding: 15px 30px;
+        border-radius: 8px;
+        font-size: 20px;
+        font-weight: 900;
+        color: #1E293B;
+        font-family: var(--font-head);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 160px;
+        opacity: 0.9;
+        transition: transform 0.3s;
+    }
+    .company-logo:hover { transform: scale(1.05); opacity: 1; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: var(--font-main); color: var(--text-main); background: var(--bg-white); line-height: 1.6; overflow-x: hidden; }
-        h1, h2, h3, h4, h5 { font-family: var(--font-head); color: var(--text-dark); }
-        a { text-decoration: none; color: inherit; }
-        
-        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+    /* =========================================
+       MASSIVE STATS SECTION
+    ========================================= */
+    .stats-sec {
+        padding: 100px 24px;
+        text-align: center;
+        background: var(--bg-base);
+    }
+    .stats-header {
+        font-size: 24px;
+        font-weight: 700;
+        color: #FFFFFF;
+        margin-bottom: 20px;
+    }
+    .huge-stat {
+        font-size: clamp(6rem, 15vw, 12rem);
+        font-weight: 900;
+        line-height: 1;
+        background: linear-gradient(180deg, #38BDF8 0%, #0369A1 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+        font-family: var(--font-head);
+        letter-spacing: -3px;
+    }
+    .stats-subtext {
+        font-size: 24px;
+        font-weight: 600;
+        color: #FFFFFF;
+        margin-bottom: 80px;
+    }
 
-        /* =========================================
-           NAVBAR
-        ========================================= */
-        .navbar {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border); transition: all 0.3s;
-        }
-        .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 15px 24px; max-width: 1280px; margin: 0 auto; }
-        
-        .nav-brand { display: flex; align-items: center; gap: 12px; }
-        .nav-brand img { height: 45px; object-fit: contain; } 
-        .brand-text { font-family: var(--font-head); font-weight: 800; font-size: 1.6rem; color: var(--primary); letter-spacing: -0.5px; }
-        .brand-text span { color: var(--accent); }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 40px;
+    }
+    .stat-item {
+        text-align: center;
+    }
+    .stat-item i {
+        font-size: 28px;
+        color: var(--text-muted);
+        margin-bottom: 15px;
+    }
+    .stat-item h4 {
+        font-size: 16px;
+        font-weight: 800;
+        color: #FFFFFF;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .stat-item p {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
 
-        .nav-links { display: flex; gap: 35px; align-items: center; }
-        .nav-link { color: var(--text-dark); font-weight: 600; font-size: 15px; position: relative; transition: color 0.3s; }
-        .nav-link:hover { color: var(--accent); }
+    /* =========================================
+       WHY EASY LEARN (CAROUSEL SIMULATION)
+    ========================================= */
+    .why-sec {
+        padding: 100px 24px;
+        background: radial-gradient(ellipse at center, #1A222E 0%, var(--bg-base) 100%);
+        text-align: center;
+    }
+    .sec-tag {
+        display: inline-block;
+        padding: 6px 16px;
+        border-radius: 50px;
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+    .why-title {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        font-weight: 800;
+        color: #38BDF8;
+        margin-bottom: 15px;
+    }
+    
+    .showcase-wrapper {
+        margin: 60px auto 40px;
+        max-width: 900px;
+        position: relative;
+    }
+    .showcase-card {
+        background: linear-gradient(180deg, #1E293B 0%, #0F172A 100%);
+        border: 2px solid #38BDF8;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 0 40px rgba(56, 189, 248, 0.2);
+        position: relative;
+        z-index: 2;
+    }
+    .showcase-card img {
+        width: 100%;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+    .showcase-stats {
+        display: flex;
+        justify-content: space-around;
+        background: rgba(0,0,0,0.4);
+        padding: 15px;
+        border-radius: 12px;
+    }
+    .s-stat {
+        text-align: center;
+    }
+    .s-stat h5 { color: #38BDF8; font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+    .s-stat span { color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;}
 
-        .btn-nav {
-            background: var(--primary); color: #fff !important; 
-            padding: 10px 26px; border-radius: 8px; font-weight: 700; transition: all 0.3s;
-        }
-        .btn-nav:hover { background: #083467; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(11, 67, 133, 0.2); }
+    /* Background blurred cards to simulate carousel */
+    .showcase-bg-left, .showcase-bg-right {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%) scale(0.8);
+        width: 60%;
+        height: 80%;
+        background: #1E293B;
+        border-radius: 20px;
+        z-index: 1;
+        opacity: 0.5;
+        filter: blur(2px);
+    }
+    .showcase-bg-left { left: -10%; }
+    .showcase-bg-right { right: -10%; }
 
-        /* =========================================
-           HERO SECTION
-        ========================================= */
-        .hero { padding: 140px 0 60px; background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%); position: relative; overflow: hidden; }
-        .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-        
-        .hero-text h1 { font-size: clamp(3rem, 5vw, 4.2rem); font-weight: 900; line-height: 1.15; margin-bottom: 24px; color: var(--text-dark); }
-        .hero-text h1 span { color: var(--accent); }
-        
-        .hero-sub { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 40px; max-width: 550px; line-height: 1.8; }
+    /* =========================================
+       COURSE TAB UI (EXPERIENCE PLATFORM)
+    ========================================= */
+    .platform-sec {
+        padding: 100px 24px;
+        background: var(--bg-card);
+        text-align: center;
+    }
+    .platform-title {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        font-weight: 800;
+        color: #FFFFFF;
+        margin-bottom: 15px;
+    }
 
-        .btn-primary {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: var(--accent); color: #fff; padding: 16px 36px; border-radius: 8px; 
-            font-weight: 700; font-size: 16px; box-shadow: 0 8px 20px rgba(255, 118, 5, 0.25); transition: all 0.3s;
-        }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(255, 118, 5, 0.35); }
+    .course-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 50px 0;
+    }
+    .tab-btn {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .tab-btn.active {
+        background: var(--primary);
+        color: #FFF;
+        border-color: var(--primary);
+    }
 
-        /* Unique Image Container */
-        .hero-image-wrap { position: relative; }
-        .hero-image-wrap img { width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); z-index: 2; position: relative; }
-        
-        /* Decorative Background Elements for Image */
-        .hero-image-wrap::after {
-            content: ''; position: absolute; top: -20px; right: -20px; bottom: 20px; left: 20px;
-            border: 3px solid var(--primary-light); border-radius: 20px; z-index: 1;
-        }
+    .course-card-detailed {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: var(--bg-base);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        text-align: left;
+        overflow: hidden;
+    }
+    
+    .course-info { padding: 50px; }
+    .c-tag {
+        background: rgba(251, 191, 36, 0.1);
+        color: #FBBF24;
+        padding: 4px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+    .c-title { font-size: 28px; font-weight: 800; color: #FFF; margin-bottom: 5px; line-height: 1.3;}
+    .c-guarantee { color: #38BDF8; font-size: 16px; font-weight: 700; margin-bottom: 20px; }
+    .c-desc { color: var(--text-muted); font-size: 15px; margin-bottom: 30px; line-height: 1.6;}
+    
+    .c-features {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 40px;
+    }
+    .c-feature {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #E2E8F0;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .c-feature i { color: #38BDF8; }
 
-        /* =========================================
-           3 PILLARS / CORE OFFERINGS
-        ========================================= */
-        .pillars-section { padding: 40px 24px 80px; background: var(--bg-white); }
-        .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1280px; margin: 0 auto; }
-        
-        .pillar-card {
-            background: #fff; border: 1px solid var(--border); border-radius: 16px; 
-            padding: 40px 30px; transition: all 0.4s; position: relative; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            display: flex; flex-direction: column; align-items: center; text-align: center;
-        }
-        .pillar-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(11, 67, 133, 0.08); border-color: var(--primary-light); }
-        
-        .pillar-icon {
-            width: 80px; height: 80px; border-radius: 50%; background: var(--primary-light); color: var(--primary);
-            display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 25px;
-            transition: all 0.3s;
-        }
-        .pillar-card:hover .pillar-icon { background: var(--primary); color: #fff; transform: scale(1.1); }
-        
-        /* Secondary Accent for the middle card */
-        .pillar-card.accent .pillar-icon { background: var(--accent-light); color: var(--accent); }
-        .pillar-card.accent:hover .pillar-icon { background: var(--accent); color: #fff; }
+    .c-meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    .c-meta-box {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+    }
+    .c-meta-title { color: var(--text-muted); font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+    
+    .c-mentors {
+        display: flex;
+    }
+    .c-mentors img {
+        width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--bg-base);
+        margin-left: -10px;
+    }
+    .c-mentors img:first-child { margin-left: 0; }
 
-        .pillar-card h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 15px; color: var(--text-dark); }
-        .pillar-card p { font-size: 15px; color: var(--text-muted); line-height: 1.7; }
+    .c-date { font-size: 18px; font-weight: 800; color: #FFF; }
+    .c-seats { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
 
+    .course-visual {
+        background: linear-gradient(135deg, rgba(41, 128, 185, 0.1) 0%, rgba(0,0,0,0) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 50px;
+        position: relative;
+    }
+    .course-visual img {
+        width: 100%;
+        max-width: 450px;
+        border-radius: 16px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
 
-        /* =========================================
-           GLOBAL SECTION STYLES
-        ========================================= */
-        .section { padding: 100px 0; background: var(--bg-white); }
-        .section.light { background: var(--bg-light); }
-        .sec-header { text-align: center; margin-bottom: 60px; }
-        .sec-tag { display: inline-block; color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; font-size: 13px; margin-bottom: 12px; }
-        .sec-title { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 15px; color: var(--text-dark); }
-        .sec-desc { font-size: 1.1rem; color: var(--text-muted); max-width: 700px; margin: 0 auto; }
+    @media (max-width: 1024px) {
+        .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        .course-card-detailed { grid-template-columns: 1fr; }
+        .showcase-bg-left, .showcase-bg-right { display: none; }
+    }
+    @media (max-width: 640px) {
+        .stats-grid { grid-template-columns: 1fr; }
+        .c-features, .c-meta-grid { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
 
-        /* =========================================
-           COMPILERS SECTION
-        ========================================= */
-        .compiler-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto; }
-        .tech-box {
-            background: #fff; border: 1px solid var(--border); border-radius: 16px; 
-            padding: 25px 15px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-        }
-        .tech-box:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-color: var(--primary-light); }
-        .tech-box img { height: 45px; margin-bottom: 12px; object-fit: contain; }
-        .tech-box i { font-size: 45px; margin-bottom: 12px; }
-        .tech-box span { font-size: 14px; font-weight: 700; color: var(--text-dark); }
-
-        /* =========================================
-           CURRICULUM TECHNOLOGIES
-        ========================================= */
-        .tech-track { margin-bottom: 50px; }
-        .track-title { font-size: 20px; font-weight: 800; color: var(--text-dark); margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
-        .track-title::before { content: ''; display: block; width: 10px; height: 10px; border-radius: 50%; }
-        .track-title.python::before { background: var(--primary); }
-        .track-title.java::before { background: var(--accent); }
-
-        .tech-icon-grid { display: flex; flex-wrap: wrap; gap: 15px; }
-        .tech-icon-box {
-            background: #fff; border: 1px solid var(--border); border-radius: 12px; 
-            padding: 15px; min-width: 110px; text-align: center; display: flex; flex-direction: column; align-items: center;
-            transition: all 0.3s;
-        }
-        .tech-icon-box:hover { border-color: var(--primary); box-shadow: 0 4px 15px rgba(11, 67, 133, 0.08); transform: translateY(-3px); }
-        .tech-icon-box i { font-size: 32px; margin-bottom: 10px; }
-        .tech-icon-box span { font-size: 13px; font-weight: 600; color: var(--text-dark); }
-
-        /* =========================================
-           FOOTER
-        ========================================= */
-        .footer { padding: 80px 24px 30px; background: var(--bg-light); border-top: 1px solid var(--border); }
-        .footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
-        .ft-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
-        .ft-logo img { height: 45px; }
-        .ft-logo span { font-family: var(--font-head); font-weight: 800; font-size: 1.5rem; color: var(--primary); }
-        .ft-desc { color: var(--text-muted); font-size: 15px; max-width: 400px; margin-bottom: 25px; }
-        
-        .ft-title { color: var(--text-dark); font-family: var(--font-head); font-size: 18px; margin-bottom: 25px; }
-        .ft-links { display: flex; flex-direction: column; gap: 15px; }
-        .ft-links a { color: var(--text-muted); font-size: 15px; transition: color 0.3s; font-weight: 500; }
-        .ft-links a:hover { color: var(--accent); }
-        
-        .ft-bottom { text-align: center; padding-top: 30px; border-top: 1px solid var(--border); font-size: 14px; color: var(--text-muted); }
-
-        /* WhatsApp Button */
-        .whatsapp-float {
-            position: fixed; bottom: 30px; right: 30px; display: flex; align-items: center; gap: 12px;
-            z-index: 9999; text-decoration: none; 
-        }
-        .whatsapp-icon { background: #25D366; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; box-shadow: 0 5px 20px rgba(37,211,102,0.3); transition: transform 0.3s; }
-        .whatsapp-float:hover .whatsapp-icon { transform: scale(1.05); }
-
-        @media (max-width: 1024px) {
-            .hero-grid { grid-template-columns: 1fr; text-align: center; }
-            .hero-image-wrap { margin-top: 40px; }
-            .pillars-grid { grid-template-columns: 1fr; }
-            .compiler-grid { grid-template-columns: repeat(3, 1fr); }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-        @media (max-width: 640px) {
-            .compiler-grid { grid-template-columns: repeat(2, 1fr); }
-            .tech-icon-grid { justify-content: center; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- NAVBAR -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-inner">
-            <a href="/" class="nav-brand">
-                <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn">
-                <div class="brand-text">EasyLearn<span>.</span></div>
-            </a>
-            <div class="nav-links">
-                <a href="#offerings" class="nav-link">Our Offerings</a>
-                <a href="#curriculum" class="nav-link">Curriculum</a>
-                <a href="{% url 'login' %}" class="btn-nav">Portal</a>
-            </div>
-        </div>
-    </nav>
-
+{% block wrapper %}
     <!-- HERO SECTION -->
     <section class="hero">
-        <div class="hero-grid">
-            <div class="hero-text">
-                <h1>Code your way to a<br><span>Top Tech Career.</span></h1>
-                <p class="hero-sub">We specialize in comprehensive technical education. Whether you want to learn from home, train at your college campus, or secure a top-tier tech job, we have you covered.</p>
-                <a href="#offerings" class="btn-primary">Explore Our Programs</a>
-            </div>
-            
-            <div class="hero-image-wrap">
-                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Students learning to code">
-            </div>
-        </div>
-    </section>
-
-    <!-- 3 CORE PILLARS (Online, Campus, Placement) -->
-    <section class="pillars-section" id="offerings">
-        <div class="sec-header">
-            <h2 class="sec-title">What We Provide</h2>
-            <p class="sec-desc">Comprehensive pathways to launch your career in the IT industry.</p>
-        </div>
-        <div class="pillars-grid">
-            <!-- Online Training -->
-            <div class="pillar-card">
-                <div class="pillar-icon">
-                    <i class="fa-solid fa-laptop-code"></i>
-                </div>
-                <h3>Online Training</h3>
-                <p>Master Full Stack Development from anywhere. Our interactive, live online classes are led by corporate experts and feature 100% hands-on coding assignments.</p>
-            </div>
-            
-            <!-- Campus Training -->
-            <div class="pillar-card accent">
-                <div class="pillar-icon">
-                    <i class="fa-solid fa-school"></i>
-                </div>
-                <h3>Campus Training</h3>
-                <p>We bring Silicon Valley standards directly to your engineering college. Intensive, offline bootcamps integrated seamlessly with your academic calendar.</p>
-            </div>
-            
-            <!-- Placements -->
-            <div class="pillar-card">
-                <div class="pillar-icon">
-                    <i class="fa-solid fa-briefcase"></i>
-                </div>
-                <h3>Placements</h3>
-                <p>End-to-end career support. From Git portfolio building to unlimited mock interviews, we stay with you until you secure your offer letter from our network of hiring partners.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- COMPILERS SECTION -->
-    <section class="section light">
         <div class="container">
-            <div class="sec-header">
-                <h2 class="sec-title">We are equipped with 12 Compilers</h2>
+            <div class="hero-badge">
+                <i class="fa-solid fa-bolt"></i> Elevate Your Tech Career
             </div>
+            <h1>The Ultimate Platform to <br><span>Master Full Stack</span></h1>
+            <p class="hero-sub">Experience immersive AR/VR training, Silicon Valley standard curriculum, and direct placements at top product companies across India.</p>
             
-            <div class="compiler-grid">
-                <div class="tech-box"><i class="fa-brands fa-cuttlefish" style="color:#00599C;"></i><span>C</span></div>
-                <div class="tech-box"><i class="fa-brands fa-cuttlefish" style="color:#00599C;"></i><span>C++</span></div>
-                <div class="tech-box"><i class="fa-brands fa-java" style="color:#f89820;"></i><span>Java</span></div>
-                <div class="tech-box"><i class="fa-brands fa-python" style="color:#3776AB;"></i><span>Python</span></div>
-                <div class="tech-box"><i class="fa-brands fa-js" style="color:#F7DF1E;"></i><span>JavaScript</span></div>
-                <div class="tech-box"><i class="fa-brands fa-php" style="color:#777BB4;"></i><span>PHP</span></div>
-                <div class="tech-box"><i class="fa-solid fa-code" style="color:#3178C6;"></i><span>TypeScript</span></div>
-                <div class="tech-box"><i class="fa-solid fa-hashtag" style="color:#239120;"></i><span>C#</span></div>
-                <div class="tech-box"><i class="fa-brands fa-golang" style="color:#00ADD8;"></i><span>Go</span></div>
-                <div class="tech-box"><i class="fa-brands fa-r-project" style="color:#276DC3;"></i><span>R</span></div>
-                <div class="tech-box"><i class="fa-solid fa-stairs" style="color:#DC322F;"></i><span>Scala</span></div>
-                <div class="tech-box"><i class="fa-brands fa-microsoft" style="color:#512BD4;"></i><span>.NET</span></div>
+            <div class="hero-actions">
+                <a href="#courses" class="btn btn-primary btn-hero">Explore Courses</a>
+                <a href="{% url 'login' %}" class="btn btn-outline btn-hero">Access Platform</a>
             </div>
         </div>
     </section>
 
-    <!-- CURRICULUM GRID -->
-    <section class="section" id="curriculum">
-        <div class="container">
-            <div class="sec-header">
-                <span class="sec-tag">Curriculum</span>
-                <h2 class="sec-title">Now it's easy to Upskill yourself</h2>
-            </div>
+    <!-- COMPANIES MARQUEE -->
+    <section class="companies-sec">
+        <h2 class="companies-title">Our Students Are Placed In Top Companies</h2>
+        <p class="companies-sub">Join the ranks of our successful alumni working as industry leaders</p>
+        
+        <div class="marquee-container">
+            <!-- Simulated Logos -->
+            <div class="company-logo"><i class="fa-brands fa-microsoft" style="color:#00A4EF; margin-right:8px;"></i> Microsoft</div>
+            <div class="company-logo"><i class="fa-brands fa-aws" style="color:#FF9900; margin-right:8px;"></i> Amazon</div>
+            <div class="company-logo"><i class="fa-brands fa-google" style="color:#4285F4; margin-right:8px;"></i> Google</div>
+            <div class="company-logo" style="color:#0071C5;">intel</div>
+            <div class="company-logo" style="color:#000000;">Capgemini</div>
+            <div class="company-logo" style="color:#0033A0;">Cognizant</div>
+        </div>
+    </section>
 
-            <!-- Python Track -->
-            <div class="tech-track">
-                <h3 class="track-title python">Python Full Stack Technologies</h3>
-                <div class="tech-icon-grid">
-                    <div class="tech-icon-box"><i class="fa-brands fa-python" style="color:#3776AB;"></i><span>Python</span></div>
-                    <div class="tech-icon-box"><i class="fa-solid fa-d" style="color:#092E20;"></i><span>Django</span></div>
-                    <div class="tech-icon-box"><i class="fa-brands fa-html5" style="color:#E34F26;"></i><span>HTML5</span></div>
-                    <div class="tech-icon-box"><i class="fa-brands fa-css3-alt" style="color:#1572B6;"></i><span>CSS3</span></div>
-                    <div class="tech-icon-box"><i class="fa-brands fa-js" style="color:#F7DF1E;"></i><span>JavaScript</span></div>
-                    <div class="tech-icon-box"><i class="fa-brands fa-react" style="color:#61DAFB;"></i><span>React</span></div>
-                    <div class="tech-icon-box"><i class="fa-solid fa-database" style="color:#4479A1;"></i><span>MySQL</span></div>
-                    <div class="tech-icon-box"><i class="fa-solid fa-server" style="color:#003B57;"></i><span>SQLite</span></div>
-                    <div class="tech-icon-box"><i class="fa-brands fa-git-alt" style="color:#F05032;"></i><span>Git</span></div>
-                    <div class="tech-icon-box"><i class="fa-brands fa-github" style="color:#181717;"></i><span>GitHub</span></div>
-                </div>
-            </div>
+    <!-- MASSIVE STATS SECTION -->
+    <section class="stats-sec">
+        <h3 class="stats-header">Trusted by students across 500+ colleges in India</h3>
+        <div class="huge-stat">75,000+</div>
+        <div class="stats-subtext">of you</div>
 
-            <!-- Java Track -->
-            <div class="tech-track">
-                <h3 class="track-title java">Java Full Stack Technologies</h3>
-                <div class="tech-icon-grid">
-                    <div class="tech-icon-box"><i class="fa-brands fa-java" style="color:#f89820;"></i><span>Java</span></div>
-                    <div class="tech-icon-box"><i class="fa-brands fa-pagelines" style="color:#6DB33F;"></i><span>Spring Boot</span></div>
-                    <div class="tech-icon-box"><i class="fa-brands fa-html5" style="color:#E34F26;"></i><span>HTML5</span></div>
-                    <div class="tech-icon-box"><i class="fa-brands fa-css3-alt" style="color:#1572B6;"></i><span>CSS3</span></div>
-                    <div class="tech-icon-box"><i class="fa-brands fa-js" style="color:#F7DF1E;"></i><span>JavaScript</span></div>
-                    <div class="tech-icon-box"><i class="fa-brands fa-angular" style="color:#DD0031;"></i><span>Angular</span></div>
-                    <div class="tech-icon-box"><i class="fa-solid fa-database" style="color:#336791;"></i><span>PostgreSQL</span></div>
-                    <div class="tech-icon-box"><i class="fa-brands fa-aws" style="color:#FF9900;"></i><span>AWS</span></div>
-                    <div class="tech-icon-box"><i class="fa-brands fa-git-alt" style="color:#F05032;"></i><span>Git</span></div>
-                </div>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <i class="fa-solid fa-award"></i>
+                <h4>Training Institute</h4>
+                <p>Top-Rated Full Stack<br>training in India</p>
+            </div>
+            <div class="stat-item">
+                <i class="fa-solid fa-handshake"></i>
+                <h4>3000+ Hiring Partners</h4>
+                <p>Direct placement<br>partnerships with top tech companies</p>
+            </div>
+            <div class="stat-item">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <h4>100% Placement</h4>
+                <p>Complete eligibility<br>after meeting assessment criteria</p>
+            </div>
+            <div class="stat-item">
+                <i class="fa-solid fa-users"></i>
+                <h4>2000+ Campus Workshops</h4>
+                <p>Conducted workshops<br>across colleges nationwide</p>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="footer-grid">
-            <div>
-                <div class="ft-logo">
-                    <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn">
-                    <span>EasyLearn.</span>
-                </div>
-                <p class="ft-desc">Bridging the gap between college academics and actual tech industry requirements through intensive, live coding bootcamps.</p>
-            </div>
+    <!-- WHY EASY LEARN (IMMERSIVE CAROUSEL) -->
+    <section class="why-sec">
+        <div class="sec-tag"><i class="fa-solid fa-star"></i> Why Choose Us</div>
+        <h2 class="why-title">Why Easy Learn Academy?</h2>
+        <p style="color: var(--text-muted); font-size: 18px;">We don't just teach code. We build careers.</p>
+
+        <div class="showcase-wrapper">
+            <div class="showcase-bg-left"></div>
+            <div class="showcase-bg-right"></div>
             
-            <div>
-                <h4 class="ft-title">Platform</h4>
-                <div class="ft-links">
-                    <a href="#offerings">Our Offerings</a>
-                    <a href="#curriculum">Curriculum</a>
+            <div class="showcase-card">
+                <div style="background: rgba(56, 189, 248, 0.2); color: #38BDF8; padding: 6px 16px; border-radius: 50px; display: inline-block; font-weight: 800; font-size: 14px; margin-bottom: 20px; border: 1px solid rgba(56,189,248,0.4);">
+                    <i class="fa-solid fa-vr-cardboard"></i> Learning Mode
                 </div>
-            </div>
-            
-            <div>
-                <h4 class="ft-title">Access</h4>
-                <div class="ft-links">
-                    <a href="{% url 'login' %}">Portal</a>
-                    <a href="{% url 'trainer_signup' %}">Apply to Teach</a>
+                
+                <!-- Placeholder for the AR/VR Teacher image -->
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Immersive Learning">
+                
+                <div class="showcase-stats">
+                    <div class="s-stat">
+                        <h5>100%</h5>
+                        <span>Engagement</span>
+                    </div>
+                    <div class="s-stat" style="border-left: 1px solid var(--border); border-right: 1px solid var(--border); padding: 0 40px;">
+                        <h5>4.9/5</h5>
+                        <span>Rating</span>
+                    </div>
+                    <div class="s-stat">
+                        <h5>Immersive</h5>
+                        <span>Experience</span>
+                    </div>
                 </div>
+                
+                <h3 style="color: #FFF; font-size: 24px; font-weight: 800; margin-top: 30px;">AR/VR Based Teaching</h3>
+                <p style="color: var(--text-muted); margin-top: 10px;">Experience real-world simulations and interactive learning with our advanced AR/VR technology. Immerse yourself in coding environments and visualize complex concepts.</p>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Easy Learn Academy. Built for Students.</p>
+    </section>
+
+    <!-- PLATFORM & COURSES TABBED UI -->
+    <section class="platform-sec" id="courses">
+        <h2 class="platform-title">Experience the Platform</h2>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 16px;">
+            Explore our features through interactive tabs and discover how our comprehensive learning platform transforms students into industry-ready professionals.
+        </p>
+        
+        <div class="course-tabs">
+            <button class="tab-btn active">Java Full-Stack</button>
+            <button class="tab-btn">Python Full-Stack</button>
+            <button class="tab-btn">Data Analytics</button>
         </div>
-    </footer>
 
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/918220032456?text=Hi%2C%20I%20want%20to%20learn%20coding%20at%20Easy%20Learn%20Academy." target="_blank" class="whatsapp-float">
-        <div class="whatsapp-icon"><i class="fab fa-whatsapp"></i></div>
-    </a>
+        <div class="course-card-detailed">
+            <div class="course-info">
+                <div class="c-tag"><i class="fa-solid fa-star"></i> Most Popular</div>
+                <h3 class="c-title">Java Full-Stack Web Development With AI Program</h3>
+                <div class="c-guarantee">(Job Guarantee)</div>
+                
+                <p class="c-desc">Master Java, Spring Boot & React. Build 3+ end-to-end apps and ace product-company interviews and land your dream job.</p>
+                
+                <div class="c-features">
+                    <div class="c-feature"><i class="fa-solid fa-circle-check"></i> Java Programming Mastery</div>
+                    <div class="c-feature"><i class="fa-solid fa-circle-check"></i> OOPs Concepts & Collections</div>
+                    <div class="c-feature"><i class="fa-solid fa-circle-check"></i> Advanced Java & JDBC</div>
+                    <div class="c-feature"><i class="fa-solid fa-circle-check"></i> Hibernate & Spring</div>
+                    <div class="c-feature"><i class="fa-solid fa-circle-check"></i> Frontend & Backend</div>
+                    <div class="c-feature"><i class="fa-solid fa-circle-check"></i> AI Integration</div>
+                </div>
 
-</body>
-</html>
+                <div class="c-meta-grid">
+                    <div class="c-meta-box">
+                        <div class="c-meta-title"><i class="fa-solid fa-user-group"></i> Our Expert Mentors</div>
+                        <div class="c-mentors">
+                            <img src="https://ui-avatars.com/api/?name=Trainer+1&background=0D8ABC&color=fff" alt="Mentor">
+                            <img src="https://ui-avatars.com/api/?name=Trainer+2&background=FF7605&color=fff" alt="Mentor">
+                            <img src="https://ui-avatars.com/api/?name=Trainer+3&background=1E293B&color=fff" alt="Mentor">
+                        </div>
+                    </div>
+                    <div class="c-meta-box">
+                        <div class="c-meta-title"><i class="fa-regular fa-calendar"></i> Next Batch Starts:</div>
+                        <div class="c-date">Aug 15, 2026</div>
+                        <div class="c-seats">(17 seats left)</div>
+                        <div style="font-size: 13px; color: var(--text-muted);"><i class="fa-solid fa-laptop"></i> Online & Offline</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="course-visual">
+                <!-- Abstract coding visualization placeholder -->
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Java Full Stack">
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
