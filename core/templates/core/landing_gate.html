@@ -70,13 +70,13 @@
         /* =========================================
            HERO SECTION
         ========================================= */
-        .hero { padding: 140px 0 80px; background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%); position: relative; overflow: hidden; }
+        .hero { padding: 140px 0 60px; background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 100%); position: relative; overflow: hidden; }
         .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; max-width: 1280px; margin: 0 auto; padding: 0 24px; }
         
         .hero-text h1 { font-size: clamp(3rem, 5vw, 4.2rem); font-weight: 900; line-height: 1.15; margin-bottom: 24px; color: var(--text-dark); }
         .hero-text h1 span { color: var(--accent); }
         
-        .hero-sub { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; max-width: 550px; line-height: 1.8; }
+        .hero-sub { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 40px; max-width: 550px; line-height: 1.8; }
 
         .btn-primary {
             display: inline-flex; align-items: center; gap: 10px;
@@ -96,6 +96,35 @@
         }
 
         /* =========================================
+           3 PILLARS / CORE OFFERINGS
+        ========================================= */
+        .pillars-section { padding: 40px 24px 80px; background: var(--bg-white); }
+        .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1280px; margin: 0 auto; }
+        
+        .pillar-card {
+            background: #fff; border: 1px solid var(--border); border-radius: 16px; 
+            padding: 40px 30px; transition: all 0.4s; position: relative; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+        }
+        .pillar-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(11, 67, 133, 0.08); border-color: var(--primary-light); }
+        
+        .pillar-icon {
+            width: 80px; height: 80px; border-radius: 50%; background: var(--primary-light); color: var(--primary);
+            display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 25px;
+            transition: all 0.3s;
+        }
+        .pillar-card:hover .pillar-icon { background: var(--primary); color: #fff; transform: scale(1.1); }
+        
+        /* Secondary Accent for the middle card */
+        .pillar-card.accent .pillar-icon { background: var(--accent-light); color: var(--accent); }
+        .pillar-card.accent:hover .pillar-icon { background: var(--accent); color: #fff; }
+
+        .pillar-card h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 15px; color: var(--text-dark); }
+        .pillar-card p { font-size: 15px; color: var(--text-muted); line-height: 1.7; }
+
+
+        /* =========================================
            GLOBAL SECTION STYLES
         ========================================= */
         .section { padding: 100px 0; background: var(--bg-white); }
@@ -106,7 +135,7 @@
         .sec-desc { font-size: 1.1rem; color: var(--text-muted); max-width: 700px; margin: 0 auto; }
 
         /* =========================================
-           COMPILERS SECTION (Based on screenshot)
+           COMPILERS SECTION
         ========================================= */
         .compiler-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto; }
         .tech-box {
@@ -120,7 +149,7 @@
         .tech-box span { font-size: 14px; font-weight: 700; color: var(--text-dark); }
 
         /* =========================================
-           CURRICULUM TECHNOLOGIES (Based on screenshot)
+           CURRICULUM TECHNOLOGIES
         ========================================= */
         .tech-track { margin-bottom: 50px; }
         .track-title { font-size: 20px; font-weight: 800; color: var(--text-dark); margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
@@ -137,16 +166,6 @@
         .tech-icon-box:hover { border-color: var(--primary); box-shadow: 0 4px 15px rgba(11, 67, 133, 0.08); transform: translateY(-3px); }
         .tech-icon-box i { font-size: 32px; margin-bottom: 10px; }
         .tech-icon-box span { font-size: 13px; font-weight: 600; color: var(--text-dark); }
-
-        /* =========================================
-           METHODOLOGY SECTION
-        ========================================= */
-        .method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .method-box { background: var(--bg-white); padding: 40px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: all 0.3s; }
-        .method-box:hover { box-shadow: 0 15px 30px rgba(0,0,0,0.08); transform: translateY(-5px); border-color: var(--accent-light); }
-        .method-icon { width: 60px; height: 60px; border-radius: 12px; background: var(--primary-light); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; }
-        .method-box h4 { font-size: 1.25rem; margin-bottom: 15px; }
-        .method-box p { color: var(--text-muted); font-size: 15px; }
 
         /* =========================================
            FOOTER
@@ -176,8 +195,8 @@
         @media (max-width: 1024px) {
             .hero-grid { grid-template-columns: 1fr; text-align: center; }
             .hero-image-wrap { margin-top: 40px; }
+            .pillars-grid { grid-template-columns: 1fr; }
             .compiler-grid { grid-template-columns: repeat(3, 1fr); }
-            .method-grid { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 640px) {
@@ -196,7 +215,7 @@
                 <div class="brand-text">EasyLearn<span>.</span></div>
             </a>
             <div class="nav-links">
-                <a href="#about" class="nav-link">Methodology</a>
+                <a href="#offerings" class="nav-link">Our Offerings</a>
                 <a href="#curriculum" class="nav-link">Curriculum</a>
                 <a href="{% url 'login' %}" class="btn-nav">Portal</a>
             </div>
@@ -208,19 +227,54 @@
         <div class="hero-grid">
             <div class="hero-text">
                 <h1>Code your way to a<br><span>Top Tech Career.</span></h1>
-                <p class="hero-sub">We bring rigorous, Silicon Valley standard technical training directly to engineering college campuses across India. Master Full Stack Development and crack top-tier product companies.</p>
-                <a href="#curriculum" class="btn-primary">Explore Curriculum</a>
+                <p class="hero-sub">We specialize in comprehensive technical education. Whether you want to learn from home, train at your college campus, or secure a top-tier tech job, we have you covered.</p>
+                <a href="#offerings" class="btn-primary">Explore Our Programs</a>
             </div>
             
             <div class="hero-image-wrap">
-                <!-- Using a high-quality placeholder image for now, keeping it clean -->
                 <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Students learning to code">
             </div>
         </div>
     </section>
 
+    <!-- 3 CORE PILLARS (Online, Campus, Placement) -->
+    <section class="pillars-section" id="offerings">
+        <div class="sec-header">
+            <h2 class="sec-title">What We Provide</h2>
+            <p class="sec-desc">Comprehensive pathways to launch your career in the IT industry.</p>
+        </div>
+        <div class="pillars-grid">
+            <!-- Online Training -->
+            <div class="pillar-card">
+                <div class="pillar-icon">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+                <h3>Online Training</h3>
+                <p>Master Full Stack Development from anywhere. Our interactive, live online classes are led by corporate experts and feature 100% hands-on coding assignments.</p>
+            </div>
+            
+            <!-- Campus Training -->
+            <div class="pillar-card accent">
+                <div class="pillar-icon">
+                    <i class="fa-solid fa-school"></i>
+                </div>
+                <h3>Campus Training</h3>
+                <p>We bring Silicon Valley standards directly to your engineering college. Intensive, offline bootcamps integrated seamlessly with your academic calendar.</p>
+            </div>
+            
+            <!-- Placements -->
+            <div class="pillar-card">
+                <div class="pillar-icon">
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <h3>Placements</h3>
+                <p>End-to-end career support. From Git portfolio building to unlimited mock interviews, we stay with you until you secure your offer letter from our network of hiring partners.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- COMPILERS SECTION -->
-    <section class="section">
+    <section class="section light">
         <div class="container">
             <div class="sec-header">
                 <h2 class="sec-title">We are equipped with 12 Compilers</h2>
@@ -244,7 +298,7 @@
     </section>
 
     <!-- CURRICULUM GRID -->
-    <section class="section light" id="curriculum">
+    <section class="section" id="curriculum">
         <div class="container">
             <div class="sec-header">
                 <span class="sec-tag">Curriculum</span>
@@ -286,34 +340,6 @@
         </div>
     </section>
 
-    <!-- METHODOLOGY -->
-    <section class="section" id="about">
-        <div class="container">
-            <div class="sec-header">
-                <span class="sec-tag">Why Choose Us</span>
-                <h2 class="sec-title">Our Learning Methodology</h2>
-            </div>
-            
-            <div class="method-grid">
-                <div class="method-box">
-                    <div class="method-icon"><i class="fas fa-laptop-code"></i></div>
-                    <h4>Industry-aligned Curriculum</h4>
-                    <p>We teach current tech stacks. We update our syllabus every 6 months to match changing industry hiring requirements.</p>
-                </div>
-                <div class="method-box">
-                    <div class="method-icon"><i class="fas fa-users-cog"></i></div>
-                    <h4>Expert Corporate Trainers</h4>
-                    <p>You learn exclusively from senior developers actively working in top tech companies who bring real-world context to classes.</p>
-                </div>
-                <div class="method-box">
-                    <div class="method-icon"><i class="fas fa-project-diagram"></i></div>
-                    <h4>Project-Based Evaluation</h4>
-                    <p>Our students are evaluated on their ability to build, debug, and deploy major full-stack web applications to live servers.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-grid">
@@ -328,8 +354,8 @@
             <div>
                 <h4 class="ft-title">Platform</h4>
                 <div class="ft-links">
-                    <a href="#about">Methodology</a>
-                    <a href="#curriculum">Our Bootcamps</a>
+                    <a href="#offerings">Our Offerings</a>
+                    <a href="#curriculum">Curriculum</a>
                 </div>
             </div>
             
