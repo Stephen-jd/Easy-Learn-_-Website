@@ -31,11 +31,11 @@
   --text:        #111827;
   --muted:       #6B7280;
   --border:      #DDE8F8;
-  --radius:      10px;
-  --radius-lg:   18px;
-  --shadow:      0 2px 12px rgba(11,67,133,.08);
-  --shadow-md:   0 6px 24px rgba(11,67,133,.12);
-  --shadow-lg:   0 16px 48px rgba(11,67,133,.15);
+  --radius:      12px;
+  --radius-lg:   24px;
+  --shadow:      0 4px 20px rgba(11,67,133,.08);
+  --shadow-md:   0 8px 32px rgba(11,67,133,.12);
+  --shadow-lg:   0 24px 64px rgba(11,67,133,.15);
 }
 
 /* =========================================================
@@ -43,7 +43,7 @@
 ========================================================= */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; line-height: 1.6; }
+body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--off-white); overflow-x: hidden; line-height: 1.6; }
 h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.15; }
 a { text-decoration: none; color: inherit; }
 img { max-width: 100%; display: block; }
@@ -64,22 +64,21 @@ ul { list-style: none; }
   opacity: .15; pointer-events: none;
 }
 @keyframes logoIn {
-  0%   { transform: scale(.05) rotate(-15deg); opacity: 0; filter: blur(20px); }
-  65%  { transform: scale(1.1) rotate(3deg);  opacity: 1; filter: blur(0); }
-  100% { transform: scale(1) rotate(0);        opacity: 1; }
+  0%   { transform: scale(.8); opacity: 0; filter: blur(20px); }
+  100% { transform: scale(1); opacity: 1; filter: blur(0); }
 }
-@keyframes logoOut  { to { transform: scale(3); opacity: 0; filter: blur(12px); } }
+@keyframes logoOut  { to { transform: scale(1.5); opacity: 0; filter: blur(12px); } }
 @keyframes fadeUpIn { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 @keyframes splashFade { to { opacity: 0; } }
 
 .sp-circle {
-  width: 150px; height: 150px; border-radius: 50%;
+  width: 140px; height: 140px; border-radius: 24px;
   background: var(--white); padding: 14px;
-  box-shadow: 0 0 0 10px rgba(255,118,5,.2), 0 0 0 20px rgba(255,118,5,.07), 0 28px 72px rgba(0,0,0,.5);
-  animation: logoIn 1.2s cubic-bezier(.34,1.56,.64,1) .1s both;
+  box-shadow: 0 24px 64px rgba(0,0,0,.4);
+  animation: logoIn 1s cubic-bezier(.16, 1, .3, 1) .1s both;
   position: relative; z-index: 1;
 }
-.sp-circle img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+.sp-circle img { width: 100%; height: 100%; object-fit: contain; border-radius: 12px; }
 .sp-circle.out { animation: logoOut .5s ease forwards; }
 
 .sp-title {
@@ -111,1168 +110,725 @@ ul { list-style: none; }
 .ann-bar a { color: #ffd199; font-weight: 700; border-bottom: 1px dotted rgba(255,209,153,.5); }
 
 /* =========================================================
-   NAVBAR  — fully working sticky nav
+   NAVBAR
 ========================================================= */
 .navbar {
   position: sticky; top: 0; z-index: 900; width: 100%;
   background: rgba(255,255,255,.97);
-  border-bottom: 1.5px solid var(--border);
+  border-bottom: 1px solid var(--border);
   backdrop-filter: blur(14px);
   transition: box-shadow .3s;
 }
-.navbar.scrolled { box-shadow: 0 4px 28px rgba(11,67,133,.12); }
+.navbar.scrolled { box-shadow: 0 4px 28px rgba(11,67,133,.08); }
 
 .nav-inner {
-  max-width: 1180px; margin: 0 auto; padding: 0 28px;
-  height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  max-width: 1280px; margin: 0 auto; padding: 0 28px;
+  height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px;
 }
 
-/* Brand */
 .nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-.nav-brand img { width: 46px; height: 46px; object-fit: contain; }
-.nav-brand-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 800; }
+.nav-brand img { width: 42px; height: 42px; object-fit: contain; }
+.nav-brand-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; }
 .nav-brand-text .b { color: var(--blue); }
 .nav-brand-text .o { color: var(--orange); }
 
-/* Desktop Links — always visible on desktop */
 .nav-links { display: flex; align-items: center; gap: 4px; }
 .nav-links a {
-  font-size: 14.5px; font-weight: 500; color: var(--muted);
-  padding: 8px 16px; border-radius: var(--radius); transition: all .2s; white-space: nowrap;
+  font-size: 14.5px; font-weight: 600; color: var(--muted);
+  padding: 8px 18px; border-radius: var(--radius); transition: all .2s; white-space: nowrap;
 }
 .nav-links a:hover { color: var(--blue); background: var(--blue-pale); }
 
-/* Login button */
 .nav-login {
-  display: inline-flex; align-items: center; gap: 7px;
-  background: linear-gradient(135deg, var(--blue), var(--blue-mid));
-  color: var(--white) !important; font-size: 14.5px; font-weight: 700;
-  padding: 10px 24px; border-radius: var(--radius);
-  box-shadow: 0 4px 16px rgba(11,67,133,.25); flex-shrink: 0;
-  transition: all .25s;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--navy); color: var(--white) !important; 
+  font-size: 14.5px; font-weight: 700;
+  padding: 12px 28px; border-radius: 50px;
+  transition: all .25s; flex-shrink: 0;
 }
-.nav-login:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(11,67,133,.35); }
+.nav-login:hover { background: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(11,67,133,.25); }
 
-/* Hamburger — HIDDEN on desktop */
 .hamburger {
   display: none; background: none; border: none; cursor: pointer; padding: 6px; flex-shrink: 0;
 }
 .hamburger span {
-  display: block; width: 24px; height: 2.5px;
+  display: block; width: 24px; height: 2px;
   background: var(--navy); border-radius: 2px; margin: 5px 0;
   transition: all .3s ease;
 }
-.hamburger.active span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .hamburger.active span:nth-child(2) { opacity: 0; }
-.hamburger.active span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+.hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Mobile drawer — completely hidden until .open on small screens only */
-.mobile-drawer {
-  display: none; /* hidden by default everywhere */
-}
+.mobile-drawer { display: none; }
 
 /* =========================================================
-   HERO SECTION
+   HERO SECTION (Trendy Layout)
 ========================================================= */
 .hero {
   position: relative; overflow: hidden;
   background: var(--navy);
-  min-height: 92vh; display: flex; align-items: center;
+  min-height: 90vh; display: flex; align-items: center;
+  padding: 120px 0 80px;
 }
 .hero-bg {
   position: absolute; inset: 0;
   background: url("{% static 'core/images/hero_bg.png' %}") center/cover no-repeat;
-  opacity: .22;
+  opacity: .15;
 }
 .hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(7,22,64,.94) 0%, rgba(11,67,133,.78) 55%, rgba(255,118,5,.18) 100%);
+  background: radial-gradient(circle at 80% 20%, rgba(255,118,5,.15) 0%, transparent 40%),
+              radial-gradient(circle at 20% 80%, rgba(11,67,133,.4) 0%, transparent 50%);
 }
-.hero-glow {
-  position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none;
-}
-.hg-1 { width: 500px; height: 500px; background: var(--blue-mid); opacity: .25; top: -150px; right: -80px; animation: drift1 10s ease-in-out infinite alternate; }
-.hg-2 { width: 350px; height: 350px; background: var(--orange); opacity: .12; bottom: -80px; left: -60px; animation: drift1 14s ease-in-out 3s infinite alternate; }
-@keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(30px,-30px) scale(1.1); } }
 
 .hero-content {
   position: relative; z-index: 2;
-  max-width: 1180px; margin: 0 auto; padding: 90px 28px;
-  display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 72px; align-items: center;
+  max-width: 1280px; margin: 0 auto; padding: 0 28px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
 }
 
-/* Hero text */
 .hero-label {
-  display: inline-flex; align-items: center; gap: 9px;
-  background: rgba(255,118,5,.15); border: 1px solid rgba(255,118,5,.35);
-  color: #ffd199; font-size: 13px; font-weight: 600;
-  padding: 7px 18px; border-radius: 50px; margin-bottom: 26px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+  backdrop-filter: blur(12px);
+  color: var(--white); font-size: 13px; font-weight: 600;
+  padding: 8px 20px; border-radius: 50px; margin-bottom: 28px;
 }
 .hero-label .live-dot {
   width: 8px; height: 8px; border-radius: 50%; background: var(--orange);
-  animation: livePulse 1.4s infinite;
+  box-shadow: 0 0 12px var(--orange);
+  animation: livePulse 2s infinite;
 }
-@keyframes livePulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+@keyframes livePulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
 
 .hero h1 {
-  font-size: clamp(2.3rem, 4.8vw, 3.8rem); font-weight: 900;
-  color: var(--white); letter-spacing: -1px; margin-bottom: 22px;
+  font-size: clamp(2.5rem, 5vw, 4.2rem); font-weight: 900;
+  color: var(--white); letter-spacing: -1.5px; margin-bottom: 24px; line-height: 1.1;
 }
-.hero h1 .txt-orange { color: var(--orange); }
-.hero h1 .txt-blue-lt {
-  background: linear-gradient(90deg, #60a5fa, #93c5fd);
+.hero h1 .txt-gradient {
+  background: linear-gradient(135deg, #fff, #93c5fd);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
-.hero-desc { font-size: 1.05rem; color: rgba(255,255,255,.72); max-width: 490px; line-height: 1.78; margin-bottom: 38px; }
+.hero-desc { font-size: 1.1rem; color: rgba(255,255,255,.65); max-width: 520px; line-height: 1.8; margin-bottom: 40px; }
 
-.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 46px; }
-.btn-hero-orange {
-  display: inline-flex; align-items: center; gap: 9px;
-  background: linear-gradient(135deg, var(--orange), var(--orange-light));
-  color: var(--white); font-size: 15.5px; font-weight: 700;
-  padding: 14px 34px; border-radius: var(--radius);
-  box-shadow: 0 6px 24px rgba(255,118,5,.38); transition: all .25s;
+.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 48px; }
+.btn-hero-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--white); color: var(--navy);
+  font-size: 15px; font-weight: 700;
+  padding: 16px 36px; border-radius: 50px;
+  transition: all .25s;
 }
-.btn-hero-orange:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255,118,5,.5); }
-.btn-hero-outline {
-  display: inline-flex; align-items: center; gap: 9px;
-  border: 2px solid rgba(255,255,255,.35); color: var(--white);
-  font-size: 15.5px; font-weight: 600; padding: 13px 32px; border-radius: var(--radius);
-  backdrop-filter: blur(4px); transition: all .25s;
+.btn-hero-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255,255,255,.15); }
+.btn-hero-secondary {
+  display: inline-flex; align-items: center; gap: 10px;
+  border: 1px solid rgba(255,255,255,.2); color: var(--white);
+  font-size: 15px; font-weight: 600; padding: 15px 36px; border-radius: 50px;
+  background: rgba(255,255,255,.03); backdrop-filter: blur(10px); transition: all .25s;
 }
-.btn-hero-outline:hover { background: rgba(255,255,255,.1); border-color: var(--white); }
+.btn-hero-secondary:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.4); }
 
-/* Social proof */
-.hero-proof { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-.proof-avatars { display: flex; }
-.proof-avatars span {
-  width: 36px; height: 36px; border-radius: 50%;
-  border: 2.5px solid rgba(255,255,255,.6);
-  background: linear-gradient(135deg, var(--blue-mid), var(--orange));
-  display: flex; align-items: center; justify-content: center;
-  color: var(--white); font-size: 11px; font-weight: 800;
-  margin-left: -10px; font-family: 'Space Grotesk', sans-serif;
-}
-.proof-avatars span:first-child { margin-left: 0; }
-.proof-text { font-size: 13.5px; color: rgba(255,255,255,.72); }
-.proof-text strong { color: var(--white); }
+.hero-stats-row { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; border-top: 1px solid rgba(255,255,255,.1); padding-top: 32px; }
+.hs-item { display: flex; flex-direction: column; gap: 4px; }
+.hs-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--white); }
+.hs-val span { color: var(--orange); }
+.hs-lbl { font-size: 13px; color: rgba(255,255,255,.5); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
 
-/* Hero visual */
-.hero-visual { display: flex; align-items: center; justify-content: center; position: relative; }
-.logo-ring-outer {
-  width: 380px; height: 380px; border-radius: 50%;
-  border: 1.5px dashed rgba(255,118,5,.28);
-  display: flex; align-items: center; justify-content: center; position: relative;
-  animation: spin 30s linear infinite;
+/* Trendy Hero Visual (No rotating rings) */
+.hero-visual {
+  position: relative; height: 100%; display: flex; align-items: center; justify-content: center;
 }
-.logo-ring-inner {
-  width: 290px; height: 290px; border-radius: 50%;
-  border: 1.5px dashed rgba(255,255,255,.15);
-  display: flex; align-items: center; justify-content: center;
-  animation: spin 18s linear reverse infinite;
+.bento-hero {
+  position: relative; width: 100%; max-width: 500px; aspect-ratio: 1;
 }
-@keyframes spin { to { transform: rotate(360deg); } }
-.hero-logo-box {
-  width: 190px; height: 190px; border-radius: 50%;
-  background: var(--white); padding: 16px;
-  box-shadow: 0 0 0 14px rgba(255,118,5,.12), 0 0 0 28px rgba(255,118,5,.06), 0 28px 72px rgba(0,0,0,.45);
-  animation: floatY 4s ease-in-out infinite alternate;
+.bh-card {
+  position: absolute; background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(24px);
+  border-radius: 24px; display: flex; flex-direction: column; justify-content: center;
+  box-shadow: 0 24px 64px rgba(0,0,0,.4);
+  transition: transform .5s cubic-bezier(.22,1,.36,1);
 }
-@keyframes floatY { from { transform: translateY(0); } to { transform: translateY(-18px); } }
-.hero-logo-box img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+.bh-card:hover { transform: translateY(-10px); }
+.bh-main {
+  width: 280px; height: 280px; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  align-items: center; padding: 32px; z-index: 2;
+  background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.01));
+}
+.bh-main img { width: 120px; height: 120px; object-fit: contain; margin-bottom: 24px; filter: drop-shadow(0 12px 24px rgba(255,255,255,.1)); }
+.bh-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--white); }
+.bh-sub { font-size: 13px; color: rgba(255,255,255,.6); margin-top: 4px; }
 
-/* Floating stat chips */
-.stat-chip {
-  position: absolute; background: var(--white); border-radius: 14px;
-  padding: 12px 18px; box-shadow: 0 8px 32px rgba(0,0,0,.22);
-  display: flex; align-items: center; gap: 12px; white-space: nowrap;
-  animation: chipFloat 3.5s ease-in-out infinite alternate;
+.bh-float-1 {
+  width: 180px; height: 140px; top: 10%; right: -5%; z-index: 3;
+  padding: 24px; align-items: flex-start;
+  animation: floatCard 6s ease-in-out infinite alternate;
 }
-@keyframes chipFloat { from{transform:translateY(0)} to{transform:translateY(-8px)} }
-.chip-icon {
-  width: 38px; height: 38px; border-radius: 9px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; font-size: 17px;
+.bh-float-2 {
+  width: 200px; height: 120px; bottom: 10%; left: -10%; z-index: 3;
+  padding: 20px 24px; align-items: flex-start;
+  animation: floatCard 8s ease-in-out 1s infinite alternate;
 }
-.chip-val { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 800; color: var(--navy); }
-.chip-lab { font-size: 11px; color: var(--muted); font-weight: 500; }
-.ch1 { top: 2%;  left: -55px; animation-delay: 0s; }
-.ch2 { bottom: 15%; left: -45px; animation-delay: .8s; }
-.ch3 { top: 8%;  right: -55px; animation-delay: .4s; }
-.ch4 { bottom: 8%; right: -40px; animation-delay: 1.2s; }
+@keyframes floatCard { from{transform:translateY(0)} to{transform:translateY(-15px)} }
 
-/* =========================================================
-   STATS BAR  — Reference style: dark bg, huge white numbers
-========================================================= */
-.stats-bar {
-  background: var(--dark);
-  position: relative; overflow: hidden;
+.bh-icon-wrap {
+  width: 42px; height: 42px; border-radius: 12px; background: rgba(255,118,5,.15);
+  display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--orange);
+  margin-bottom: 12px;
 }
-.stats-bar::before {
-  content: ''; position: absolute; inset: 0;
-  background: url("{% static 'core/images/stats_bg.png' %}") center/cover;
-  opacity: .18;
-}
-.stats-bar-inner {
-  position: relative; z-index: 1;
-  max-width: 1180px; margin: 0 auto;
-  display: grid; grid-template-columns: repeat(4,1fr);
-}
-.stat-cell {
-  padding: 52px 28px; text-align: center;
-  border-right: 1px solid rgba(255,255,255,.06);
-  transition: background .3s;
-}
-.stat-cell:last-child { border-right: none; }
-.stat-cell:hover { background: rgba(255,255,255,.03); }
-.stat-number {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(2.4rem,4vw,3.5rem); font-weight: 900;
-  color: var(--white); line-height: 1; margin-bottom: 10px;
-  display: flex; align-items: baseline; justify-content: center; gap: 2px;
-}
-.stat-number .count { display: inline-block; }
-.stat-number .suffix { font-size: .65em; font-weight: 800; }
-.stat-label {
-  font-size: 12px; font-weight: 700; color: var(--orange);
-  text-transform: uppercase; letter-spacing: 2px;
-}
+.bh-float-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--white); }
+.bh-float-lbl { font-size: 12px; color: rgba(255,255,255,.5); font-weight: 500; }
 
 /* =========================================================
    SECTION COMMONS
 ========================================================= */
-section { padding: 90px 28px; }
-.container { max-width: 1180px; margin: 0 auto; }
+section { padding: 120px 28px; }
+.container { max-width: 1280px; margin: 0 auto; }
 .sec-tag {
-  display: inline-block;
-  background: var(--blue-pale); color: var(--blue);
-  border: 1px solid rgba(11,67,133,.15);
-  font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
-  padding: 6px 16px; border-radius: 50px; margin-bottom: 14px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--white); color: var(--blue);
+  border: 1px solid var(--border); box-shadow: var(--shadow);
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+  padding: 8px 20px; border-radius: 50px; margin-bottom: 20px;
 }
-.sec-title { font-size: clamp(1.9rem,3.5vw,2.6rem); font-weight: 800; color: var(--navy); margin-bottom: 14px; }
-.sec-sub { font-size: 1rem; color: var(--muted); max-width: 540px; line-height: 1.72; }
-.sec-head { margin-bottom: 52px; }
-.sec-head.center { text-align: center; }
-.sec-head.center .sec-sub { margin: 0 auto; }
+.sec-title { font-size: clamp(2rem,4vw,3.2rem); font-weight: 800; color: var(--navy); margin-bottom: 18px; letter-spacing: -1px; }
+.sec-sub { font-size: 1.1rem; color: var(--muted); max-width: 600px; line-height: 1.7; }
+.sec-head { margin-bottom: 64px; }
+.sec-head.center { text-align: center; display: flex; flex-direction: column; align-items: center; }
 
 /* =========================================================
-   COURSES SECTION
+   TRENDY BENTO GRID (Replaces old Why/How sections)
 ========================================================= */
-.courses-sec {
-  background: var(--white); position: relative; overflow: hidden;
+.bento-sec { background: var(--off-white); }
+.bento-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 280px; gap: 24px;
 }
-.courses-sec::before {
-  content: ''; position: absolute; inset: 0;
-  background: url("{% static 'core/images/course_bg.png' %}") center/cover;
-  opacity: .05; pointer-events: none;
+.bento-card {
+  background: var(--white); border: 1px solid var(--border); border-radius: 32px;
+  padding: 40px; position: relative; overflow: hidden;
+  box-shadow: 0 4px 20px rgba(11,67,133,.04);
+  display: flex; flex-direction: column; justify-content: space-between;
+  transition: all .4s cubic-bezier(.22,1,.36,1);
 }
+.bento-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(11,67,133,.1); border-color: var(--blue-pale); }
+.bc-large { grid-column: span 2; grid-row: span 2; background: linear-gradient(145deg, var(--navy) 0%, var(--blue) 100%); color: var(--white); border: none; }
+.bc-wide { grid-column: span 2; }
+.bc-tall { grid-row: span 2; }
 
-/* Tab row */
+/* Inner content */
+.bc-icon {
+  width: 56px; height: 56px; border-radius: 16px; background: var(--off-white);
+  display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--blue);
+  margin-bottom: 24px; transition: transform .3s;
+}
+.bento-card:hover .bc-icon { transform: scale(1.1); }
+.bc-large .bc-icon { background: rgba(255,255,255,.1); color: var(--orange); }
+
+.bc-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--navy); margin-bottom: 12px; }
+.bc-desc { font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+.bc-large .bc-title { color: var(--white); font-size: 2.2rem; line-height: 1.2; margin-bottom: 20px; }
+.bc-large .bc-desc { color: rgba(255,255,255,.7); font-size: 16px; max-width: 80%; }
+
+.bc-stat { font-family: 'Space Grotesk', sans-serif; font-size: 3.5rem; font-weight: 900; color: var(--orange); line-height: 1; margin-bottom: 12px; }
+
+/* Decorative bg for bento */
+.bc-bg-shape { position: absolute; right: -20px; bottom: -20px; width: 200px; height: 200px; opacity: .03; pointer-events: none; }
+.bc-large .bc-bg-shape { right: -50px; bottom: -50px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,118,5,.2) 0%, transparent 70%); opacity: 1; }
+
+/* =========================================================
+   COURSES SECTION (Modernized Tab Design)
+========================================================= */
+.courses-sec { background: var(--white); }
+
 .course-tab-row {
-  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
-  margin-bottom: 42px; position: relative; z-index: 1;
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px;
 }
 .ctab {
-  display: flex; align-items: center; gap: 8px;
-  padding: 11px 22px; border-radius: 50px;
-  font-size: 14px; font-weight: 600; cursor: pointer;
-  border: 2px solid var(--border); color: var(--muted); background: var(--white);
-  transition: all .28s; white-space: nowrap;
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 28px; border-radius: 50px;
+  font-size: 14.5px; font-weight: 700; cursor: pointer;
+  border: 1px solid var(--border); color: var(--muted); background: var(--off-white);
+  transition: all .3s; white-space: nowrap;
 }
-.ctab i { font-size: 14px; }
-.ctab:hover { border-color: var(--blue-light); color: var(--blue); }
+.ctab i { font-size: 16px; }
+.ctab:hover { border-color: var(--blue-light); color: var(--blue); background: var(--white); }
 .ctab.active {
-  background: linear-gradient(135deg, var(--blue), var(--blue-mid));
-  color: var(--white); border-color: transparent;
-  box-shadow: 0 6px 20px rgba(11,67,133,.3);
-  transform: translateY(-2px);
+  background: var(--navy); color: var(--white); border-color: var(--navy);
+  box-shadow: 0 8px 24px rgba(7,22,64,.2); transform: translateY(-2px);
 }
 
-/* Course panels */
-.course-panels-wrap { position: relative; z-index: 1; }
+.course-panels-wrap { position: relative; }
 .cpanel {
   display: none;
-  border: 1.5px solid var(--border); border-radius: var(--radius-lg);
+  border: 1px solid var(--border); border-radius: 32px;
   background: var(--white); overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
 }
 .cpanel.active {
-  display: grid; grid-template-columns: 1.15fr 0.85fr;
-  animation: slidePanel .4s cubic-bezier(.22,1,.36,1) both;
+  display: grid; grid-template-columns: 1fr 380px;
+  animation: fadeScale .5s cubic-bezier(.22,1,.36,1) both;
 }
-@keyframes slidePanel {
-  from { opacity: 0; transform: translateX(36px) scale(.98); }
+@keyframes fadeScale {
+  from { opacity: 0; transform: scale(.98) translateY(20px); }
   to   { opacity: 1; transform: none; }
 }
 
-/* Left panel */
-.cp-left { padding: 44px 46px; border-right: 1.5px solid var(--border); position: relative; }
-.cp-left::before {
-  content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
-  background: linear-gradient(180deg, var(--blue), var(--orange));
-}
+.cp-left { padding: 56px; }
 .cp-badge {
-  display: inline-flex; align-items: center; gap: 7px;
-  background: var(--orange-pale); border: 1px solid rgba(255,118,5,.22);
-  color: var(--orange); font-size: 12px; font-weight: 700;
-  padding: 5px 14px; border-radius: 50px; margin-bottom: 18px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--off-white); border: 1px solid var(--border);
+  color: var(--orange); font-size: 12.5px; font-weight: 700;
+  padding: 8px 18px; border-radius: 50px; margin-bottom: 24px;
 }
-.cp-title { font-size: 1.75rem; font-weight: 800; color: var(--navy); margin-bottom: 7px; }
-.cp-line2 { font-size: 1rem; color: var(--blue-mid); font-weight: 600; margin-bottom: 16px; }
-.cp-desc { font-size: 14.5px; color: var(--muted); line-height: 1.72; margin-bottom: 28px; }
+.cp-title { font-size: 2.2rem; font-weight: 800; color: var(--navy); margin-bottom: 12px; letter-spacing: -.5px; }
+.cp-line2 { font-size: 1.1rem; color: var(--blue); font-weight: 600; margin-bottom: 20px; }
+.cp-desc { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 40px; max-width: 90%; }
 
-.cp-features {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; margin-bottom: 28px;
-}
-.cp-feat { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--text); font-weight: 500; }
-.cp-feat i { color: var(--blue); font-size: 12px; flex-shrink: 0; }
+.cp-features { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 32px; margin-bottom: 40px; }
+.cp-feat { display: flex; align-items: center; gap: 12px; font-size: 14.5px; color: var(--text); font-weight: 500; }
+.cp-feat i { color: var(--orange); font-size: 14px; flex-shrink: 0; }
 
-.cp-meta {
-  display: flex; flex-wrap: wrap; gap: 16px;
-  background: var(--blue-pale); border-radius: 10px; padding: 16px 20px; margin-bottom: 28px;
-}
-.cp-meta-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
-.cp-meta-item i { color: var(--blue); font-size: 12px; }
-.cp-meta-item strong { color: var(--navy); font-weight: 700; }
-
-.cp-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.cp-btns { display: flex; gap: 16px; flex-wrap: wrap; }
 .btn-enroll {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: linear-gradient(135deg, var(--blue), var(--blue-mid));
-  color: var(--white); font-size: 14.5px; font-weight: 700;
-  padding: 13px 28px; border-radius: var(--radius);
-  box-shadow: 0 4px 16px rgba(11,67,133,.28); transition: all .25s;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--blue); color: var(--white); font-size: 15px; font-weight: 700;
+  padding: 16px 36px; border-radius: 50px;
+  box-shadow: 0 8px 24px rgba(11,67,133,.25); transition: all .25s;
 }
-.btn-enroll:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(11,67,133,.4); }
-.btn-contact {
-  display: inline-flex; align-items: center; gap: 8px;
-  border: 2px solid var(--blue); color: var(--blue);
-  font-size: 14.5px; font-weight: 700; padding: 12px 26px; border-radius: var(--radius);
-  background: var(--white); transition: all .25s;
-}
-.btn-contact:hover { background: var(--blue); color: var(--white); }
+.btn-enroll:hover { background: var(--navy); transform: translateY(-3px); }
 
-/* Right panel */
 .cp-right {
-  background: linear-gradient(160deg, var(--navy) 0%, var(--blue) 100%);
-  padding: 40px 36px; display: flex; flex-direction: column; gap: 22px;
-  position: relative; overflow: hidden;
+  background: var(--off-white); border-left: 1px solid var(--border);
+  padding: 56px 40px; display: flex; flex-direction: column; gap: 32px;
 }
-.cp-right::before {
-  content: ''; position: absolute; top: -70px; right: -70px;
-  width: 260px; height: 260px; border-radius: 50%;
-  background: rgba(255,118,5,.18); filter: blur(60px); pointer-events: none;
-}
-.cp-r-title { font-size: 1rem; font-weight: 700; color: var(--white); position: relative; z-index: 1; }
-.cp-r-sub { font-size: 12.5px; color: rgba(255,255,255,.55); position: relative; z-index: 1; }
+.cpr-block { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); }
+.cpr-title { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
 
-.batch-box {
-  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
-  border-radius: 14px; padding: 22px; position: relative; z-index: 1;
-}
-.batch-lbl { font-size: 11px; color: rgba(255,255,255,.5); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-.batch-date { font-family: 'Space Grotesk', sans-serif; font-size: 1.7rem; font-weight: 800; color: var(--orange); margin-bottom: 4px; }
-.batch-seats { font-size: 12.5px; color: rgba(255,255,255,.65); margin-bottom: 16px; }
-.batch-row { display: flex; align-items: center; gap: 9px; font-size: 13px; color: rgba(255,255,255,.78); margin-top: 8px; }
-.batch-row i { color: var(--orange); width: 14px; text-align: center; font-size: 12px; }
+.batch-date { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; line-height: 1; }
+.batch-seats { font-size: 14px; color: var(--orange); font-weight: 600; margin-bottom: 20px; }
+.batch-row { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--muted); font-weight: 500; margin-top: 12px; }
+.batch-row i { color: var(--blue); width: 16px; text-align: center; }
 
-.cp-tech-wrap { position: relative; z-index: 1; }
-.cp-tech-title { font-size: 12.5px; font-weight: 700; color: rgba(255,255,255,.65); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
-.tech-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.tech-chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .tech-chip {
-  background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.15);
-  color: var(--white); font-size: 12.5px; font-weight: 700;
-  padding: 6px 14px; border-radius: 8px; transition: all .2s;
-  font-family: 'Space Grotesk', sans-serif;
+  background: var(--off-white); border: 1px solid var(--border);
+  color: var(--navy); font-size: 13px; font-weight: 600;
+  padding: 8px 16px; border-radius: 10px;
 }
-.tech-chip:hover { background: rgba(255,118,5,.3); border-color: var(--orange); }
-
-/* Course quick list */
-.course-quick-grid {
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 14px;
-  margin-top: 44px; position: relative; z-index: 1;
-}
-.cqc {
-  display: flex; align-items: center; gap: 14px;
-  border: 1.5px solid var(--border); border-radius: 12px;
-  padding: 18px 20px; background: var(--white); cursor: pointer;
-  transition: all .28s;
-}
-.cqc:hover, .cqc.active {
-  border-color: var(--blue); background: var(--blue-pale);
-  transform: translateY(-3px); box-shadow: var(--shadow-md);
-}
-.cqc-icon {
-  width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; font-size: 19px;
-}
-.cqc-name { font-size: 14px; font-weight: 700; color: var(--navy); }
-.cqc-dur  { font-size: 12px; color: var(--muted); margin-top: 3px; }
-.cqc-arrow { margin-left: auto; color: var(--blue); font-size: 12px; opacity: 0; transition: opacity .2s; }
-.cqc:hover .cqc-arrow, .cqc.active .cqc-arrow { opacity: 1; }
 
 /* =========================================================
-   COLLEGES — MARQUEE
+   COLLEGES — Infinite Marquee
 ========================================================= */
-.colleges-sec { background: var(--off-white); padding: 80px 0; }
-.colleges-sec .container { padding: 0 28px; }
-.marquee-outer {
-  overflow: hidden; position: relative; margin-top: 42px;
-}
-.marquee-outer::before, .marquee-outer::after {
-  content: ''; position: absolute; top: 0; height: 100%; width: 140px; z-index: 2; pointer-events: none;
-}
-.marquee-outer::before { left: 0; background: linear-gradient(90deg, var(--off-white), transparent); }
-.marquee-outer::after  { right: 0; background: linear-gradient(-90deg, var(--off-white), transparent); }
-.marquee-belt {
-  display: flex; gap: 18px; width: max-content;
-  animation: beltScroll 30s linear infinite;
-}
+.colleges-sec { padding: 80px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--white); overflow: hidden; }
+.colleges-sec .sec-head { margin-bottom: 40px; }
+.marquee-belt { display: flex; gap: 24px; width: max-content; animation: beltScroll 35s linear infinite; }
 .marquee-belt:hover { animation-play-state: paused; }
 @keyframes beltScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 .coll-card {
-  flex-shrink: 0; background: var(--white); border: 1.5px solid var(--border);
-  border-radius: 14px; padding: 18px 24px;
-  display: flex; align-items: center; gap: 16px;
-  box-shadow: var(--shadow); transition: all .28s; min-width: 210px; cursor: default;
+  background: var(--off-white); border: 1px solid var(--border); border-radius: 20px;
+  padding: 24px 32px; display: flex; align-items: center; gap: 20px;
+  min-width: 260px; transition: all .3s;
 }
-.coll-card:hover { border-color: var(--blue-light); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.coll-card:hover { border-color: var(--blue); box-shadow: var(--shadow-md); transform: translateY(-4px); background: var(--white); }
 .coll-abbr {
-  width: 46px; height: 46px; border-radius: 10px; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--blue-pale), var(--orange-pale));
+  width: 56px; height: 56px; border-radius: 14px; background: var(--white); border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 800; color: var(--blue);
-  border: 1.5px solid var(--border);
+  font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 800; color: var(--blue); box-shadow: var(--shadow);
 }
-.coll-name { font-size: 14px; font-weight: 700; color: var(--navy); }
-.coll-city { font-size: 12px; color: var(--muted); }
-
-/* =========================================================
-   HOW IT WORKS  — dark blue bg
-========================================================= */
-.how-sec {
-  background: linear-gradient(145deg, var(--navy) 0%, var(--blue) 100%);
-  position: relative; overflow: hidden;
-}
-.how-sec::before {
-  content: ''; position: absolute; inset: 0;
-  background: url("{% static 'core/images/stats_bg.png' %}") center/cover;
-  opacity: .12; pointer-events: none;
-}
-.how-sec .sec-tag { background: rgba(255,118,5,.18); color: var(--orange); border-color: rgba(255,118,5,.3); }
-.how-sec .sec-title { color: var(--white); }
-.how-sec .sec-sub { color: rgba(255,255,255,.62); }
-.how-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 26px; position: relative; z-index: 1; }
-.how-connector {
-  position: absolute; top: 50px; left: calc(12.5% + 28px); right: calc(12.5% + 28px); height: 2px;
-  background: linear-gradient(90deg, rgba(255,118,5,.25), var(--orange), rgba(255,118,5,.25)); z-index: 0;
-}
-.how-step { text-align: center; position: relative; z-index: 1; }
-.how-num {
-  width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 22px;
-  background: linear-gradient(135deg, var(--orange), var(--orange-light));
-  color: var(--white); font-family: 'Space Grotesk', sans-serif; font-size: 1.65rem; font-weight: 800;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 8px 28px rgba(255,118,5,.38); border: 4px solid rgba(255,255,255,.12);
-}
-.how-title { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 10px; }
-.how-desc  { font-size: 13.5px; color: rgba(255,255,255,.62); line-height: 1.68; }
-
-/* =========================================================
-   WHY US
-========================================================= */
-.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-.why-feats { display: flex; flex-direction: column; gap: 16px; margin-top: 30px; }
-.why-card {
-  display: flex; gap: 16px; padding: 20px 22px;
-  border: 1.5px solid var(--border); border-radius: 14px;
-  background: var(--white); transition: all .28s;
-}
-.why-card:hover {
-  border-color: var(--blue-light); box-shadow: var(--shadow-md);
-  transform: translateX(4px);
-}
-.why-card-icon {
-  width: 46px; height: 46px; border-radius: 10px; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center; font-size: 20px;
-  background: linear-gradient(135deg, var(--blue-pale), var(--orange-pale));
-}
-.why-card-title { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
-.why-card-desc  { font-size: 13.5px; color: var(--muted); line-height: 1.65; }
-
-.why-right-panel { display: flex; flex-direction: column; gap: 14px; }
-.why-logo-card {
-  border: 1.5px solid var(--border); border-radius: var(--radius-lg);
-  padding: 36px; text-align: center;
-  background: linear-gradient(135deg, var(--blue-pale), var(--orange-pale));
-  box-shadow: var(--shadow-md);
-}
-.why-logo-card img { width: 130px; height: 130px; object-fit: contain; margin: 0 auto; animation: floatY 4s ease-in-out infinite alternate; }
-.why-logo-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--navy); margin-top: 18px; }
-.why-logo-sub  { font-size: 12.5px; color: var(--muted); margin-top: 5px; }
-.why-stat-row {
-  display: flex; align-items: center; justify-content: space-between;
-  border: 1.5px solid var(--border); border-radius: 12px;
-  padding: 18px 24px; background: var(--white); transition: all .28s;
-}
-.why-stat-row:hover { border-color: var(--orange); box-shadow: 0 4px 16px rgba(255,118,5,.1); }
-.wsr-label { font-size: 14px; color: var(--muted); font-weight: 500; }
-.wsr-val   { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--blue); }
-.wsr-val.orange { color: var(--orange); }
-
-/* =========================================================
-   TESTIMONIALS
-========================================================= */
-.testi-sec { background: var(--off-white); }
-.testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
-.testi-card {
-  background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-lg);
-  padding: 28px 24px; position: relative; transition: all .28s;
-}
-.testi-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3.5px;
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  background: linear-gradient(90deg, var(--blue), var(--orange));
-}
-.testi-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-.testi-stars { color: var(--orange); font-size: 14px; margin-bottom: 14px; letter-spacing: 2px; }
-.testi-quote {
-  font-size: 14.5px; color: #374151; line-height: 1.76; margin-bottom: 22px;
-  padding-left: 14px; border-left: 3px solid var(--blue); font-style: italic;
-}
-.testi-author { display: flex; align-items: center; gap: 13px; }
-.testi-av {
-  width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px; font-weight: 800; color: var(--white);
-  font-family: 'Space Grotesk', sans-serif;
-}
-.testi-name { font-size: 14.5px; font-weight: 700; color: var(--navy); }
-.testi-role { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.coll-name { font-size: 15px; font-weight: 700; color: var(--navy); }
+.coll-city { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
 /* =========================================================
    CTA
 ========================================================= */
 .cta-sec {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 60%, var(--blue-mid) 100%);
-  padding: 90px 28px; text-align: center; position: relative; overflow: hidden;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  padding: 120px 28px; text-align: center; position: relative; overflow: hidden;
 }
 .cta-sec::before {
-  content: ''; position: absolute; inset: 0;
-  background: url("{% static 'core/images/hero_bg.png' %}") center/cover; opacity: .14;
+  content: ''; position: absolute; top: -50%; left: -10%; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,255,255,.05) 0%, transparent 60%); pointer-events: none;
 }
-.cta-sec::after {
-  content: ''; position: absolute; bottom: -90px; right: -90px;
-  width: 320px; height: 320px; border-radius: 50%;
-  background: rgba(255,118,5,.2); filter: blur(70px); pointer-events: none;
-}
-.cta-sec .container { position: relative; z-index: 1; }
-.cta-sec h2 { font-size: clamp(1.8rem,4vw,2.8rem); color: var(--white); margin-bottom: 14px; }
-.cta-sec p  { font-size: 1.05rem; color: rgba(255,255,255,.78); margin-bottom: 36px; max-width: 560px; margin-left: auto; margin-right: auto; }
+.cta-sec h2 { font-size: clamp(2.2rem,5vw,3.5rem); color: var(--white); margin-bottom: 20px; letter-spacing: -1px; }
+.cta-sec p  { font-size: 1.15rem; color: rgba(255,255,255,.7); margin-bottom: 48px; max-width: 600px; margin-left: auto; margin-right: auto; }
 .cta-btns   { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-.btn-cta-white {
-  display: inline-flex; align-items: center; gap: 9px;
-  background: var(--white); color: var(--blue);
-  font-size: 15.5px; font-weight: 800; padding: 15px 38px; border-radius: var(--radius);
-  box-shadow: 0 8px 32px rgba(0,0,0,.18); transition: all .25s;
+.btn-cta-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--white); color: var(--navy);
+  font-size: 16px; font-weight: 800; padding: 18px 42px; border-radius: 50px;
+  box-shadow: 0 12px 32px rgba(0,0,0,.2); transition: all .3s;
 }
-.btn-cta-white:hover { transform: translateY(-3px); box-shadow: 0 14px 44px rgba(0,0,0,.22); }
-.btn-cta-orange {
-  display: inline-flex; align-items: center; gap: 9px;
-  background: var(--orange); color: var(--white);
-  font-size: 15.5px; font-weight: 800; padding: 15px 38px; border-radius: var(--radius);
-  box-shadow: 0 8px 28px rgba(255,118,5,.38); transition: all .25s;
-}
-.btn-cta-orange:hover { background: var(--orange-light); transform: translateY(-3px); }
+.btn-cta-primary:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,.3); }
 
 /* =========================================================
    FOOTER
 ========================================================= */
-.footer { background: var(--dark); padding: 64px 28px 28px; }
+.footer { background: var(--dark); padding: 80px 28px 40px; }
 .footer-grid {
-  max-width: 1180px; margin: 0 auto;
-  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px;
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 64px; margin-bottom: 64px;
 }
-.fb-logo img { width: 52px; height: 52px; object-fit: contain; margin-bottom: 14px; }
-.fb-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 800; margin-bottom: 12px; }
-.fb-name .b { color: #93c5fd; }
-.fb-name .o { color: var(--orange); }
-.fb-desc { font-size: 13.5px; color: #94a3b8; line-height: 1.72; margin-bottom: 20px; }
-.fb-contacts a {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 13px; color: #94a3b8; margin-bottom: 9px; transition: color .2s;
-}
-.fb-contacts a:hover { color: var(--orange); }
-.fc-head { font-size: 12.5px; font-weight: 700; color: #e2e8f0; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 18px; }
-.fc-list { display: flex; flex-direction: column; gap: 10px; }
-.fc-list a { font-size: 13.5px; color: #94a3b8; transition: color .2s; }
+.fb-logo img { width: 56px; height: 56px; object-fit: contain; margin-bottom: 20px; background: #fff; border-radius: 12px; padding: 8px; }
+.fb-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; margin-bottom: 16px; color: #fff; }
+.fb-desc { font-size: 14.5px; color: rgba(255,255,255,.6); line-height: 1.8; margin-bottom: 24px; max-width: 90%; }
+.fc-head { font-size: 13px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 24px; }
+.fc-list { display: flex; flex-direction: column; gap: 14px; }
+.fc-list a { font-size: 14.5px; color: rgba(255,255,255,.6); transition: color .2s; }
 .fc-list a:hover { color: var(--orange); }
-.cred-panel {
-  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
-  border-radius: 10px; padding: 14px 16px; margin-top: 18px;
-  font-size: 12.5px; color: #64748b; line-height: 2.1;
-}
-.cred-panel .cl { font-size: 11px; color: #475569; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; font-weight: 700; }
-.cred-panel code { color: #93c5fd; font-size: 12px; }
-.footer-bottom {
-  max-width: 1180px; margin: 0 auto;
-  padding-top: 24px; border-top: 1px solid rgba(255,255,255,.07);
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
-  font-size: 12.5px; color: #64748b;
-}
-.footer-bottom a { color: #64748b; transition: color .2s; }
-.footer-bottom a:hover { color: var(--orange); }
 
-/* =========================================================
-   SCROLL REVEAL
-========================================================= */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
-.reveal.visible { opacity: 1; transform: none; }
+.footer-bottom {
+  max-width: 1280px; margin: 0 auto;
+  padding-top: 32px; border-top: 1px solid rgba(255,255,255,.1);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+  font-size: 13.5px; color: rgba(255,255,255,.5);
+}
+.footer-bottom a { color: rgba(255,255,255,.5); transition: color .2s; }
+.footer-bottom a:hover { color: var(--white); }
 
 /* =========================================================
    RESPONSIVE
 ========================================================= */
-@media (max-width: 1020px) {
-  .hero-content { grid-template-columns: 1fr; }
-  .hero-visual { display: none; }
+@media (max-width: 1100px) {
+  .hero-content { grid-template-columns: 1fr; text-align: center; gap: 64px; }
+  .hero-desc { margin: 0 auto 40px; }
+  .hero-btns, .hero-stats-row { justify-content: center; }
+  .hero-stats-row { border-top: none; padding-top: 0; }
+  .bento-grid { grid-template-columns: repeat(2, 1fr); }
   .cpanel.active { grid-template-columns: 1fr; }
-  .cp-right { display: none; }
-  .why-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-  .how-steps { grid-template-columns: 1fr 1fr; }
-  .how-connector { display: none; }
+  .cp-right { border-left: none; border-top: 1px solid var(--border); }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 48px; }
 }
 @media (max-width: 768px) {
-  /* HIDE desktop navlinks on mobile */
   .nav-links { display: none; }
   .hamburger { display: block; }
-
-  /* Mobile drawer — shown only when .open */
   .mobile-drawer {
-    position: fixed; inset: 72px 0 0 0;
+    position: fixed; inset: 77px 0 0 0;
     background: rgba(255,255,255,.98); backdrop-filter: blur(16px);
-    border-top: 1px solid var(--border);
-    flex-direction: column; padding: 20px 24px; gap: 6px;
-    overflow-y: auto; z-index: 899;
+    flex-direction: column; padding: 32px; gap: 12px;
+    overflow-y: auto; z-index: 899; display: none;
   }
   .mobile-drawer.open { display: flex; }
-  .mobile-drawer a {
-    font-size: 16px; font-weight: 500; color: var(--muted);
-    padding: 13px 16px; border-radius: var(--radius); display: block;
-  }
-  .mobile-drawer a:hover { background: var(--blue-pale); color: var(--blue); }
-  .mobile-drawer .nav-login { margin-top: 10px; justify-content: center; }
-
-  .stats-bar-inner { grid-template-columns: 1fr 1fr; }
-  .stat-cell { border-right: none; border-bottom: 1px solid rgba(255,255,255,.06); padding: 36px 20px; }
-  .stat-cell:nth-child(odd) { border-right: 1px solid rgba(255,255,255,.06); }
-  .stat-cell:last-child, .stat-cell:nth-last-child(2) { border-bottom: none; }
-
-  .testi-grid { grid-template-columns: 1fr; }
-  .course-quick-grid { grid-template-columns: 1fr 1fr; }
-  .cta-btns { flex-direction: column; align-items: center; }
-  .footer-grid { grid-template-columns: 1fr; }
-  .hero-btns, .hero-proof { justify-content: center; }
-  .cp-left { padding: 28px 24px; }
-}
-@media (max-width: 480px) {
-  .course-tab-row { gap: 6px; }
-  .ctab { padding: 9px 16px; font-size: 13px; }
-  .course-quick-grid { grid-template-columns: 1fr; }
+  .mobile-drawer a { font-size: 18px; font-weight: 600; color: var(--navy); padding: 12px 0; border-bottom: 1px solid var(--border); }
+  
+  .bento-grid { grid-template-columns: 1fr; grid-auto-rows: auto; }
+  .bc-large, .bc-wide, .bc-tall { grid-column: span 1; grid-row: span 1; }
+  .bento-card { padding: 32px; min-height: 280px; }
+  
+  .cp-left { padding: 32px 24px; }
   .cp-features { grid-template-columns: 1fr; }
+  .cp-right { padding: 32px 24px; }
+  
+  .footer-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- ===================== SPLASH ===================== -->
+<!-- SPLASH -->
 <div id="splash">
   <div class="sp-circle" id="spCircle">
-    <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Academy">
+    <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn">
   </div>
-  <h1 class="sp-title">Easy Learn Academy</h1>
-  <p class="sp-sub">Online Technical Training</p>
 </div>
 
-<!-- ANN BAR -->
-<div class="ann-bar">
-  <span class="tag">New Batches</span>
-  Python &nbsp;·&nbsp; Java Full Stack &nbsp;·&nbsp; Data Science starting soon
-  &nbsp;&mdash;&nbsp;
-  <a href="{% url 'trainer_signup' %}">Join as Trainer &rarr;</a>
-</div>
-
-<!-- ===================== NAVBAR ===================== -->
+<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <div class="nav-inner">
     <a href="#hero" class="nav-brand">
-      <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Academy Logo">
+      <img src="{% static 'core/images/logo.png' %}" alt="Logo">
       <span class="nav-brand-text"><span class="b">Easy</span><span class="o">Learn</span></span>
     </a>
-
-    <!-- Desktop nav links — always visible on >= 769px -->
     <div class="nav-links">
-      <a href="#courses">Courses</a>
-      <a href="#colleges">Colleges</a>
-      <a href="#how">How It Works</a>
-      <a href="#why">Why Us</a>
-      <a href="#contact">Contact</a>
+      <a href="#features">Platform</a>
+      <a href="#courses">Programs</a>
+      <a href="#colleges">Partners</a>
     </div>
-
     <a href="{% url 'login' %}" class="nav-login">
-      <i class="fa-solid fa-right-to-bracket"></i> Login
+      Portal Login <i class="fa-solid fa-arrow-right"></i>
     </a>
-
-    <button class="hamburger" id="ham" aria-label="Open menu" aria-expanded="false">
+    <button class="hamburger" id="ham">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
-<!-- Mobile drawer — outside nav, hidden by default -->
+<!-- MOBILE DRAWER -->
 <div class="mobile-drawer" id="mobDrawer">
-  <a href="#courses">Courses</a>
-  <a href="#colleges">Colleges</a>
-  <a href="#how">How It Works</a>
-  <a href="#why">Why Us</a>
-  <a href="#contact">Contact</a>
-  <a href="{% url 'login' %}" class="nav-login">
-    <i class="fa-solid fa-right-to-bracket"></i> Login
-  </a>
+  <a href="#features">Platform</a>
+  <a href="#courses">Programs</a>
+  <a href="#colleges">Partners</a>
+  <a href="{% url 'login' %}" style="color:var(--blue); border:none; margin-top:20px;">Portal Login &rarr;</a>
 </div>
 
-<!-- ===================== HERO ===================== -->
+<!-- ===================== HERO (Trendy Layout) ===================== -->
 <section class="hero" id="hero">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
-  <div class="hero-glow hg-1"></div>
-  <div class="hero-glow hg-2"></div>
 
   <div class="hero-content">
-    <!-- Text -->
+    <!-- Left Text -->
     <div>
       <div class="hero-label">
-        <span class="live-dot"></span>
-        100% Live Online &bull; No Travel Required
+        <span class="live-dot"></span> Next-Gen Tech Education
       </div>
       <h1>
-        Skill Up With<br>
-        <span class="txt-orange">Industry-Level</span><br>
-        <span class="txt-blue-lt">Tech Training</span>
+        Elevate College <br>
+        <span class="txt-gradient">Tech Training.</span>
       </h1>
       <p class="hero-desc">
-        Easy Learn Academy delivers expert-led live online technical bootcamps directly to engineering college students &mdash; structured, practical, and placement-ready.
+        The most advanced live online training platform designed exclusively for engineering institutions. Zero infrastructure, verified corporate trainers, absolute transparency.
       </p>
       <div class="hero-btns">
-        <a href="#courses" class="btn-hero-orange">
-          <i class="fa-solid fa-rocket"></i> Explore Courses
-        </a>
-        <a href="{% url 'login' %}" class="btn-hero-outline">
-          <i class="fa-solid fa-right-to-bracket"></i> Portal Login
-        </a>
+        <a href="#courses" class="btn-hero-primary">Explore Programs</a>
+        <a href="#features" class="btn-hero-secondary">View Platform</a>
       </div>
-      <div class="hero-proof">
-        <div class="proof-avatars">
-          <span>AK</span><span>PR</span><span>MS</span><span>RV</span><span>+</span>
-        </div>
-        <span class="proof-text"><strong>15,000+ students</strong> trained across 20+ colleges</span>
+      <div class="hero-stats-row">
+        <div class="hs-item"><div class="hs-val">20<span>+</span></div><div class="hs-lbl">Colleges</div></div>
+        <div class="hs-item"><div class="hs-val">15k<span>+</span></div><div class="hs-lbl">Students</div></div>
+        <div class="hs-item"><div class="hs-val">100<span>%</span></div><div class="hs-lbl">Online</div></div>
       </div>
     </div>
 
-    <!-- Visual -->
+    <!-- Right Visual: Floating Glassmorphism Cards -->
     <div class="hero-visual">
-      <div class="logo-ring-outer">
-        <div class="logo-ring-inner">
-          <div class="hero-logo-box">
-            <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Logo">
-          </div>
+      <div class="bento-hero">
+        <div class="bh-card bh-main">
+          <img src="{% static 'core/images/logo.png' %}" alt="Logo">
+          <div class="bh-title">Easy Learn</div>
+          <div class="bh-sub">EdTech Platform</div>
         </div>
-      </div>
-      <div class="stat-chip ch1">
-        <div class="chip-icon" style="background:var(--orange-pale);color:var(--orange)"><i class="fa-solid fa-school"></i></div>
-        <div><div class="chip-val">20+</div><div class="chip-lab">Partner Colleges</div></div>
-      </div>
-      <div class="stat-chip ch2">
-        <div class="chip-icon" style="background:var(--blue-pale);color:var(--blue)"><i class="fa-solid fa-graduation-cap"></i></div>
-        <div><div class="chip-val">15K+</div><div class="chip-lab">Students Trained</div></div>
-      </div>
-      <div class="stat-chip ch3">
-        <div class="chip-icon" style="background:var(--orange-pale);color:var(--orange)"><i class="fa-solid fa-laptop-code"></i></div>
-        <div><div class="chip-val">6+</div><div class="chip-lab">Programs</div></div>
-      </div>
-      <div class="stat-chip ch4">
-        <div class="chip-icon" style="background:var(--blue-pale);color:var(--blue)"><i class="fa-solid fa-wifi"></i></div>
-        <div><div class="chip-val">100%</div><div class="chip-lab">Online</div></div>
+        <div class="bh-card bh-float-1">
+          <div class="bh-icon-wrap"><i class="fa-solid fa-chart-line"></i></div>
+          <div class="bh-float-val">98%</div>
+          <div class="bh-float-lbl">Completion Rate</div>
+        </div>
+        <div class="bh-card bh-float-2">
+          <div class="bh-icon-wrap" style="background:rgba(59,130,246,.15); color:var(--blue-light)"><i class="fa-solid fa-video"></i></div>
+          <div class="bh-float-val">Live</div>
+          <div class="bh-float-lbl">Interactive Sessions</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===================== STATS BAR ===================== -->
-<div class="stats-bar">
-  <div class="stats-bar-inner">
-    <div class="stat-cell">
-      <div class="stat-number">
-        <span class="count" data-target="20">0</span><span class="suffix">+</span>
-      </div>
-      <div class="stat-label">Partner Colleges</div>
+<!-- ===================== TRENDY BENTO GRID (Platform Features) ===================== -->
+<section class="bento-sec" id="features">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-tag">The Platform</span>
+      <h2 class="sec-title">Built for Modern Education</h2>
+      <p class="sec-sub">We threw out the old playbook. Easy Learn is a streamlined, transparent, and completely online ecosystem connecting corporate experts directly to college classrooms.</p>
     </div>
-    <div class="stat-cell">
-      <div class="stat-number">
-        <span class="count" data-target="15000">0</span><span class="suffix">+</span>
+
+    <div class="bento-grid">
+      <!-- Large Featured Card -->
+      <div class="bento-card bc-large">
+        <div class="bc-bg-shape"></div>
+        <div>
+          <div class="bc-icon"><i class="fa-solid fa-globe"></i></div>
+          <div class="bc-title">100% Cloud Campus</div>
+          <div class="bc-desc">No software installations. No physical labs required. Students and trainers connect flawlessly through our optimized live delivery infrastructure from anywhere in India.</div>
+        </div>
       </div>
-      <div class="stat-label">Students Trained</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-number">
-        <span class="count" data-target="6">0</span><span class="suffix">+</span>
+
+      <!-- Stat Card -->
+      <div class="bento-card">
+        <div>
+          <div class="bc-title">Verified Experts</div>
+          <div class="bc-desc">Every session is led by working industry professionals.</div>
+        </div>
+        <div class="bc-stat">100%</div>
       </div>
-      <div class="stat-label">Online Programs</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-number">
-        <span class="count" data-target="100">0</span><span class="suffix">%</span>
+
+      <!-- Standard Card -->
+      <div class="bento-card">
+        <div class="bc-icon" style="color:var(--orange); background:var(--orange-pale)"><i class="fa-solid fa-bolt"></i></div>
+        <div>
+          <div class="bc-title">Daily Insights</div>
+          <div class="bc-desc">Real-time attendance and daily topic logging keeps everyone aligned.</div>
+        </div>
       </div>
-      <div class="stat-label">Online Delivery</div>
+
+      <!-- Wide Card -->
+      <div class="bento-card bc-wide">
+        <div>
+          <div class="bc-icon"><i class="fa-solid fa-briefcase"></i></div>
+          <div class="bc-title">Placement-Ready Curriculum</div>
+          <div class="bc-desc">Syllabi designed around current tech hiring demands, not outdated textbooks. Real projects, real code, real interviews.</div>
+        </div>
+      </div>
+
+      <!-- Standard Card -->
+      <div class="bento-card">
+        <div class="bc-icon"><i class="fa-solid fa-shield-check"></i></div>
+        <div>
+          <div class="bc-title">Secure Portal</div>
+          <div class="bc-desc">Role-based access for admins and trainers to manage cohorts securely.</div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ===================== COURSES ===================== -->
+<!-- ===================== COURSES (Sleek Tabs) ===================== -->
 <section class="courses-sec" id="courses">
   <div class="container">
     <div class="sec-head center">
-      <span class="sec-tag">Our Programs</span>
-      <h2 class="sec-title">Online Technical Training Courses</h2>
-      <p class="sec-sub">Industry-curated live online curricula delivered by verified corporate trainers</p>
+      <span class="sec-tag">Programs</span>
+      <h2 class="sec-title">Industry Curricula</h2>
     </div>
 
-    <!-- Tab Row -->
     <div class="course-tab-row">
-      <div class="ctab active" data-course="python"><i class="fa-brands fa-python"></i> Python Full Stack</div>
-      <div class="ctab" data-course="java"><i class="fa-brands fa-java"></i> Java Full Stack</div>
-      <div class="ctab" data-course="ds"><i class="fa-solid fa-chart-bar"></i> Data Science</div>
-      <div class="ctab" data-course="web"><i class="fa-brands fa-html5"></i> Web Development</div>
-      <div class="ctab" data-course="c"><i class="fa-solid fa-code"></i> C / C++</div>
-      <div class="ctab" data-course="cyber"><i class="fa-solid fa-shield-halved"></i> Cyber Security</div>
+      <div class="ctab active" data-course="python">Python Full Stack</div>
+      <div class="ctab" data-course="java">Java Full Stack</div>
+      <div class="ctab" data-course="ds">Data Science</div>
+      <div class="ctab" data-course="web">Web Dev</div>
     </div>
 
-    <!-- Panels -->
     <div class="course-panels-wrap">
-
+      
+      <!-- Python -->
       <div class="cpanel active" id="cp-python">
         <div class="cp-left">
-          <div class="cp-badge"><i class="fa-solid fa-star"></i> Most Popular</div>
-          <div class="cp-title">Python Full Stack Web Development</div>
-          <div class="cp-line2">Django Framework &bull; REST API &bull; PostgreSQL</div>
-          <div class="cp-desc">Master Python programming, Django framework, REST APIs and PostgreSQL. Build and deploy production-ready web applications from zero to full-stack in 45 days — 100% live online.</div>
+          <div class="cp-badge">Most Popular Track</div>
+          <div class="cp-title">Python Full Stack Engineering</div>
+          <div class="cp-line2">Django &bull; PostgreSQL &bull; REST APIs</div>
+          <div class="cp-desc">A rigorous 45-day bootcamp transforming students into deployment-ready backend engineers. Deep dive into OOPs, MVT architecture, and scalable database design.</div>
           <div class="cp-features">
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Python Fundamentals &amp; OOPs</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Django Framework (MVT)</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> REST API Development</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> HTML / CSS / JavaScript</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> PostgreSQL &amp; SQLite</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Deployment &amp; Git</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Live Projects &amp; Assignments</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Resume &amp; Interview Prep</div>
-          </div>
-          <div class="cp-meta">
-            <div class="cp-meta-item"><i class="fa-regular fa-clock"></i> <strong>30&ndash;45 Days</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-wifi"></i> <strong>Live Online</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-video"></i> <strong>2&ndash;3 Sessions/Day</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-file-pdf"></i> <strong>Daily Notes</strong></div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> Advanced Python OOPs</div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> Django ORM & Architecture</div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> RESTful API Construction</div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> Cloud Deployment Strategies</div>
           </div>
           <div class="cp-btns">
-            <a href="{% url 'login' %}" class="btn-enroll"><i class="fa-solid fa-right-to-bracket"></i> Enroll via Portal</a>
-            <a href="#contact" class="btn-contact"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+            <a href="{% url 'login' %}" class="btn-enroll">Access Portal</a>
           </div>
         </div>
         <div class="cp-right">
-          <div><div class="cp-r-title">Next Batch Details</div><div class="cp-r-sub">Limited seats available</div></div>
-          <div class="batch-box">
-            <div class="batch-lbl">Batch Starts</div>
-            <div class="batch-date">Aug 1, 2026</div>
-            <div class="batch-seats">20 seats left</div>
-            <div class="batch-row"><i class="fa-solid fa-wifi"></i> 100% Live Online</div>
-            <div class="batch-row"><i class="fa-regular fa-clock"></i> 2:00 PM &ndash; 5:00 PM IST</div>
-            <div class="batch-row"><i class="fa-solid fa-certificate"></i> Certificate on Completion</div>
+          <div class="cpr-block">
+            <div class="cpr-title">Upcoming Cohort</div>
+            <div class="batch-date">Aug 01</div>
+            <div class="batch-seats">20 Seats Remaining</div>
+            <div class="batch-row"><i class="fa-solid fa-video"></i> 100% Live Delivery</div>
+            <div class="batch-row"><i class="fa-solid fa-clock"></i> 2-3 Hrs / Day</div>
           </div>
-          <div class="cp-tech-wrap">
-            <div class="cp-tech-title">Tech Stack</div>
+          <div>
+            <div class="cpr-title">Tech Stack</div>
             <div class="tech-chips">
               <span class="tech-chip">Python</span><span class="tech-chip">Django</span>
-              <span class="tech-chip">JS</span><span class="tech-chip">HTML5</span>
-              <span class="tech-chip">CSS3</span><span class="tech-chip">SQL</span><span class="tech-chip">Git</span>
+              <span class="tech-chip">PostgreSQL</span><span class="tech-chip">Docker</span>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- Java -->
       <div class="cpanel" id="cp-java">
         <div class="cp-left">
-          <div class="cp-badge" style="background:var(--blue-pale);color:var(--blue);border-color:rgba(11,67,133,.2)"><i class="fa-solid fa-fire"></i> High Demand</div>
-          <div class="cp-title">Java Full Stack Web Development</div>
-          <div class="cp-line2">Spring Boot &bull; Hibernate &bull; React.js</div>
-          <div class="cp-desc">Master Core Java, Spring Boot, Hibernate and React.js. Build enterprise-grade applications and crack product company interviews with confidence &mdash; live online in 45 days.</div>
+          <div class="cp-badge" style="color:var(--blue)">Enterprise Standard</div>
+          <div class="cp-title">Java Full Stack Architecture</div>
+          <div class="cp-line2">Spring Boot &bull; React &bull; Microservices</div>
+          <div class="cp-desc">The ultimate enterprise developer pathway. Master the tools used by Fortune 500 companies to build resilient, scalable distributed systems.</div>
           <div class="cp-features">
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Core Java &amp; OOPs</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Advanced Java &amp; JDBC</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Spring Boot &amp; Hibernate</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> React.js Frontend</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> MySQL &amp; REST APIs</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Maven &amp; Git</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> 3+ Real Projects</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Interview Preparation</div>
-          </div>
-          <div class="cp-meta">
-            <div class="cp-meta-item"><i class="fa-regular fa-clock"></i> <strong>30&ndash;45 Days</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-wifi"></i> <strong>Live Online</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-video"></i> <strong>2&ndash;3 Sessions/Day</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-file-pdf"></i> <strong>Daily Notes</strong></div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> Java 17+ Features</div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> Spring Boot Framework</div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> React.js Frontend Integration</div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> Microservice Concepts</div>
           </div>
           <div class="cp-btns">
-            <a href="{% url 'login' %}" class="btn-enroll"><i class="fa-solid fa-right-to-bracket"></i> Enroll via Portal</a>
-            <a href="#contact" class="btn-contact"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+            <a href="{% url 'login' %}" class="btn-enroll">Access Portal</a>
           </div>
         </div>
         <div class="cp-right">
-          <div><div class="cp-r-title">Next Batch Details</div><div class="cp-r-sub">Limited seats available</div></div>
-          <div class="batch-box">
-            <div class="batch-lbl">Batch Starts</div>
-            <div class="batch-date">Aug 5, 2026</div>
-            <div class="batch-seats">18 seats left</div>
-            <div class="batch-row"><i class="fa-solid fa-wifi"></i> 100% Live Online</div>
-            <div class="batch-row"><i class="fa-regular fa-clock"></i> 3:00 PM &ndash; 6:00 PM IST</div>
-            <div class="batch-row"><i class="fa-solid fa-certificate"></i> Certificate on Completion</div>
+          <div class="cpr-block">
+            <div class="cpr-title">Upcoming Cohort</div>
+            <div class="batch-date">Aug 15</div>
+            <div class="batch-seats">15 Seats Remaining</div>
+            <div class="batch-row"><i class="fa-solid fa-video"></i> 100% Live Delivery</div>
+            <div class="batch-row"><i class="fa-solid fa-clock"></i> 2-3 Hrs / Day</div>
           </div>
-          <div class="cp-tech-wrap">
-            <div class="cp-tech-title">Tech Stack</div>
+          <div>
+            <div class="cpr-title">Tech Stack</div>
             <div class="tech-chips">
-              <span class="tech-chip">Java</span><span class="tech-chip">Spring Boot</span>
-              <span class="tech-chip">React</span><span class="tech-chip">MySQL</span><span class="tech-chip">Git</span>
+              <span class="tech-chip">Java</span><span class="tech-chip">Spring</span>
+              <span class="tech-chip">React</span><span class="tech-chip">MySQL</span>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- Data Science -->
       <div class="cpanel" id="cp-ds">
         <div class="cp-left">
-          <div class="cp-badge"><i class="fa-solid fa-chart-line"></i> Trending</div>
-          <div class="cp-title">Data Science &amp; Machine Learning</div>
-          <div class="cp-line2">Python &bull; NumPy &bull; Pandas &bull; Scikit-Learn</div>
-          <div class="cp-desc">Master data analysis, visualization and machine learning with real-world datasets. From raw data to trained models &mdash; fully live and online in 30 days.</div>
+          <div class="cp-badge" style="color:var(--orange)">High Growth Field</div>
+          <div class="cp-title">Data Science & ML</div>
+          <div class="cp-line2">Pandas &bull; Scikit-Learn &bull; Analytics</div>
+          <div class="cp-desc">Extract value from raw data. Learn statistical modeling, predictive analytics, and machine learning algorithms using industry-standard Python libraries.</div>
           <div class="cp-features">
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Python for Data Science</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> NumPy &amp; Pandas</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Matplotlib &amp; Seaborn</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Scikit-Learn &amp; ML Models</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> EDA &amp; Feature Engineering</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Regression &amp; Classification</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Real Dataset Projects</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Jupyter Notebooks</div>
-          </div>
-          <div class="cp-meta">
-            <div class="cp-meta-item"><i class="fa-regular fa-clock"></i> <strong>30 Days</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-wifi"></i> <strong>Live Online</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-video"></i> <strong>2 Sessions/Day</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-file-pdf"></i> <strong>Daily Notes</strong></div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> Exploratory Data Analysis</div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> ML Algorithms</div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> Data Visualization</div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> Real-world Datasets</div>
           </div>
           <div class="cp-btns">
-            <a href="{% url 'login' %}" class="btn-enroll"><i class="fa-solid fa-right-to-bracket"></i> Enroll via Portal</a>
-            <a href="#contact" class="btn-contact"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+            <a href="{% url 'login' %}" class="btn-enroll">Access Portal</a>
           </div>
         </div>
         <div class="cp-right">
-          <div><div class="cp-r-title">Next Batch Details</div><div class="cp-r-sub">Limited seats available</div></div>
-          <div class="batch-box">
-            <div class="batch-lbl">Batch Starts</div>
-            <div class="batch-date">Aug 10, 2026</div>
-            <div class="batch-seats">22 seats left</div>
-            <div class="batch-row"><i class="fa-solid fa-wifi"></i> 100% Live Online</div>
-            <div class="batch-row"><i class="fa-regular fa-clock"></i> 2:30 PM &ndash; 5:30 PM IST</div>
-            <div class="batch-row"><i class="fa-solid fa-certificate"></i> Certificate on Completion</div>
+          <div class="cpr-block">
+            <div class="cpr-title">Upcoming Cohort</div>
+            <div class="batch-date">Sep 01</div>
+            <div class="batch-seats">25 Seats Remaining</div>
+            <div class="batch-row"><i class="fa-solid fa-video"></i> 100% Live Delivery</div>
+            <div class="batch-row"><i class="fa-solid fa-clock"></i> 2 Hrs / Day</div>
           </div>
-          <div class="cp-tech-wrap">
-            <div class="cp-tech-title">Tech Stack</div>
+          <div>
+            <div class="cpr-title">Tech Stack</div>
             <div class="tech-chips">
-              <span class="tech-chip">Python</span><span class="tech-chip">NumPy</span>
-              <span class="tech-chip">Pandas</span><span class="tech-chip">Scikit-Learn</span><span class="tech-chip">Jupyter</span>
+              <span class="tech-chip">Python</span><span class="tech-chip">Pandas</span>
+              <span class="tech-chip">Scikit</span><span class="tech-chip">Jupyter</span>
             </div>
           </div>
         </div>
       </div>
 
+      <!-- Web Dev -->
       <div class="cpanel" id="cp-web">
         <div class="cp-left">
-          <div class="cp-badge"><i class="fa-solid fa-globe"></i> Beginner Friendly</div>
-          <div class="cp-title">Full Web Development</div>
-          <div class="cp-line2">HTML5 &bull; CSS3 &bull; JavaScript &bull; React.js</div>
-          <div class="cp-desc">Build modern responsive websites and single-page applications from scratch. Master HTML5, CSS3, JavaScript ES6+ and React &mdash; 100% live online in 30 days.</div>
+          <div class="cp-badge" style="color:var(--blue)">Creative Track</div>
+          <div class="cp-title">Modern Web Development</div>
+          <div class="cp-line2">React &bull; Next.js &bull; Tailwind</div>
+          <div class="cp-desc">Build stunning, performant user interfaces. Master the modern frontend ecosystem to create seamless web applications that users love.</div>
           <div class="cp-features">
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> HTML5 Semantic Markup</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> CSS3 Flexbox &amp; Grid</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> JavaScript ES6+</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> React.js &amp; Hooks</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> REST API Integration</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Responsive Design</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Git &amp; GitHub</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Portfolio Projects</div>
-          </div>
-          <div class="cp-meta">
-            <div class="cp-meta-item"><i class="fa-regular fa-clock"></i> <strong>21&ndash;30 Days</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-wifi"></i> <strong>Live Online</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-video"></i> <strong>2 Sessions/Day</strong></div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> Advanced JavaScript ES6+</div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> React Hooks & State Management</div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> Responsive Layouts</div>
+            <div class="cp-feat"><i class="fa-solid fa-check"></i> API Integrations</div>
           </div>
           <div class="cp-btns">
-            <a href="{% url 'login' %}" class="btn-enroll"><i class="fa-solid fa-right-to-bracket"></i> Enroll via Portal</a>
-            <a href="#contact" class="btn-contact"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+            <a href="{% url 'login' %}" class="btn-enroll">Access Portal</a>
           </div>
         </div>
         <div class="cp-right">
-          <div><div class="cp-r-title">Next Batch Details</div><div class="cp-r-sub">Limited seats available</div></div>
-          <div class="batch-box">
-            <div class="batch-lbl">Batch Starts</div>
-            <div class="batch-date">Aug 3, 2026</div>
-            <div class="batch-seats">25 seats left</div>
-            <div class="batch-row"><i class="fa-solid fa-wifi"></i> 100% Live Online</div>
-            <div class="batch-row"><i class="fa-regular fa-clock"></i> 10:00 AM &ndash; 1:00 PM IST</div>
-            <div class="batch-row"><i class="fa-solid fa-certificate"></i> Certificate on Completion</div>
+          <div class="cpr-block">
+            <div class="cpr-title">Upcoming Cohort</div>
+            <div class="batch-date">Sep 10</div>
+            <div class="batch-seats">30 Seats Remaining</div>
+            <div class="batch-row"><i class="fa-solid fa-video"></i> 100% Live Delivery</div>
+            <div class="batch-row"><i class="fa-solid fa-clock"></i> 2 Hrs / Day</div>
           </div>
-          <div class="cp-tech-wrap">
-            <div class="cp-tech-title">Tech Stack</div>
+          <div>
+            <div class="cpr-title">Tech Stack</div>
             <div class="tech-chips">
-              <span class="tech-chip">HTML5</span><span class="tech-chip">CSS3</span>
-              <span class="tech-chip">JavaScript</span><span class="tech-chip">React</span><span class="tech-chip">Git</span>
+              <span class="tech-chip">React</span><span class="tech-chip">JS</span>
+              <span class="tech-chip">CSS3</span><span class="tech-chip">Git</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="cpanel" id="cp-c">
-        <div class="cp-left">
-          <div class="cp-badge"><i class="fa-solid fa-microchip"></i> Foundation Course</div>
-          <div class="cp-title">C &amp; C++ Programming</div>
-          <div class="cp-line2">Data Structures &amp; Algorithms</div>
-          <div class="cp-desc">Build the strongest programming foundation with C and C++. Master DSA, memory management, and problem-solving &mdash; essential for placements and competitive coding.</div>
-          <div class="cp-features">
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> C Programming Basics</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> C++ OOP Concepts</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Arrays &amp; Linked Lists</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Stacks, Queues &amp; Trees</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Sorting &amp; Searching</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Pointers &amp; Memory</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> File Handling</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Problem Solving Practice</div>
-          </div>
-          <div class="cp-meta">
-            <div class="cp-meta-item"><i class="fa-regular fa-clock"></i> <strong>21 Days</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-wifi"></i> <strong>Live Online</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-video"></i> <strong>2 Sessions/Day</strong></div>
-          </div>
-          <div class="cp-btns">
-            <a href="{% url 'login' %}" class="btn-enroll"><i class="fa-solid fa-right-to-bracket"></i> Enroll via Portal</a>
-            <a href="#contact" class="btn-contact"><i class="fa-solid fa-envelope"></i> Contact Us</a>
-          </div>
-        </div>
-        <div class="cp-right">
-          <div><div class="cp-r-title">Next Batch Details</div><div class="cp-r-sub">Limited seats available</div></div>
-          <div class="batch-box">
-            <div class="batch-lbl">Batch Starts</div>
-            <div class="batch-date">Aug 8, 2026</div>
-            <div class="batch-seats">30 seats left</div>
-            <div class="batch-row"><i class="fa-solid fa-wifi"></i> 100% Live Online</div>
-            <div class="batch-row"><i class="fa-regular fa-clock"></i> 11:00 AM &ndash; 2:00 PM IST</div>
-            <div class="batch-row"><i class="fa-solid fa-certificate"></i> Certificate on Completion</div>
-          </div>
-          <div class="cp-tech-wrap">
-            <div class="cp-tech-title">Languages</div>
-            <div class="tech-chips">
-              <span class="tech-chip">C</span><span class="tech-chip">C++</span><span class="tech-chip">DSA</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cpanel" id="cp-cyber">
-        <div class="cp-left">
-          <div class="cp-badge"><i class="fa-solid fa-shield-halved"></i> Growing Field</div>
-          <div class="cp-title">Cyber Security Fundamentals</div>
-          <div class="cp-line2">Ethical Hacking &bull; Network Security &bull; Linux</div>
-          <div class="cp-desc">Learn ethical hacking, network security, vulnerability assessment, Linux and real-world cybersecurity skills that organisations urgently need. Fully live, fully online.</div>
-          <div class="cp-features">
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Networking Fundamentals</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Linux &amp; Terminal</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Ethical Hacking Basics</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Vulnerability Assessment</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Web Application Security</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Cryptography Basics</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Kali Linux Tools</div>
-            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Hands-On Labs</div>
-          </div>
-          <div class="cp-meta">
-            <div class="cp-meta-item"><i class="fa-regular fa-clock"></i> <strong>21 Days</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-wifi"></i> <strong>Live Online</strong></div>
-            <div class="cp-meta-item"><i class="fa-solid fa-video"></i> <strong>2 Sessions/Day</strong></div>
-          </div>
-          <div class="cp-btns">
-            <a href="{% url 'login' %}" class="btn-enroll"><i class="fa-solid fa-right-to-bracket"></i> Enroll via Portal</a>
-            <a href="#contact" class="btn-contact"><i class="fa-solid fa-envelope"></i> Contact Us</a>
-          </div>
-        </div>
-        <div class="cp-right">
-          <div><div class="cp-r-title">Next Batch Details</div><div class="cp-r-sub">Limited seats available</div></div>
-          <div class="batch-box">
-            <div class="batch-lbl">Batch Starts</div>
-            <div class="batch-date">Aug 12, 2026</div>
-            <div class="batch-seats">28 seats left</div>
-            <div class="batch-row"><i class="fa-solid fa-wifi"></i> 100% Live Online</div>
-            <div class="batch-row"><i class="fa-regular fa-clock"></i> 4:00 PM &ndash; 7:00 PM IST</div>
-            <div class="batch-row"><i class="fa-solid fa-certificate"></i> Certificate on Completion</div>
-          </div>
-          <div class="cp-tech-wrap">
-            <div class="cp-tech-title">Tools</div>
-            <div class="tech-chips">
-              <span class="tech-chip">Kali Linux</span><span class="tech-chip">Linux</span><span class="tech-chip">Networking</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /panels -->
-
-    <!-- Quick grid -->
-    <div class="course-quick-grid">
-      <div class="cqc active" data-sw="python">
-        <div class="cqc-icon" style="background:var(--orange-pale);color:var(--orange)"><i class="fa-brands fa-python"></i></div>
-        <div><div class="cqc-name">Python Full Stack</div><div class="cqc-dur">30&ndash;45 Days &bull; Online</div></div>
-        <i class="fa-solid fa-arrow-right cqc-arrow"></i>
-      </div>
-      <div class="cqc" data-sw="java">
-        <div class="cqc-icon" style="background:var(--blue-pale);color:var(--blue)"><i class="fa-brands fa-java"></i></div>
-        <div><div class="cqc-name">Java Full Stack</div><div class="cqc-dur">30&ndash;45 Days &bull; Online</div></div>
-        <i class="fa-solid fa-arrow-right cqc-arrow"></i>
-      </div>
-      <div class="cqc" data-sw="ds">
-        <div class="cqc-icon" style="background:var(--orange-pale);color:var(--orange)"><i class="fa-solid fa-chart-bar"></i></div>
-        <div><div class="cqc-name">Data Science &amp; ML</div><div class="cqc-dur">30 Days &bull; Online</div></div>
-        <i class="fa-solid fa-arrow-right cqc-arrow"></i>
-      </div>
-      <div class="cqc" data-sw="web">
-        <div class="cqc-icon" style="background:var(--blue-pale);color:var(--blue)"><i class="fa-brands fa-react"></i></div>
-        <div><div class="cqc-name">Web Development</div><div class="cqc-dur">21&ndash;30 Days &bull; Online</div></div>
-        <i class="fa-solid fa-arrow-right cqc-arrow"></i>
-      </div>
-      <div class="cqc" data-sw="c">
-        <div class="cqc-icon" style="background:var(--orange-pale);color:var(--orange)"><i class="fa-solid fa-code"></i></div>
-        <div><div class="cqc-name">C / C++ Programming</div><div class="cqc-dur">21 Days &bull; Online</div></div>
-        <i class="fa-solid fa-arrow-right cqc-arrow"></i>
-      </div>
-      <div class="cqc" data-sw="cyber">
-        <div class="cqc-icon" style="background:var(--blue-pale);color:var(--blue)"><i class="fa-solid fa-shield-halved"></i></div>
-        <div><div class="cqc-name">Cyber Security</div><div class="cqc-dur">21 Days &bull; Online</div></div>
-        <i class="fa-solid fa-arrow-right cqc-arrow"></i>
-      </div>
     </div>
   </div>
 </section>
@@ -1280,178 +836,33 @@ section { padding: 90px 28px; }
 <!-- ===================== COLLEGES MARQUEE ===================== -->
 <section class="colleges-sec" id="colleges">
   <div class="container">
-    <div class="sec-head center">
-      <span class="sec-tag">Our Colleges</span>
-      <h2 class="sec-title">20+ Partner Colleges Across India</h2>
-      <p class="sec-sub">Trusted by leading engineering institutions across Karnataka and beyond</p>
+    <div class="sec-head center" style="margin-bottom:32px">
+      <h2 class="sec-title" style="font-size:2rem">Trusted by 20+ Institutions</h2>
     </div>
   </div>
-  <div class="marquee-outer">
-    <div class="marquee-belt">
-      <div class="coll-card"><div class="coll-abbr">RYM</div><div><div class="coll-name">RYMEC</div><div class="coll-city">Bellary, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">SMV</div><div><div class="coll-name">SMVITM</div><div class="coll-city">Udupi, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">BLD</div><div><div class="coll-name">BLDEA</div><div class="coll-city">Vijayapur, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">ASB</div><div><div class="coll-name">ASBLDEA</div><div class="coll-city">Bijapur, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">KLE</div><div><div class="coll-name">KLE Institute</div><div class="coll-city">Belagavi, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">BVB</div><div><div class="coll-name">BVB College</div><div class="coll-city">Hubballi, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">SDM</div><div><div class="coll-name">SDMCET</div><div class="coll-city">Dharwad, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">PES</div><div><div class="coll-name">PESITM</div><div class="coll-city">Shivamogga, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">ALV</div><div><div class="coll-name">Alva's Institute</div><div class="coll-city">Mangaluru, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">HKB</div><div><div class="coll-name">HKBK College</div><div class="coll-city">Bengaluru, Karnataka</div></div></div>
-      <!-- duplicate for loop -->
-      <div class="coll-card"><div class="coll-abbr">RYM</div><div><div class="coll-name">RYMEC</div><div class="coll-city">Bellary, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">SMV</div><div><div class="coll-name">SMVITM</div><div class="coll-city">Udupi, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">BLD</div><div><div class="coll-name">BLDEA</div><div class="coll-city">Vijayapur, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">ASB</div><div><div class="coll-name">ASBLDEA</div><div class="coll-city">Bijapur, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">KLE</div><div><div class="coll-name">KLE Institute</div><div class="coll-city">Belagavi, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">BVB</div><div><div class="coll-name">BVB College</div><div class="coll-city">Hubballi, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">SDM</div><div><div class="coll-name">SDMCET</div><div class="coll-city">Dharwad, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">PES</div><div><div class="coll-name">PESITM</div><div class="coll-city">Shivamogga, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">ALV</div><div><div class="coll-name">Alva's Institute</div><div class="coll-city">Mangaluru, Karnataka</div></div></div>
-      <div class="coll-card"><div class="coll-abbr">HKB</div><div><div class="coll-name">HKBK College</div><div class="coll-city">Bengaluru, Karnataka</div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== HOW IT WORKS ===================== -->
-<section class="how-sec" id="how">
-  <div class="container">
-    <div class="sec-head center" style="margin-bottom:56px">
-      <span class="sec-tag">Process</span>
-      <h2 class="sec-title">How It Works</h2>
-      <p class="sec-sub">Simple, structured and 100% online &mdash; from enrolment to certification</p>
-    </div>
-    <div style="position:relative">
-      <div class="how-connector"></div>
-      <div class="how-steps">
-        <div class="how-step reveal">
-          <div class="how-num">1</div>
-          <div class="how-title">College Partners With Us</div>
-          <div class="how-desc">The college signs up with Easy Learn to run a structured online technical bootcamp for their engineering students.</div>
-        </div>
-        <div class="how-step reveal">
-          <div class="how-num">2</div>
-          <div class="how-title">Trainer Gets Approved</div>
-          <div class="how-desc">An expert trainer is vetted and approved by our admin team before being assigned to deliver sessions.</div>
-        </div>
-        <div class="how-step reveal">
-          <div class="how-num">3</div>
-          <div class="how-title">Live Online Classes</div>
-          <div class="how-desc">Students attend 2&ndash;3 live sessions daily. Trainers log topics, upload notes and track progress every day.</div>
-        </div>
-        <div class="how-step reveal">
-          <div class="how-num">4</div>
-          <div class="how-title">Certificate &amp; Completion</div>
-          <div class="how-desc">Students complete assignments and receive a verified Easy Learn Academy completion certificate.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== WHY US ===================== -->
-<section id="why">
-  <div class="container">
-    <div class="why-grid">
-      <div>
-        <span class="sec-tag">Why Easy Learn</span>
-        <h2 class="sec-title">The Smarter Way to Train College Students</h2>
-        <p class="sec-sub">Quality technical education with zero infrastructure required from the college side</p>
-        <div class="why-feats">
-          <div class="why-card reveal">
-            <div class="why-card-icon"><i class="fa-solid fa-wifi" style="color:var(--blue)"></i></div>
-            <div>
-              <div class="why-card-title">100% Online &mdash; No Travel</div>
-              <div class="why-card-desc">All sessions conducted live online. Students and trainers connect from anywhere across India &mdash; zero infrastructure required.</div>
-            </div>
-          </div>
-          <div class="why-card reveal">
-            <div class="why-card-icon"><i class="fa-solid fa-user-tie" style="color:var(--orange)"></i></div>
-            <div>
-              <div class="why-card-title">Verified Industry Trainers</div>
-              <div class="why-card-desc">Every trainer is a verified corporate professional approved by our admin before any session begins.</div>
-            </div>
-          </div>
-          <div class="why-card reveal">
-            <div class="why-card-icon"><i class="fa-solid fa-chart-line" style="color:var(--blue)"></i></div>
-            <div>
-              <div class="why-card-title">Daily Progress Reports</div>
-              <div class="why-card-desc">Trainers log topics, upload class notes and submit session reports every day &mdash; complete transparency.</div>
-            </div>
-          </div>
-          <div class="why-card reveal">
-            <div class="why-card-icon"><i class="fa-solid fa-trophy" style="color:var(--orange)"></i></div>
-            <div>
-              <div class="why-card-title">Placement-Ready Curriculum</div>
-              <div class="why-card-desc">All programs mapped to university syllabi and designed to make students industry and placement ready.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="why-right-panel">
-        <div class="why-logo-card reveal">
-          <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Academy Logo">
-          <div class="why-logo-name">Easy Learn Academy</div>
-          <div class="why-logo-sub">India's Trusted Online Technical Training Partner</div>
-        </div>
-        <div class="why-stat-row reveal"><span class="wsr-label">Partner Colleges</span><span class="wsr-val">20+</span></div>
-        <div class="why-stat-row reveal"><span class="wsr-label">Students Trained</span><span class="wsr-val orange">15,000+</span></div>
-        <div class="why-stat-row reveal"><span class="wsr-label">Online Programs</span><span class="wsr-val">6+</span></div>
-        <div class="why-stat-row reveal"><span class="wsr-label">Session Satisfaction</span><span class="wsr-val orange">98%</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== TESTIMONIALS ===================== -->
-<section class="testi-sec">
-  <div class="container">
-    <div class="sec-head center">
-      <span class="sec-tag">Student Reviews</span>
-      <h2 class="sec-title">What Students Say</h2>
-      <p class="sec-sub">Real feedback from 15,000+ students who completed our online programs</p>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card reveal">
-        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <div class="testi-quote">The Python Full Stack program was brilliantly structured. Live sessions, daily notes, hands-on projects &mdash; I got placed within 2 months of completion!</div>
-        <div class="testi-author">
-          <div class="testi-av" style="background:linear-gradient(135deg,var(--blue),var(--blue-light))">AK</div>
-          <div><div class="testi-name">Akash Kumar</div><div class="testi-role">B.Tech CSE &bull; RYMEC, Bellary</div></div>
-        </div>
-      </div>
-      <div class="testi-card reveal">
-        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <div class="testi-quote">Best decision I made &mdash; Java Full Stack online. Daily sessions kept me on track. The trainer logged everything and I never missed a single topic.</div>
-        <div class="testi-author">
-          <div class="testi-av" style="background:linear-gradient(135deg,var(--orange),var(--orange-light))">PR</div>
-          <div><div class="testi-name">Priya Rao</div><div class="testi-role">B.E. IT &bull; SMVITM, Udupi</div></div>
-        </div>
-      </div>
-      <div class="testi-card reveal">
-        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <div class="testi-quote">Easy Learn's Data Science program gave me exactly the foundation I needed. 100% online, no travel, industry-relevant content &mdash; it was perfect for our batch.</div>
-        <div class="testi-author">
-          <div class="testi-av" style="background:linear-gradient(135deg,var(--navy),var(--blue))">MS</div>
-          <div><div class="testi-name">Mohammed Saad</div><div class="testi-role">B.E. CSE &bull; BLDEA, Vijayapur</div></div>
-        </div>
-      </div>
-    </div>
+  <div class="marquee-belt">
+    <!-- Duplicate sets for seamless scrolling -->
+    <div class="coll-card"><div class="coll-abbr">RYM</div><div><div class="coll-name">RYMEC</div><div class="coll-city">Bellary</div></div></div>
+    <div class="coll-card"><div class="coll-abbr">SMV</div><div><div class="coll-name">SMVITM</div><div class="coll-city">Udupi</div></div></div>
+    <div class="coll-card"><div class="coll-abbr">BLD</div><div><div class="coll-name">BLDEA</div><div class="coll-city">Vijayapur</div></div></div>
+    <div class="coll-card"><div class="coll-abbr">KLE</div><div><div class="coll-name">KLE Tech</div><div class="coll-city">Belagavi</div></div></div>
+    <div class="coll-card"><div class="coll-abbr">BVB</div><div><div class="coll-name">BVB College</div><div class="coll-city">Hubballi</div></div></div>
+    
+    <div class="coll-card"><div class="coll-abbr">RYM</div><div><div class="coll-name">RYMEC</div><div class="coll-city">Bellary</div></div></div>
+    <div class="coll-card"><div class="coll-abbr">SMV</div><div><div class="coll-name">SMVITM</div><div class="coll-city">Udupi</div></div></div>
+    <div class="coll-card"><div class="coll-abbr">BLD</div><div><div class="coll-name">BLDEA</div><div class="coll-city">Vijayapur</div></div></div>
+    <div class="coll-card"><div class="coll-abbr">KLE</div><div><div class="coll-name">KLE Tech</div><div class="coll-city">Belagavi</div></div></div>
+    <div class="coll-card"><div class="coll-abbr">BVB</div><div><div class="coll-name">BVB College</div><div class="coll-city">Hubballi</div></div></div>
   </div>
 </section>
 
 <!-- ===================== CTA ===================== -->
-<section class="cta-sec" id="contact">
+<section class="cta-sec">
   <div class="container">
-    <h2>Ready to Skill Up Your College Students?</h2>
-    <p>Partner with Easy Learn Academy and bring live online technical training to your campus &mdash; zero infrastructure, zero hassle, full transparency.</p>
+    <h2>Ready to upgrade your campus?</h2>
+    <p>Join the next generation of technical education delivery.</p>
     <div class="cta-btns">
-      <a href="mailto:manager.projects@easy-learn-academy.com" class="btn-cta-white">
-        <i class="fa-solid fa-envelope"></i> Contact Us Today
-      </a>
-      <a href="{% url 'trainer_signup' %}" class="btn-cta-orange">
-        <i class="fa-solid fa-chalkboard-user"></i> Apply as Trainer
-      </a>
+      <a href="mailto:manager.projects@easy-learn-academy.com" class="btn-cta-primary">Partner With Us</a>
     </div>
   </div>
 </section>
@@ -1459,163 +870,91 @@ section { padding: 90px 28px; }
 <!-- ===================== FOOTER ===================== -->
 <footer class="footer">
   <div class="footer-grid">
-    <div class="fb-logo">
-      <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Academy">
-      <div class="fb-name"><span class="b">Easy</span><span class="o">Learn</span> Academy</div>
-      <p class="fb-desc">Empowering 15,000+ engineering college students with expert live online technical training across 20+ institutions in India.</p>
-      <div class="fb-contacts">
-        <a href="mailto:manager.projects@easy-learn-academy.com">
-          <i class="fa-solid fa-envelope"></i> manager.projects@easy-learn-academy.com
-        </a>
-        <a href="#">
-          <i class="fa-solid fa-globe"></i> www.easy-learn-academy.com
-        </a>
+    <div>
+      <div class="fb-logo"><img src="{% static 'core/images/logo.png' %}" alt="Logo"></div>
+      <div class="fb-name">Easy Learn</div>
+      <p class="fb-desc">The modern standard for live online technical training in engineering colleges.</p>
+    </div>
+    <div>
+      <div class="fc-head">Platform</div>
+      <div class="fc-list">
+        <a href="#features">Features</a>
+        <a href="#courses">Curriculum</a>
+        <a href="#colleges">Network</a>
       </div>
     </div>
     <div>
-      <div class="fc-head">Programs</div>
+      <div class="fc-head">Portal</div>
       <div class="fc-list">
-        <a href="#courses">Python Full Stack</a>
-        <a href="#courses">Java Full Stack</a>
-        <a href="#courses">Data Science &amp; ML</a>
-        <a href="#courses">Web Development</a>
-        <a href="#courses">C / C++ Programming</a>
-        <a href="#courses">Cyber Security</a>
-      </div>
-    </div>
-    <div>
-      <div class="fc-head">Company</div>
-      <div class="fc-list">
-        <a href="#colleges">Our Colleges</a>
-        <a href="#how">How It Works</a>
-        <a href="#why">Why Easy Learn</a>
-        <a href="#contact">Contact Us</a>
-        <a href="{% url 'trainer_signup' %}">Become a Trainer</a>
-      </div>
-    </div>
-    <div>
-      <div class="fc-head">Portal Access</div>
-      <div class="fc-list">
+        <a href="{% url 'login' %}">Admin Dashboard</a>
         <a href="{% url 'login' %}">Trainer Login</a>
-        <a href="{% url 'trainer_signup' %}">Register as Trainer</a>
-        <a href="{% url 'login' %}">Admin Login</a>
+        <a href="{% url 'trainer_signup' %}">Apply to Teach</a>
       </div>
-      <div class="cred-panel">
-        <div class="cl">Demo Credentials</div>
-        Admin: <code>admin</code> / <code>adminpassword123</code><br>
-        Trainer: <code>stephenjebadurai</code> / <code>trainerpassword123</code>
+    </div>
+    <div>
+      <div class="fc-head">Contact</div>
+      <div class="fc-list">
+        <a href="mailto:manager.projects@easy-learn-academy.com">Email Us</a>
+        <span style="color:rgba(255,255,255,.3); font-size:12px; margin-top:10px">
+          Demo: admin / adminpassword123<br>
+          Trainer: stephenjebadurai / trainerpassword123
+        </span>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>&copy; 2026 Easy Learn Academy &bull; Built by Stephen Jebadurai</span>
-    <a href="{% url 'login' %}"><i class="fa-solid fa-user-shield"></i> Operations Login</a>
+    <span>&copy; 2026 Easy Learn Academy</span>
+    <span>Built by Stephen Jebadurai</span>
   </div>
 </footer>
 
-<!-- ===================== SCRIPTS ===================== -->
 <script>
-/* SPLASH */
-(function(){
-  var sp = document.getElementById('splash');
-  var sc = document.getElementById('spCircle');
-  if (!sp) return;
+// Splash
+setTimeout(function(){
+  document.getElementById('spCircle')?.classList.add('out');
   setTimeout(function(){
-    if (sc) sc.classList.add('out');
-    setTimeout(function(){
-      sp.classList.add('out');
-      setTimeout(function(){ sp.style.display = 'none'; }, 700);
-    }, 320);
-  }, 2400);
-})();
+    var sp = document.getElementById('splash');
+    if(sp) { sp.classList.add('out'); setTimeout(function(){ sp.style.display='none'; },700); }
+  }, 300);
+}, 2000);
 
-/* NAVBAR SCROLL */
+// Navbar
 window.addEventListener('scroll', function(){
-  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 16);
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
 });
 
-/* HAMBURGER — toggle mobile drawer */
+// Mobile menu
 var ham = document.getElementById('ham');
 var drawer = document.getElementById('mobDrawer');
 ham.addEventListener('click', function(){
   var open = drawer.classList.toggle('open');
   ham.classList.toggle('active', open);
-  ham.setAttribute('aria-expanded', open);
 });
-
-/* CLOSE DRAWER ON LINK CLICK */
 drawer.querySelectorAll('a').forEach(function(a){
   a.addEventListener('click', function(){
     drawer.classList.remove('open');
     ham.classList.remove('active');
-    ham.setAttribute('aria-expanded', 'false');
   });
 });
 
-/* SMOOTH ANCHORS */
+// Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(function(a){
   a.addEventListener('click', function(e){
-    var t = document.querySelector(this.getAttribute('href'));
-    if (t){ e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    var target = document.querySelector(this.getAttribute('href'));
+    if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
   });
 });
 
-/* COURSE TAB SWITCHING */
-function switchCourse(key){
-  document.querySelectorAll('.ctab').forEach(function(t){
-    t.classList.toggle('active', t.dataset.course === key);
-  });
-  document.querySelectorAll('.cpanel').forEach(function(p){
-    p.classList.remove('active');
-  });
-  var panel = document.getElementById('cp-' + key);
-  if (panel) panel.classList.add('active');
-  document.querySelectorAll('.cqc').forEach(function(c){
-    c.classList.toggle('active', c.dataset.sw === key);
-  });
-  document.getElementById('courses').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
+// Tabs
 document.querySelectorAll('.ctab').forEach(function(t){
-  t.addEventListener('click', function(){ switchCourse(this.dataset.course); });
-});
-document.querySelectorAll('.cqc').forEach(function(c){
-  c.addEventListener('click', function(){ switchCourse(this.dataset.sw); });
-});
-
-/* COUNTER ANIMATION */
-function animateCount(el, target){
-  var start = 0;
-  var step  = target / 60;
-  var timer = setInterval(function(){
-    start = Math.min(start + step, target);
-    var rounded = Math.round(start);
-    el.textContent = rounded >= 1000 ? rounded.toLocaleString() : rounded;
-    if (rounded >= target){ el.textContent = target >= 1000 ? target.toLocaleString() : target; clearInterval(timer); }
-  }, 20);
-}
-var counted = false;
-new IntersectionObserver(function(entries){
-  if (entries[0].isIntersecting && !counted){
-    counted = true;
-    document.querySelectorAll('[data-target]').forEach(function(el){
-      animateCount(el, parseInt(el.dataset.target));
-    });
-  }
-}, { threshold: .3 }).observe(document.querySelector('.stats-bar'));
-
-/* SCROLL REVEAL */
-new IntersectionObserver(function(entries){
-  entries.forEach(function(e){
-    if (e.isIntersecting){ e.target.classList.add('visible'); }
+  t.addEventListener('click', function(){
+    var key = this.dataset.course;
+    document.querySelectorAll('.ctab').forEach(function(tb){ tb.classList.remove('active'); });
+    this.classList.add('active');
+    document.querySelectorAll('.cpanel').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById('cp-'+key).classList.add('active');
   });
-}, { threshold: .1 }).observe && (function(){
-  var obs = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if (e.isIntersecting){ e.target.classList.add('visible'); }
-    });
-  }, { threshold: .1 });
-  document.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
-})();
+});
 </script>
 </body>
 </html>
