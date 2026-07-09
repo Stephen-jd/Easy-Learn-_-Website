@@ -5,989 +5,1128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Easy Learn Academy | Online Technical Training for College Students</title>
-    <meta name="description" content="Easy Learn Academy offers online technical bootcamps in Python, Django, Full Stack, Java and more. Trusted by top engineering colleges across Karnataka.">
+    <meta name="description" content="Easy Learn Academy offers industry-level online technical bootcamps in Python, Java Full Stack, Data Science & more. Trusted by top engineering colleges.">
     <link rel="icon" type="image/png" href="{% static 'core/images/logo.png' %}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <style>
-        /* ============================================================
-           RESET & BASE
-        ============================================================ */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<style>
+/* ============================================================
+   RESET & TOKENS
+============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',sans-serif;color:#111827;background:#fff;line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.15}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+ul{list-style:none}
 
-        :root {
-            --blue:       #1a56db;
-            --blue-dark:  #1042a8;
-            --orange:     #f97316;
-            --orange-dark:#ea6c0e;
-            --dark:       #0f172a;
-            --dark2:      #1e293b;
-            --gray:       #475569;
-            --light-gray: #f1f5f9;
-            --white:      #ffffff;
-            --border:     #e2e8f0;
-            --radius-sm:  8px;
-            --radius:     14px;
-            --radius-lg:  22px;
-            --shadow:     0 4px 24px rgba(0,0,0,.08);
-            --shadow-lg:  0 16px 48px rgba(0,0,0,.12);
-        }
+:root{
+  --green:#16a34a;
+  --green-light:#22c55e;
+  --green-pale:#dcfce7;
+  --orange:#f97316;
+  --orange-pale:#fff7ed;
+  --navy:#0f172a;
+  --navy2:#1e293b;
+  --gray:#6b7280;
+  --gray-light:#f9fafb;
+  --border:#e5e7eb;
+  --white:#ffffff;
+  --radius:10px;
+  --radius-lg:16px;
+  --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:0 4px 16px rgba(0,0,0,.10);
+  --shadow-lg:0 10px 40px rgba(0,0,0,.12);
+}
 
-        html { scroll-behavior: smooth; }
+/* ============================================================
+   SPLASH
+============================================================ */
+#splash{
+  position:fixed;inset:0;z-index:99999;
+  background:linear-gradient(135deg,#0f172a 0%,#16a34a 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity .6s ease;
+}
+#splash.hide{opacity:0;pointer-events:none}
+@keyframes popIn{
+  0%{transform:scale(0) rotate(-15deg);opacity:0}
+  70%{transform:scale(1.1) rotate(3deg);opacity:1}
+  100%{transform:scale(1) rotate(0);opacity:1}
+}
+@keyframes popOut{
+  0%{transform:scale(1);opacity:1}
+  100%{transform:scale(3);opacity:0;filter:blur(8px)}
+}
+#splash img{
+  width:120px;height:120px;border-radius:50%;object-fit:contain;
+  background:#fff;padding:10px;
+  box-shadow:0 0 0 8px rgba(255,255,255,.15),0 20px 60px rgba(0,0,0,.4);
+  animation:popIn 1s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+#splash img.out{animation:popOut .5s ease forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#splash h1{
+  font-family:'Space Grotesk',sans-serif;font-size:2.4rem;font-weight:700;
+  color:#fff;margin-top:22px;
+  animation:fadeUp .8s ease .7s both;
+}
+#splash p{
+  font-size:.85rem;font-weight:600;color:rgba(255,255,255,.7);
+  text-transform:uppercase;letter-spacing:4px;margin-top:8px;
+  animation:fadeUp .8s ease 1s both;
+}
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: var(--dark);
-            background: var(--white);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+/* ============================================================
+   ANNOUNCEMENT BAR
+============================================================ */
+.ann-bar{
+  background:var(--navy);color:#fff;
+  padding:10px 24px;text-align:center;
+  font-size:13.5px;font-weight:500;
+  display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
+}
+.ann-bar .pill{
+  background:var(--green);color:#fff;
+  font-size:11px;font-weight:700;padding:3px 12px;border-radius:50px;
+  text-transform:uppercase;letter-spacing:.5px;
+}
+.ann-bar a{color:#86efac;font-weight:700;border-bottom:1px solid rgba(134,239,172,.4)}
 
-        h1,h2,h3,h4,h5 { font-family: 'Outfit', sans-serif; font-weight: 700; line-height: 1.2; }
+/* ============================================================
+   NAVBAR
+============================================================ */
+.navbar{
+  position:sticky;top:0;z-index:900;
+  background:rgba(255,255,255,.96);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(12px);
+  transition:box-shadow .3s;
+}
+.navbar.scrolled{box-shadow:var(--shadow-md)}
+.nav-inner{
+  max-width:1180px;margin:0 auto;padding:0 24px;
+  height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+/* Brand */
+.brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.brand img{width:44px;height:44px;object-fit:contain}
+.brand-text{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:700}
+.brand-text .e{color:var(--navy)}
+.brand-text .l{color:var(--green)}
 
-        a { text-decoration: none; color: inherit; }
+/* Nav links */
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{
+  font-size:14.5px;font-weight:500;color:#374151;
+  padding:8px 14px;border-radius:8px;transition:all .2s;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--navy);background:#f3f4f6}
+.nav-links a.active{color:var(--green);font-weight:600}
 
-        img { max-width: 100%; display: block; }
+/* Right buttons */
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.btn-nav-login{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--green);color:#fff;
+  font-size:14.5px;font-weight:600;
+  padding:9px 22px;border-radius:8px;
+  transition:all .25s;
+  box-shadow:0 2px 10px rgba(22,163,74,.3);
+}
+.btn-nav-login:hover{background:#15803d;transform:translateY(-1px);box-shadow:0 4px 16px rgba(22,163,74,.4)}
 
-        /* ============================================================
-           SPLASH SCREEN
-        ============================================================ */
-        #ela-splash {
-            position: fixed; inset: 0; z-index: 99999;
-            background: radial-gradient(ellipse at 55% 40%, #1042a8 0%, #0a0f2b 70%);
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            overflow: hidden;
-        }
-        #ela-splash::before {
-            content:''; position:absolute;
-            width:360px; height:360px; border-radius:50%;
-            background:radial-gradient(circle, rgba(249,115,22,.15) 0%, transparent 70%);
-            animation: glowPulse 2s ease-in-out infinite alternate;
-        }
-        @keyframes glowPulse {
-            from { transform:scale(.9); opacity:.6; }
-            to   { transform:scale(1.2); opacity:1; }
-        }
-        @keyframes logoZoomIn {
-            0%   { transform:scale(.1) rotate(-10deg); opacity:0; filter:blur(14px); }
-            65%  { transform:scale(1.1) rotate(2deg);  opacity:1; filter:blur(0); }
-            100% { transform:scale(1) rotate(0deg);    opacity:1; filter:blur(0); }
-        }
-        @keyframes logoZoomOut {
-            0%   { transform:scale(1);   opacity:1; filter:blur(0); }
-            100% { transform:scale(2.6); opacity:0; filter:blur(10px); }
-        }
-        @keyframes textRise {
-            0%   { transform:translateY(22px); opacity:0; }
-            100% { transform:translateY(0);    opacity:1; }
-        }
-        @keyframes overlayFade {
-            to { opacity:0; }
-        }
-        #ela-splash .sp-logo {
-            width:130px; height:130px; border-radius:50%;
-            object-fit:contain; background:white; padding:10px;
-            box-shadow:0 0 0 6px rgba(249,115,22,.35), 0 20px 60px rgba(0,0,0,.5);
-            opacity:0; z-index:2; position:relative;
-            animation:logoZoomIn 1.2s cubic-bezier(.34,1.56,.64,1) .1s forwards;
-        }
-        #ela-splash .sp-logo.out { animation:logoZoomOut .6s cubic-bezier(.55,0,1,.45) forwards; }
-        #ela-splash .sp-title {
-            font-family:'Outfit',sans-serif; font-size:44px; font-weight:800;
-            color:#fff; margin-top:26px; opacity:0; z-index:2; position:relative;
-            animation:textRise .9s cubic-bezier(.16,1,.3,1) .7s forwards;
-        }
-        #ela-splash .sp-tag {
-            font-size:11px; font-weight:800; color:#f97316; text-transform:uppercase;
-            letter-spacing:5px; margin-top:10px; opacity:0; z-index:2; position:relative;
-            animation:textRise .9s cubic-bezier(.16,1,.3,1) 1s forwards;
-        }
-        #ela-splash.exiting { animation:overlayFade .65s ease forwards; pointer-events:none; }
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--navy);margin:4px 0;border-radius:2px;transition:.3s}
 
-        /* ============================================================
-           NAVBAR
-        ============================================================ */
-        .navbar {
-            position: fixed; top:0; left:0; width:100%; z-index:1000;
-            background: rgba(255,255,255,.95);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 2px 16px rgba(0,0,0,.06);
-            transition: all .3s ease;
-        }
-        .nav-inner {
-            max-width: 1200px; margin:0 auto;
-            padding: 0 24px;
-            display: flex; align-items: center; justify-content: space-between;
-            height: 72px;
-        }
-        .nav-brand {
-            display:flex; align-items:center; gap:10px;
-        }
-        .nav-brand img {
-            width:46px; height:46px; object-fit:contain;
-        }
-        .nav-brand-name {
-            font-family:'Outfit',sans-serif; font-size:22px; font-weight:800;
-        }
-        .nav-brand-name span.easy { color: var(--blue); }
-        .nav-brand-name span.learn { color: var(--orange); }
+/* ============================================================
+   HERO  — split layout (text left, visual right)
+============================================================ */
+.hero{
+  padding:72px 24px 60px;
+  max-width:1180px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;gap:60px;
+  min-height:calc(100vh - 110px);
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--green-pale);color:var(--green);
+  border:1px solid #bbf7d0;
+  font-size:13px;font-weight:600;
+  padding:6px 16px;border-radius:50px;margin-bottom:24px;
+}
+.hero h1{
+  font-size:clamp(2.2rem,4.5vw,3.4rem);
+  font-weight:800;color:var(--navy);
+  margin-bottom:20px;letter-spacing:-.5px;
+  line-height:1.12;
+}
+.hero h1 .highlight{
+  background:linear-gradient(90deg,var(--green),#059669);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-sub{
+  font-size:1.05rem;color:var(--gray);
+  max-width:480px;margin-bottom:36px;font-weight:400;
+  line-height:1.7;
+}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--green);color:#fff;
+  font-size:15.5px;font-weight:700;
+  padding:14px 32px;border-radius:10px;
+  box-shadow:0 4px 20px rgba(22,163,74,.35);
+  transition:all .25s;
+}
+.btn-primary:hover{background:#15803d;transform:translateY(-2px);box-shadow:0 8px 28px rgba(22,163,74,.4)}
+.btn-outline-dark{
+  display:inline-flex;align-items:center;gap:8px;
+  border:2px solid var(--border);color:var(--navy);
+  font-size:15.5px;font-weight:600;
+  padding:13px 30px;border-radius:10px;
+  transition:all .25s;background:#fff;
+}
+.btn-outline-dark:hover{border-color:var(--navy);background:#f9fafb}
 
-        .nav-links {
-            display:flex; align-items:center; gap:6px; list-style:none;
-        }
-        .nav-links a {
-            font-size:15px; font-weight:600; color:var(--gray);
-            padding:8px 16px; border-radius:var(--radius-sm);
-            transition: color .2s, background .2s;
-        }
-        .nav-links a:hover { color:var(--blue); background:var(--light-gray); }
+/* Hero mini trust bar */
+.hero-trust{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.trust-avatars{display:flex}
+.trust-avatars span{
+  width:34px;height:34px;border-radius:50%;border:2px solid #fff;
+  background:linear-gradient(135deg,var(--green),var(--green-light));
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:12px;font-weight:700;
+  margin-left:-10px;
+}
+.trust-avatars span:first-child{margin-left:0}
+.trust-text{font-size:13.5px;color:var(--gray);font-weight:500}
+.trust-text strong{color:var(--navy)}
 
-        .btn-login {
-            display:inline-flex; align-items:center; gap:8px;
-            background:var(--blue); color:#fff !important;
-            padding:10px 22px; border-radius:var(--radius-sm);
-            font-size:15px; font-weight:700;
-            box-shadow:0 4px 14px rgba(26,86,219,.25);
-            transition: background .2s, transform .2s, box-shadow .2s;
-        }
-        .btn-login:hover {
-            background:var(--blue-dark);
-            transform:translateY(-2px);
-            box-shadow:0 8px 20px rgba(26,86,219,.35);
-        }
+/* Hero visual panel */
+.hero-visual{
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+.hero-visual-bg{
+  width:420px;height:420px;border-radius:50%;
+  background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 50%,#fff7ed 100%);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.hero-visual-bg::before{
+  content:'';position:absolute;inset:-12px;border-radius:50%;
+  border:2px dashed rgba(22,163,74,.25);
+  animation:spinSlow 20s linear infinite;
+}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+.hero-logo-big{
+  width:220px;height:220px;object-fit:contain;
+  filter:drop-shadow(0 20px 40px rgba(22,163,74,.2));
+  animation:floatLogo 4s ease-in-out infinite alternate;
+}
+@keyframes floatLogo{
+  from{transform:translateY(0)}
+  to{transform:translateY(-16px)}
+}
+/* Floating stat chips */
+.chip{
+  position:absolute;background:#fff;border:1px solid var(--border);
+  border-radius:12px;padding:10px 16px;
+  box-shadow:var(--shadow-md);
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;white-space:nowrap;
+  animation:floatChip 3s ease-in-out infinite alternate;
+}
+@keyframes floatChip{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+.chip-icon{
+  width:34px;height:34px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;
+}
+.chip-val{font-weight:800;font-size:15px;color:var(--navy)}
+.chip-lab{font-size:11.5px;color:var(--gray);font-weight:500}
+.chip-1{top:8%;left:-30px;animation-delay:0s}
+.chip-2{bottom:12%;left:-20px;animation-delay:.7s}
+.chip-3{top:20%;right:-30px;animation-delay:.4s}
+.chip-4{bottom:8%;right:-10px;animation-delay:1s}
 
-        .hamburger { display:none; background:none; border:none; cursor:pointer; padding:6px; }
-        .hamburger span {
-            display:block; width:24px; height:2px; background:var(--dark);
-            margin:5px 0; border-radius:2px; transition: all .3s;
-        }
+/* ============================================================
+   STATS BAR
+============================================================ */
+.stats-bar{
+  background:var(--navy);padding:36px 24px;margin:0;
+}
+.stats-bar-inner{
+  max-width:1180px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+}
+.stat-item{text-align:center;padding:10px}
+.stat-num{
+  font-family:'Space Grotesk',sans-serif;font-size:2.2rem;font-weight:800;color:#fff;
+  margin-bottom:4px;
+}
+.stat-num span{color:var(--green-light)}
+.stat-label{font-size:13px;color:rgba(255,255,255,.6);font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+.stat-divider{border-left:1px solid rgba(255,255,255,.12)}
 
-        /* ============================================================
-           HERO
-        ============================================================ */
-        .hero {
-            padding: 160px 24px 100px;
-            background: linear-gradient(135deg, #0d1b4b 0%, #1a56db 60%, #1e40af 100%);
-            position:relative; overflow:hidden; text-align:center;
-        }
-        .hero::before {
-            content:''; position:absolute; inset:0;
-            background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-        /* Floating circles */
-        .hero-circle {
-            position:absolute; border-radius:50%; opacity:.12;
-            background:radial-gradient(circle, #fff 0%, transparent 70%);
-            pointer-events:none;
-        }
-        .hero-circle-1 { width:600px; height:600px; top:-200px; right:-150px; }
-        .hero-circle-2 { width:400px; height:400px; bottom:-100px; left:-100px; }
+/* ============================================================
+   SECTION COMMONS
+============================================================ */
+.section{padding:90px 24px}
+.container{max-width:1180px;margin:0 auto}
+.sec-tag{
+  display:inline-block;background:var(--green-pale);color:var(--green);
+  font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
+  padding:5px 14px;border-radius:50px;margin-bottom:14px;
+}
+.sec-title{font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;color:var(--navy);margin-bottom:14px}
+.sec-sub{font-size:1rem;color:var(--gray);max-width:540px;line-height:1.7}
+.sec-header{margin-bottom:52px}
+.sec-header.center{text-align:center}
+.sec-header.center .sec-sub{margin:0 auto}
 
-        .hero-inner { max-width:820px; margin:0 auto; position:relative; z-index:1; }
+/* ============================================================
+   COURSE CARDS  (Tap Academy style)
+============================================================ */
+.courses-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+}
+.course-card{
+  border:1.5px solid var(--border);border-radius:var(--radius-lg);
+  padding:28px 24px;background:#fff;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  cursor:pointer;position:relative;overflow:hidden;
+}
+.course-card::before{
+  content:'';position:absolute;top:0;left:0;width:100%;height:3px;
+  border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+}
+.course-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:transparent}
+.c-green::before{background:linear-gradient(90deg,#16a34a,#4ade80)}
+.c-blue::before{background:linear-gradient(90deg,#2563eb,#60a5fa)}
+.c-orange::before{background:linear-gradient(90deg,#f97316,#fbbf24)}
+.c-purple::before{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
+.c-red::before{background:linear-gradient(90deg,#dc2626,#f97316)}
+.c-teal::before{background:linear-gradient(90deg,#0891b2,#22d3ee)}
 
-        .hero-badge {
-            display:inline-flex; align-items:center; gap:8px;
-            background:rgba(249,115,22,.18); color:#fbbf24;
-            border:1px solid rgba(251,191,36,.3);
-            padding:8px 20px; border-radius:50px;
-            font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px;
-            margin-bottom:28px;
-        }
+.course-icon{
+  width:52px;height:52px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;margin-bottom:18px;
+}
+.ci-green{background:#dcfce7;color:#16a34a}
+.ci-blue{background:#dbeafe;color:#2563eb}
+.ci-orange{background:#ffedd5;color:#f97316}
+.ci-purple{background:#ede9fe;color:#7c3aed}
+.ci-red{background:#fee2e2;color:#dc2626}
+.ci-teal{background:#cffafe;color:#0891b2}
 
-        .hero h1 {
-            font-size: clamp(36px, 5.5vw, 64px);
-            font-weight:900; color:#fff;
-            margin-bottom:24px; letter-spacing:-1.5px;
-        }
-        .hero h1 .accent { color:#fbbf24; }
+.course-title{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+.course-desc{font-size:13.5px;color:var(--gray);line-height:1.65;margin-bottom:18px}
+.course-meta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.course-meta span{font-size:12.5px;color:var(--gray);display:flex;align-items:center;gap:5px;font-weight:500}
+.course-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{background:var(--gray-light);color:var(--gray);font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:50px}
+.course-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:20px;padding-top:18px;border-top:1px solid var(--border);
+}
+.course-enroll{
+  font-size:13.5px;font-weight:700;color:var(--green);
+  display:flex;align-items:center;gap:5px;transition:gap .2s;
+}
+.course-card:hover .course-enroll{gap:10px}
+.course-duration{font-size:12.5px;color:var(--gray);font-weight:500}
 
-        .hero p {
-            font-size:18px; color:rgba(255,255,255,.8);
-            max-width:620px; margin:0 auto 42px; font-weight:400;
-        }
+/* ============================================================
+   COLLEGE PARTNER CARDS
+============================================================ */
+.colleges-section{background:var(--gray-light)}
+.colleges-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.college-card{
+  background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);
+  padding:28px 20px;text-align:center;
+  transition:all .3s;
+}
+.college-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--green)}
+.coll-badge-wrap{
+  width:64px;height:64px;border-radius:50%;margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+  border:2px solid var(--border);
+}
+.coll-name{font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:6px}
+.coll-loc{font-size:13px;color:var(--gray);display:flex;align-items:center;justify-content:center;gap:5px;margin-bottom:14px}
+.coll-status{
+  display:inline-block;background:var(--green-pale);color:var(--green);
+  font-size:11.5px;font-weight:700;padding:4px 14px;border-radius:50px;
+  border:1px solid #bbf7d0;
+}
 
-        .hero-actions {
-            display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
-        }
-        .btn-hero-primary {
-            display:inline-flex; align-items:center; gap:10px;
-            background:#f97316; color:#fff;
-            padding:16px 36px; border-radius:var(--radius-sm);
-            font-size:16px; font-weight:700;
-            box-shadow:0 8px 24px rgba(249,115,22,.4);
-            transition:all .25s;
-        }
-        .btn-hero-primary:hover { background:#ea6c0e; transform:translateY(-3px); }
+/* ============================================================
+   HOW IT WORKS
+============================================================ */
+.steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative}
+.steps-row::before{
+  content:'';position:absolute;top:36px;left:10%;right:10%;height:2px;
+  background:linear-gradient(90deg,var(--green-pale),var(--green),var(--green-pale));
+  z-index:0;
+}
+.step{text-align:center;position:relative;z-index:1}
+.step-dot{
+  width:72px;height:72px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green),#059669);
+  color:#fff;font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+  box-shadow:0 8px 24px rgba(22,163,74,.3);
+  border:4px solid #fff;
+}
+.step-title{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:8px}
+.step-desc{font-size:13.5px;color:var(--gray);line-height:1.65}
 
-        .btn-hero-outline {
-            display:inline-flex; align-items:center; gap:10px;
-            border:2px solid rgba(255,255,255,.4); color:#fff;
-            padding:14px 34px; border-radius:var(--radius-sm);
-            font-size:16px; font-weight:700;
-            transition:all .25s; backdrop-filter:blur(4px);
-        }
-        .btn-hero-outline:hover { background:rgba(255,255,255,.12); border-color:#fff; }
+/* ============================================================
+   WHY US  — feature list style (like Tap)
+============================================================ */
+.why-section{background:var(--navy)}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.why-left .sec-tag{background:rgba(22,163,74,.2);color:#4ade80}
+.why-left .sec-title{color:#fff}
+.why-left .sec-sub{color:rgba(255,255,255,.65)}
+.why-features{display:flex;flex-direction:column;gap:20px;margin-top:32px}
+.why-feat{
+  display:flex;gap:16px;align-items:flex-start;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
+  border-radius:12px;padding:18px 20px;
+  transition:all .3s;
+}
+.why-feat:hover{background:rgba(255,255,255,.09)}
+.wf-icon{
+  width:42px;height:42px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  background:rgba(22,163,74,.2);
+}
+.wf-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
+.wf-desc{font-size:13.5px;color:rgba(255,255,255,.6);line-height:1.6}
+.why-right-visual{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;padding:32px;
+  display:flex;flex-direction:column;gap:16px;
+}
+.wr-stat{
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;padding:16px 20px;
+}
+.wr-stat-label{font-size:14px;color:rgba(255,255,255,.7);font-weight:500}
+.wr-stat-val{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:800;color:#4ade80}
 
-        .hero-stats {
-            display:flex; justify-content:center; flex-wrap:wrap; gap:40px;
-            margin-top:64px; padding-top:40px;
-            border-top:1px solid rgba(255,255,255,.15);
-        }
-        .hero-stat-num {
-            font-family:'Outfit',sans-serif; font-size:38px; font-weight:800; color:#fff;
-        }
-        .hero-stat-label { font-size:13px; color:rgba(255,255,255,.65); font-weight:600; margin-top:4px; }
-        .hero-stat-sep { width:1px; background:rgba(255,255,255,.15); }
+/* ============================================================
+   TESTIMONIALS
+============================================================ */
+.testi-section{background:var(--gray-light)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.testi-card{
+  background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);
+  padding:28px 24px;transition:all .3s;
+}
+.testi-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.testi-stars{color:#f59e0b;font-size:14px;margin-bottom:14px;letter-spacing:1px}
+.testi-quote{
+  font-size:14.5px;color:#374151;line-height:1.75;margin-bottom:22px;
+  border-left:3px solid var(--green);padding-left:14px;
+}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-av{
+  width:42px;height:42px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:800;color:#fff;
+}
+.testi-name{font-size:14.5px;font-weight:700;color:var(--navy)}
+.testi-role{font-size:12.5px;color:var(--gray);margin-top:2px}
 
-        /* ============================================================
-           SECTION COMMONS
-        ============================================================ */
-        section { padding:90px 24px; }
-        .container { max-width:1200px; margin:0 auto; }
-        .section-tag {
-            display:inline-block; background:rgba(26,86,219,.08);
-            color:var(--blue); font-size:12px; font-weight:800;
-            text-transform:uppercase; letter-spacing:2px;
-            padding:6px 16px; border-radius:50px; margin-bottom:16px;
-        }
-        .section-title {
-            font-size:clamp(28px, 3.5vw, 42px); font-weight:800;
-            color:var(--dark); margin-bottom:16px;
-        }
-        .section-sub { font-size:17px; color:var(--gray); max-width:580px; }
-        .section-header { margin-bottom:56px; }
-        .section-header.center { text-align:center; }
-        .section-header.center .section-sub { margin:0 auto; }
+/* ============================================================
+   CTA BANNER
+============================================================ */
+.cta-section{
+  padding:80px 24px;
+  background:linear-gradient(135deg,#16a34a 0%,#059669 60%,#047857 100%);
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-section::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:280px;height:280px;border-radius:50%;
+  background:rgba(255,255,255,.06);
+}
+.cta-section::after{
+  content:'';position:absolute;bottom:-80px;left:-40px;
+  width:220px;height:220px;border-radius:50%;
+  background:rgba(255,255,255,.05);
+}
+.cta-section h2{font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;margin-bottom:14px;position:relative;z-index:1}
+.cta-section p{font-size:1.05rem;color:rgba(255,255,255,.85);margin-bottom:36px;position:relative;z-index:1}
+.btn-cta-white{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#fff;color:var(--green);
+  font-size:16px;font-weight:800;
+  padding:15px 38px;border-radius:10px;
+  box-shadow:0 8px 32px rgba(0,0,0,.18);
+  transition:all .25s;position:relative;z-index:1;
+}
+.btn-cta-white:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,0,0,.22)}
+.btn-cta-outline{
+  display:inline-flex;align-items:center;gap:10px;
+  border:2px solid rgba(255,255,255,.6);color:#fff;
+  font-size:16px;font-weight:700;
+  padding:13px 36px;border-radius:10px;
+  transition:all .25s;position:relative;z-index:1;
+  margin-left:14px;
+}
+.btn-cta-outline:hover{background:rgba(255,255,255,.12);border-color:#fff}
 
-        /* ============================================================
-           ONLINE BADGE STRIP
-        ============================================================ */
-        .online-strip {
-            background:linear-gradient(90deg, #0d1b4b, #1a56db);
-            padding:18px 24px; text-align:center;
-        }
-        .online-strip p {
-            color:#fff; font-size:15px; font-weight:600;
-            display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap;
-        }
-        .online-badge {
-            background:#f97316; color:#fff;
-            padding:4px 14px; border-radius:50px; font-size:12px; font-weight:800;
-        }
+/* ============================================================
+   FOOTER
+============================================================ */
+.footer{background:var(--navy);padding:64px 24px 28px}
+.footer-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.f-brand img{width:52px;height:52px;object-fit:contain;margin-bottom:14px}
+.f-brand-name{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:12px}
+.f-brand-name .e{color:#e2e8f0}
+.f-brand-name .l{color:#4ade80}
+.f-desc{font-size:13.5px;color:#94a3b8;line-height:1.7;margin-bottom:20px}
+.f-contact a{display:flex;align-items:center;gap:8px;font-size:13px;color:#94a3b8;margin-bottom:8px;transition:color .2s}
+.f-contact a:hover{color:#4ade80}
+.f-col-title{font-size:14px;font-weight:700;color:#e2e8f0;margin-bottom:18px;letter-spacing:.3px}
+.f-links{display:flex;flex-direction:column;gap:10px}
+.f-links a{font-size:13.5px;color:#94a3b8;transition:color .2s}
+.f-links a:hover{color:#4ade80}
+.footer-bottom{
+  max-width:1180px;margin:0 auto;
+  padding-top:24px;border-top:1px solid rgba(255,255,255,.07);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  font-size:12.5px;color:#64748b;
+}
+.footer-bottom a{color:#64748b;transition:color .2s}
+.footer-bottom a:hover{color:#4ade80}
 
-        /* ============================================================
-           PROGRAMS
-        ============================================================ */
-        .programs-grid {
-            display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
-            gap:28px;
-        }
-        .program-card {
-            background:#fff; border:1px solid var(--border);
-            border-radius:var(--radius); padding:32px 28px;
-            box-shadow:var(--shadow);
-            transition:all .3s cubic-bezier(.4,0,.2,1);
-            position:relative; overflow:hidden;
-        }
-        .program-card::before {
-            content:''; position:absolute; top:0; left:0;
-            width:100%; height:4px;
-        }
-        .program-card.blue::before  { background:linear-gradient(90deg,#1a56db,#60a5fa); }
-        .program-card.orange::before{ background:linear-gradient(90deg,#f97316,#fbbf24); }
-        .program-card.green::before { background:linear-gradient(90deg,#10b981,#34d399); }
-        .program-card.purple::before{ background:linear-gradient(90deg,#8b5cf6,#a78bfa); }
-        .program-card.red::before   { background:linear-gradient(90deg,#ef4444,#f97316); }
-        .program-card.teal::before  { background:linear-gradient(90deg,#06b6d4,#10b981); }
+/* ============================================================
+   SCROLL ANIMATION
+============================================================ */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
 
-        .program-card:hover { transform:translateY(-6px); box-shadow:var(--shadow-lg); border-color:transparent; }
-
-        .prog-icon {
-            width:56px; height:56px; border-radius:var(--radius-sm);
-            display:flex; align-items:center; justify-content:center;
-            font-size:24px; margin-bottom:20px;
-        }
-        .prog-icon.blue   { background:#eff6ff; color:#1a56db; }
-        .prog-icon.orange { background:#fff7ed; color:#f97316; }
-        .prog-icon.green  { background:#ecfdf5; color:#10b981; }
-        .prog-icon.purple { background:#f5f3ff; color:#8b5cf6; }
-        .prog-icon.red    { background:#fef2f2; color:#ef4444; }
-        .prog-icon.teal   { background:#ecfeff; color:#06b6d4; }
-
-        .prog-title { font-size:20px; font-weight:800; margin-bottom:10px; color:var(--dark); }
-        .prog-desc  { font-size:14px; color:var(--gray); line-height:1.6; margin-bottom:20px; }
-        .prog-tags  { display:flex; flex-wrap:wrap; gap:8px; }
-        .prog-tag {
-            font-size:11.5px; font-weight:700; padding:4px 12px; border-radius:50px;
-            background:var(--light-gray); color:var(--gray);
-        }
-        .prog-duration {
-            display:flex; align-items:center; gap:6px;
-            font-size:13px; color:var(--blue); font-weight:700; margin-top:20px;
-        }
-
-        /* ============================================================
-           COLLEGES
-        ============================================================ */
-        .colleges-section { background:var(--light-gray); }
-        .colleges-grid {
-            display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
-            gap:24px;
-        }
-        .college-card {
-            background:#fff; border:1px solid var(--border); border-radius:var(--radius);
-            padding:28px 24px; text-align:center; box-shadow:var(--shadow);
-            transition:all .3s;
-        }
-        .college-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-lg); }
-        .college-icon {
-            width:64px; height:64px; border-radius:50%;
-            background:linear-gradient(135deg,#1a56db,#60a5fa);
-            display:flex; align-items:center; justify-content:center;
-            font-size:26px; color:#fff; margin:0 auto 18px;
-        }
-        .college-name { font-size:18px; font-weight:800; color:var(--dark); margin-bottom:6px; }
-        .college-location { font-size:13px; color:var(--gray); display:flex; align-items:center; justify-content:center; gap:5px; }
-        .college-badge {
-            display:inline-block; margin-top:14px;
-            background:linear-gradient(90deg,#1a56db,#f97316);
-            color:#fff; font-size:11px; font-weight:800;
-            padding:4px 14px; border-radius:50px;
-        }
-
-        /* ============================================================
-           HOW IT WORKS
-        ============================================================ */
-        .steps-grid {
-            display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-            gap:32px; position:relative;
-        }
-        .step-card {
-            text-align:center; padding:40px 24px;
-            background:#fff; border:1px solid var(--border);
-            border-radius:var(--radius); box-shadow:var(--shadow);
-            transition:all .3s;
-        }
-        .step-card:hover { transform:translateY(-5px); }
-        .step-num {
-            width:60px; height:60px; border-radius:50%;
-            background:linear-gradient(135deg,#1a56db,#3b82f6);
-            color:#fff; font-family:'Outfit',sans-serif; font-size:24px; font-weight:800;
-            display:flex; align-items:center; justify-content:center; margin:0 auto 22px;
-            box-shadow:0 8px 20px rgba(26,86,219,.3);
-        }
-        .step-title { font-size:18px; font-weight:800; margin-bottom:10px; color:var(--dark); }
-        .step-desc  { font-size:14px; color:var(--gray); line-height:1.6; }
-
-        /* ============================================================
-           WHY EASY LEARN
-        ============================================================ */
-        .why-section { background:linear-gradient(135deg,#0d1b4b,#1e3a8a); }
-        .why-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:24px; }
-        .why-card {
-            background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
-            border-radius:var(--radius); padding:32px 28px;
-            transition:all .3s; backdrop-filter:blur(4px);
-        }
-        .why-card:hover { background:rgba(255,255,255,.1); transform:translateY(-4px); }
-        .why-icon { font-size:34px; margin-bottom:18px; }
-        .why-title { font-size:19px; font-weight:800; color:#fff; margin-bottom:10px; }
-        .why-desc  { font-size:14px; color:rgba(255,255,255,.7); line-height:1.6; }
-        .why-section .section-tag { background:rgba(249,115,22,.2); color:#fbbf24; }
-        .why-section .section-title { color:#fff; }
-        .why-section .section-sub { color:rgba(255,255,255,.7); }
-
-        /* ============================================================
-           TESTIMONIALS
-        ============================================================ */
-        .testimonials-section { background:var(--light-gray); }
-        .testimonials-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:28px; }
-        .testi-card {
-            background:#fff; border:1px solid var(--border); border-radius:var(--radius);
-            padding:32px 28px; box-shadow:var(--shadow); transition:all .3s;
-        }
-        .testi-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-lg); }
-        .stars { color:#f59e0b; font-size:15px; margin-bottom:16px; }
-        .testi-text { font-size:15px; color:var(--gray); line-height:1.7; margin-bottom:24px; font-style:italic; }
-        .testi-text::before { content:'\201C'; font-size:40px; color:var(--blue); line-height:0; vertical-align:-18px; margin-right:4px; }
-        .testi-author { display:flex; align-items:center; gap:14px; }
-        .testi-avatar {
-            width:44px; height:44px; border-radius:50%;
-            background:linear-gradient(135deg,#1a56db,#f97316);
-            display:flex; align-items:center; justify-content:center;
-            color:#fff; font-weight:800; font-size:16px;
-        }
-        .testi-name { font-weight:800; font-size:15px; color:var(--dark); }
-        .testi-role { font-size:12px; color:var(--gray); }
-
-        /* ============================================================
-           CTA BANNER
-        ============================================================ */
-        .cta-section {
-            background:linear-gradient(135deg,#f97316,#ea580c);
-            padding:80px 24px; text-align:center;
-        }
-        .cta-section h2 { font-size:clamp(28px,4vw,46px); color:#fff; margin-bottom:16px; }
-        .cta-section p { font-size:17px; color:rgba(255,255,255,.85); margin-bottom:36px; max-width:560px; margin-left:auto; margin-right:auto; }
-        .btn-cta-white {
-            display:inline-flex; align-items:center; gap:10px;
-            background:#fff; color:#f97316; font-size:16px; font-weight:800;
-            padding:16px 40px; border-radius:var(--radius-sm);
-            box-shadow:0 8px 30px rgba(0,0,0,.15); transition:all .25s;
-        }
-        .btn-cta-white:hover { transform:translateY(-3px); box-shadow:0 14px 40px rgba(0,0,0,.2); }
-
-        /* ============================================================
-           FOOTER
-        ============================================================ */
-        .footer { background:var(--dark); padding:70px 24px 30px; }
-        .footer-grid {
-            max-width:1200px; margin:0 auto;
-            display:grid; grid-template-columns:2fr 1fr 1fr; gap:60px;
-            margin-bottom:50px;
-        }
-        .footer-brand img { width:52px; height:52px; object-fit:contain; margin-bottom:14px; }
-        .footer-brand-name { font-family:'Outfit',sans-serif; font-size:22px; font-weight:800; margin-bottom:14px; }
-        .footer-brand-name .easy { color:#60a5fa; }
-        .footer-brand-name .learn { color:#f97316; }
-        .footer-desc { font-size:14px; color:#94a3b8; line-height:1.7; margin-bottom:22px; }
-        .footer-contact { font-size:14px; color:#94a3b8; display:flex; flex-direction:column; gap:8px; }
-        .footer-contact a { display:flex; align-items:center; gap:8px; color:#94a3b8; transition:color .2s; }
-        .footer-contact a:hover { color:#f97316; }
-
-        .footer-col-title { font-size:16px; font-weight:800; color:#fff; margin-bottom:20px; }
-        .footer-links { list-style:none; display:flex; flex-direction:column; gap:10px; }
-        .footer-links a { font-size:14px; color:#94a3b8; transition:color .2s; }
-        .footer-links a:hover { color:#f97316; }
-
-        .footer-bottom {
-            max-width:1200px; margin:0 auto;
-            padding-top:28px; border-top:1px solid #1e293b;
-            display:flex; align-items:center; justify-content:space-between;
-            flex-wrap:wrap; gap:12px;
-            font-size:13px; color:#64748b;
-        }
-        .footer-bottom a { color:#64748b; transition:color .2s; }
-        .footer-bottom a:hover { color:#f97316; }
-
-        /* ============================================================
-           MOBILE NAV MENU
-        ============================================================ */
-        @media (max-width: 768px) {
-            .hamburger { display:block; }
-            .nav-links-wrap {
-                display:none; position:fixed; inset:72px 0 0 0;
-                background:rgba(255,255,255,.98); backdrop-filter:blur(14px);
-                flex-direction:column; padding:32px 24px; gap:8px;
-                border-top:1px solid var(--border);
-            }
-            .nav-links-wrap.open { display:flex; }
-            .nav-links { flex-direction:column; width:100%; gap:4px; }
-            .nav-links a { display:block; padding:14px 16px; font-size:17px; }
-            .btn-login { width:100%; justify-content:center; padding:14px; margin-top:12px; }
-
-            .footer-grid { grid-template-columns:1fr; gap:36px; }
-            .hero-stat-sep { display:none; }
-        }
-
-        /* ============================================================
-           SCROLL FADE-IN ANIMATION
-        ============================================================ */
-        .fade-up { opacity:0; transform:translateY(30px); transition:opacity .6s ease, transform .6s ease; }
-        .fade-up.visible { opacity:1; transform:translateY(0); }
-    </style>
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media(max-width:1024px){
+  .courses-grid{grid-template-columns:repeat(2,1fr)}
+  .colleges-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-bar-inner{grid-template-columns:repeat(2,1fr)}
+  .why-grid{grid-template-columns:1fr}
+  .why-right-visual{display:none}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:36px}
+}
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr;gap:40px;text-align:center;padding:56px 20px 40px;min-height:auto}
+  .hero-sub,.hero-cta,.hero-trust{justify-content:center}
+  .hero-visual{order:-1}
+  .hero-visual-bg{width:300px;height:300px}
+  .hero-logo-big{width:160px;height:160px}
+  .chip{display:none}
+  .courses-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
+  .steps-row{grid-template-columns:1fr 1fr;gap:20px}
+  .steps-row::before{display:none}
+  .colleges-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+  .hamburger{display:block}
+  .mobile-menu{
+    display:none;position:fixed;inset:68px 0 0;
+    background:#fff;border-top:1px solid var(--border);
+    flex-direction:column;padding:20px;gap:4px;
+    overflow-y:auto;
+  }
+  .mobile-menu.open{display:flex}
+  .mobile-menu a{font-size:16px;font-weight:500;color:#374151;padding:12px 16px;border-radius:8px}
+  .mobile-menu a:hover{background:#f3f4f6}
+  .mobile-menu .btn-nav-login{margin-top:8px;justify-content:center;padding:13px}
+  .footer-inner{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .btn-cta-outline{margin-left:0;margin-top:12px}
+}
+</style>
 </head>
 <body>
 
-<!-- ========================================================
-     SPLASH SCREEN
-======================================================== -->
-<div id="ela-splash">
-    <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Logo" class="sp-logo" id="sp-logo">
-    <h1 class="sp-title">Easy Learn Academy</h1>
-    <p class="sp-tag">Technical Skill Partner &bull; Online Training</p>
+<!-- SPLASH -->
+<div id="splash">
+  <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn" id="sp-img">
+  <h1>Easy Learn Academy</h1>
+  <p>Online Technical Training</p>
 </div>
 
-<!-- ========================================================
-     NAVBAR
-======================================================== -->
-<nav class="navbar" id="mainNav">
-    <div class="nav-inner">
-        <!-- Brand -->
-        <a href="#" class="nav-brand">
-            <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Logo">
-            <span class="nav-brand-name"><span class="easy">Easy</span><span class="learn">Learn</span></span>
-        </a>
+<!-- ANN BAR -->
+<div class="ann-bar">
+  <span class="pill">NEW</span>
+  Python & Java Full Stack batches starting soon &nbsp;•&nbsp;
+  <a href="{% url 'trainer_signup' %}">Apply as Trainer <i class="fa-solid fa-arrow-right fa-xs"></i></a>
+</div>
 
-        <!-- Desktop Links -->
-        <div class="nav-links-wrap" id="navMenu">
-            <ul class="nav-links">
-                <li><a href="#programs">Programs</a></li>
-                <li><a href="#colleges">Our Colleges</a></li>
-                <li><a href="#how">How It Works</a></li>
-                <li><a href="#why">Why Us</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <a href="{% url 'login' %}" class="btn-login">
-                <i class="fa-solid fa-right-to-bracket"></i> Login
-            </a>
-        </div>
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="brand">
+      <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Logo">
+      <span class="brand-text"><span class="e">Easy</span><span class="l">Learn</span></span>
+    </a>
 
-        <!-- Hamburger -->
-        <button class="hamburger" id="hamburger" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
+    <div class="nav-links">
+      <a href="#courses" class="active">Courses</a>
+      <a href="#colleges">Our Colleges</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#why-us">Why Us</a>
+      <a href="#contact">Contact</a>
     </div>
+
+    <div class="nav-right">
+      <a href="{% url 'login' %}" class="btn-nav-login">
+        <i class="fa-solid fa-right-to-bracket"></i> Login
+      </a>
+    </div>
+
+    <button class="hamburger" id="ham" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#courses">Courses</a>
+    <a href="#colleges">Our Colleges</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#why-us">Why Us</a>
+    <a href="#contact">Contact</a>
+    <a href="{% url 'login' %}" class="btn-nav-login">
+      <i class="fa-solid fa-right-to-bracket"></i> Login
+    </a>
+  </div>
 </nav>
 
-<!-- ========================================================
-     ONLINE ONLY STRIP
-======================================================== -->
-<div class="online-strip">
-    <p>
-        <span class="online-badge">100% Online</span>
-        All Easy Learn programs are conducted fully online &mdash; learn from anywhere across India
-        <i class="fa-solid fa-wifi" style="color:#fbbf24;"></i>
-    </p>
+<!-- ====================================================
+     HERO
+==================================================== -->
+<section style="max-width:1180px;margin:0 auto;padding:72px 24px 60px">
+  <div class="hero" style="all:unset;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <i class="fa-solid fa-wifi"></i> 100% Online &bull; Live Interactive Sessions
+      </div>
+      <h1>
+        Skill Up with<br>
+        <span class="highlight">Industry-Level</span><br>
+        Tech Training
+      </h1>
+      <p class="hero-sub">
+        Easy Learn Academy brings expert-led online technical bootcamps directly to engineering college students — structured, live, and placement-ready.
+      </p>
+      <div class="hero-cta">
+        <a href="#courses" class="btn-primary">
+          <i class="fa-solid fa-rocket"></i> Explore Courses
+        </a>
+        <a href="{% url 'login' %}" class="btn-outline-dark">
+          <i class="fa-solid fa-right-to-bracket"></i> Login
+        </a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-avatars">
+          <span>AK</span><span>PR</span><span>MS</span><span>RV</span><span>+</span>
+        </div>
+        <span class="trust-text"><strong>500+ students</strong> trained across 4 colleges</span>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-visual-bg">
+        <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn" class="hero-logo-big">
+      </div>
+      <!-- Floating chips -->
+      <div class="chip chip-1">
+        <div class="chip-icon" style="background:#dcfce7;color:#16a34a"><i class="fa-solid fa-check"></i></div>
+        <div><div class="chip-val">4+</div><div class="chip-lab">Partner Colleges</div></div>
+      </div>
+      <div class="chip chip-2">
+        <div class="chip-icon" style="background:#dbeafe;color:#2563eb"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div><div class="chip-val">500+</div><div class="chip-lab">Students Trained</div></div>
+      </div>
+      <div class="chip chip-3">
+        <div class="chip-icon" style="background:#ffedd5;color:#f97316"><i class="fa-solid fa-laptop-code"></i></div>
+        <div><div class="chip-val">6+</div><div class="chip-lab">Tech Programs</div></div>
+      </div>
+      <div class="chip chip-4">
+        <div class="chip-icon" style="background:#ede9fe;color:#7c3aed"><i class="fa-solid fa-wifi"></i></div>
+        <div><div class="chip-val">100%</div><div class="chip-lab">Online</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-item">
+      <div class="stat-num"><span>4</span>+</div>
+      <div class="stat-label">Partner Colleges</div>
+    </div>
+    <div class="stat-item stat-divider">
+      <div class="stat-num"><span>500</span>+</div>
+      <div class="stat-label">Students Trained</div>
+    </div>
+    <div class="stat-item stat-divider">
+      <div class="stat-num"><span>6</span>+</div>
+      <div class="stat-label">Online Programs</div>
+    </div>
+    <div class="stat-item stat-divider">
+      <div class="stat-num"><span>100</span>%</div>
+      <div class="stat-label">Online Delivery</div>
+    </div>
+  </div>
 </div>
 
-<!-- ========================================================
-     HERO
-======================================================== -->
-<section class="hero" id="home">
-    <div class="hero-circle hero-circle-1"></div>
-    <div class="hero-circle hero-circle-2"></div>
-    <div class="hero-inner">
-        <div class="hero-badge">
-            <i class="fa-solid fa-star"></i>
-            Trusted by Top Engineering Colleges
-        </div>
-        <h1>
-            Master In-Demand Tech Skills<br>
-            <span class="accent">Online &mdash; From Day One</span>
-        </h1>
-        <p>
-            Easy Learn Academy brings industry-level technical bootcamps directly to college students
-            through structured online training programs in Python, Full Stack, Java, Data Science & more.
-        </p>
-        <div class="hero-actions">
-            <a href="#programs" class="btn-hero-primary">
-                <i class="fa-solid fa-rocket"></i> Explore Programs
-            </a>
-            <a href="{% url 'trainer_signup' %}" class="btn-hero-outline">
-                <i class="fa-solid fa-chalkboard-user"></i> Become a Trainer
-            </a>
-        </div>
-
-        <div class="hero-stats">
-            <div>
-                <div class="hero-stat-num">4+</div>
-                <div class="hero-stat-label">Partner Colleges</div>
-            </div>
-            <div class="hero-stat-sep"></div>
-            <div>
-                <div class="hero-stat-num">500+</div>
-                <div class="hero-stat-label">Students Trained</div>
-            </div>
-            <div class="hero-stat-sep"></div>
-            <div>
-                <div class="hero-stat-num">6+</div>
-                <div class="hero-stat-label">Tech Programs</div>
-            </div>
-            <div class="hero-stat-sep"></div>
-            <div>
-                <div class="hero-stat-num">100%</div>
-                <div class="hero-stat-label">Online Delivery</div>
-            </div>
-        </div>
+<!-- ====================================================
+     COURSES
+==================================================== -->
+<section class="section" id="courses">
+  <div class="container">
+    <div class="sec-header center">
+      <span class="sec-tag">Our Programs</span>
+      <h2 class="sec-title">Online Technical Training Courses</h2>
+      <p class="sec-sub">Industry-curated curricula delivered live online by expert corporate trainers across India</p>
     </div>
+    <div class="courses-grid">
+
+      <div class="course-card c-green reveal">
+        <div class="course-icon ci-green"><i class="fa-brands fa-python"></i></div>
+        <div class="course-title">Python Full Stack</div>
+        <div class="course-desc">Master Python, Django, REST APIs, PostgreSQL and deploy production-ready web applications from scratch.</div>
+        <div class="course-meta">
+          <span><i class="fa-regular fa-clock"></i> 30–45 Days</span>
+          <span><i class="fa-solid fa-wifi"></i> Live Online</span>
+        </div>
+        <div class="course-tags">
+          <span class="tag">Python</span><span class="tag">Django</span><span class="tag">REST API</span>
+        </div>
+        <div class="course-footer">
+          <span class="course-enroll">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></span>
+          <span class="course-duration"><i class="fa-regular fa-calendar"></i> Starts Soon</span>
+        </div>
+      </div>
+
+      <div class="course-card c-blue reveal">
+        <div class="course-icon ci-blue"><i class="fa-brands fa-java"></i></div>
+        <div class="course-title">Java Full Stack</div>
+        <div class="course-desc">Core Java, Spring Boot, Hibernate, React.js and enterprise application design patterns — industry-ready.</div>
+        <div class="course-meta">
+          <span><i class="fa-regular fa-clock"></i> 30–45 Days</span>
+          <span><i class="fa-solid fa-wifi"></i> Live Online</span>
+        </div>
+        <div class="course-tags">
+          <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">React</span>
+        </div>
+        <div class="course-footer">
+          <span class="course-enroll" style="color:#2563eb">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></span>
+          <span class="course-duration"><i class="fa-regular fa-calendar"></i> Starts Soon</span>
+        </div>
+      </div>
+
+      <div class="course-card c-orange reveal">
+        <div class="course-icon ci-orange"><i class="fa-solid fa-database"></i></div>
+        <div class="course-title">Data Science & ML</div>
+        <div class="course-desc">NumPy, Pandas, Matplotlib, Scikit-Learn and hands-on machine learning model building with real datasets.</div>
+        <div class="course-meta">
+          <span><i class="fa-regular fa-clock"></i> 30 Days</span>
+          <span><i class="fa-solid fa-wifi"></i> Live Online</span>
+        </div>
+        <div class="course-tags">
+          <span class="tag">Python</span><span class="tag">ML</span><span class="tag">Pandas</span>
+        </div>
+        <div class="course-footer">
+          <span class="course-enroll" style="color:#f97316">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></span>
+          <span class="course-duration"><i class="fa-regular fa-calendar"></i> Starts Soon</span>
+        </div>
+      </div>
+
+      <div class="course-card c-purple reveal">
+        <div class="course-icon ci-purple"><i class="fa-brands fa-react"></i></div>
+        <div class="course-title">Web Development</div>
+        <div class="course-desc">HTML5, CSS3, JavaScript ES6+, React.js — build modern, responsive and dynamic web applications.</div>
+        <div class="course-meta">
+          <span><i class="fa-regular fa-clock"></i> 21–30 Days</span>
+          <span><i class="fa-solid fa-wifi"></i> Live Online</span>
+        </div>
+        <div class="course-tags">
+          <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">React</span>
+        </div>
+        <div class="course-footer">
+          <span class="course-enroll" style="color:#7c3aed">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></span>
+          <span class="course-duration"><i class="fa-regular fa-calendar"></i> Starts Soon</span>
+        </div>
+      </div>
+
+      <div class="course-card c-red reveal">
+        <div class="course-icon ci-red"><i class="fa-solid fa-code"></i></div>
+        <div class="course-title">C / C++ Programming</div>
+        <div class="course-desc">Data structures, algorithms, memory management and systems programming — the core foundation every engineer needs.</div>
+        <div class="course-meta">
+          <span><i class="fa-regular fa-clock"></i> 21 Days</span>
+          <span><i class="fa-solid fa-wifi"></i> Live Online</span>
+        </div>
+        <div class="course-tags">
+          <span class="tag">C</span><span class="tag">C++</span><span class="tag">DSA</span>
+        </div>
+        <div class="course-footer">
+          <span class="course-enroll" style="color:#dc2626">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></span>
+          <span class="course-duration"><i class="fa-regular fa-calendar"></i> Starts Soon</span>
+        </div>
+      </div>
+
+      <div class="course-card c-teal reveal">
+        <div class="course-icon ci-teal"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="course-title">Cyber Security Basics</div>
+        <div class="course-desc">Ethical hacking, network security, vulnerability assessment, Linux fundamentals and cybersecurity practices.</div>
+        <div class="course-meta">
+          <span><i class="fa-regular fa-clock"></i> 21 Days</span>
+          <span><i class="fa-solid fa-wifi"></i> Live Online</span>
+        </div>
+        <div class="course-tags">
+          <span class="tag">Security</span><span class="tag">Linux</span><span class="tag">Networking</span>
+        </div>
+        <div class="course-footer">
+          <span class="course-enroll" style="color:#0891b2">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></span>
+          <span class="course-duration"><i class="fa-regular fa-calendar"></i> Starts Soon</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
 
-<!-- ========================================================
-     PROGRAMS
-======================================================== -->
-<section id="programs">
-    <div class="container">
-        <div class="section-header center">
-            <span class="section-tag">Our Programs</span>
-            <h2 class="section-title">Online Technical Training Programs</h2>
-            <p class="section-sub">Industry-curated curricula delivered live online by expert corporate trainers</p>
-        </div>
-        <div class="programs-grid">
-            <div class="program-card blue fade-up">
-                <div class="prog-icon blue"><i class="fa-brands fa-python"></i></div>
-                <div class="prog-title">Python Full Stack</div>
-                <div class="prog-desc">Master Python, Django, REST APIs, HTML/CSS/JS and deploy production-ready web applications.</div>
-                <div class="prog-tags">
-                    <span class="prog-tag">Python</span>
-                    <span class="prog-tag">Django</span>
-                    <span class="prog-tag">REST API</span>
-                </div>
-                <div class="prog-duration"><i class="fa-regular fa-clock"></i> 30–45 Days Online</div>
-            </div>
-
-            <div class="program-card orange fade-up">
-                <div class="prog-icon orange"><i class="fa-brands fa-java"></i></div>
-                <div class="prog-title">Java Full Stack</div>
-                <div class="prog-desc">Core Java, Spring Boot, Hibernate, React.js and modern enterprise application design.</div>
-                <div class="prog-tags">
-                    <span class="prog-tag">Java</span>
-                    <span class="prog-tag">Spring Boot</span>
-                    <span class="prog-tag">React</span>
-                </div>
-                <div class="prog-duration"><i class="fa-regular fa-clock"></i> 30–45 Days Online</div>
-            </div>
-
-            <div class="program-card green fade-up">
-                <div class="prog-icon green"><i class="fa-solid fa-database"></i></div>
-                <div class="prog-title">Data Science & ML</div>
-                <div class="prog-desc">NumPy, Pandas, Matplotlib, Scikit-Learn and real-world machine learning model building.</div>
-                <div class="prog-tags">
-                    <span class="prog-tag">Python</span>
-                    <span class="prog-tag">ML</span>
-                    <span class="prog-tag">Pandas</span>
-                </div>
-                <div class="prog-duration"><i class="fa-regular fa-clock"></i> 30 Days Online</div>
-            </div>
-
-            <div class="program-card purple fade-up">
-                <div class="prog-icon purple"><i class="fa-brands fa-react"></i></div>
-                <div class="prog-title">Web Development</div>
-                <div class="prog-desc">HTML5, CSS3, JavaScript ES6+, React.js — build modern responsive web applications from scratch.</div>
-                <div class="prog-tags">
-                    <span class="prog-tag">HTML/CSS</span>
-                    <span class="prog-tag">JavaScript</span>
-                    <span class="prog-tag">React</span>
-                </div>
-                <div class="prog-duration"><i class="fa-regular fa-clock"></i> 21–30 Days Online</div>
-            </div>
-
-            <div class="program-card red fade-up">
-                <div class="prog-icon red"><i class="fa-solid fa-network-wired"></i></div>
-                <div class="prog-title">C / C++ Programming</div>
-                <div class="prog-desc">Data structures, algorithms, memory management, and systems programming fundamentals.</div>
-                <div class="prog-tags">
-                    <span class="prog-tag">C</span>
-                    <span class="prog-tag">C++</span>
-                    <span class="prog-tag">DSA</span>
-                </div>
-                <div class="prog-duration"><i class="fa-regular fa-clock"></i> 21 Days Online</div>
-            </div>
-
-            <div class="program-card teal fade-up">
-                <div class="prog-icon teal"><i class="fa-solid fa-shield-halved"></i></div>
-                <div class="prog-title">Cyber Security Basics</div>
-                <div class="prog-desc">Ethical hacking, network security, vulnerability assessment and cybersecurity practices.</div>
-                <div class="prog-tags">
-                    <span class="prog-tag">Security</span>
-                    <span class="prog-tag">Linux</span>
-                    <span class="prog-tag">Networking</span>
-                </div>
-                <div class="prog-duration"><i class="fa-regular fa-clock"></i> 21 Days Online</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ========================================================
+<!-- ====================================================
      PARTNER COLLEGES
-======================================================== -->
-<section id="colleges" class="colleges-section">
-    <div class="container">
-        <div class="section-header center">
-            <span class="section-tag">Our Colleges</span>
-            <h2 class="section-title">Our Partner Colleges</h2>
-            <p class="section-sub">Trusted by leading engineering institutions across Karnataka</p>
-        </div>
-        <div class="colleges-grid">
-            <div class="college-card fade-up">
-                <div class="college-icon"><i class="fa-solid fa-university"></i></div>
-                <div class="college-name">RYMEC</div>
-                <div class="college-location"><i class="fa-solid fa-location-dot"></i> Bellary, Karnataka</div>
-                <span class="college-badge">Active Partner</span>
-            </div>
-            <div class="college-card fade-up">
-                <div class="college-icon" style="background:linear-gradient(135deg,#f97316,#fbbf24);"><i class="fa-solid fa-graduation-cap"></i></div>
-                <div class="college-name">SMVITM</div>
-                <div class="college-location"><i class="fa-solid fa-location-dot"></i> Udupi, Karnataka</div>
-                <span class="college-badge">Active Partner</span>
-            </div>
-            <div class="college-card fade-up">
-                <div class="college-icon" style="background:linear-gradient(135deg,#10b981,#34d399);"><i class="fa-solid fa-building-columns"></i></div>
-                <div class="college-name">BLDEA</div>
-                <div class="college-location"><i class="fa-solid fa-location-dot"></i> Vijayapur, Karnataka</div>
-                <span class="college-badge">Active Partner</span>
-            </div>
-            <div class="college-card fade-up">
-                <div class="college-icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);"><i class="fa-solid fa-school"></i></div>
-                <div class="college-name">ASBLDEA</div>
-                <div class="college-location"><i class="fa-solid fa-location-dot"></i> Bijapur, Karnataka</div>
-                <span class="college-badge">Active Partner</span>
-            </div>
-        </div>
+==================================================== -->
+<section class="section colleges-section" id="colleges">
+  <div class="container">
+    <div class="sec-header center">
+      <span class="sec-tag">Our Colleges</span>
+      <h2 class="sec-title">Trusted Partner Colleges</h2>
+      <p class="sec-sub">Leading engineering institutions across Karnataka partner with Easy Learn for technical training</p>
     </div>
+    <div class="colleges-grid">
+      <div class="college-card reveal">
+        <div class="coll-badge-wrap" style="background:#dcfce7;border-color:#bbf7d0">🎓</div>
+        <div class="coll-name">RYMEC</div>
+        <div class="coll-loc"><i class="fa-solid fa-location-dot" style="color:#16a34a"></i> Bellary, Karnataka</div>
+        <span class="coll-status">✓ Active Partner</span>
+      </div>
+      <div class="college-card reveal">
+        <div class="coll-badge-wrap" style="background:#dbeafe;border-color:#bfdbfe">🏛️</div>
+        <div class="coll-name">SMVITM</div>
+        <div class="coll-loc"><i class="fa-solid fa-location-dot" style="color:#2563eb"></i> Udupi, Karnataka</div>
+        <span class="coll-status">✓ Active Partner</span>
+      </div>
+      <div class="college-card reveal">
+        <div class="coll-badge-wrap" style="background:#ffedd5;border-color:#fed7aa">🏫</div>
+        <div class="coll-name">BLDEA</div>
+        <div class="coll-loc"><i class="fa-solid fa-location-dot" style="color:#f97316"></i> Vijayapur, Karnataka</div>
+        <span class="coll-status">✓ Active Partner</span>
+      </div>
+      <div class="college-card reveal">
+        <div class="coll-badge-wrap" style="background:#ede9fe;border-color:#ddd6fe">🎯</div>
+        <div class="coll-name">ASBLDEA</div>
+        <div class="coll-loc"><i class="fa-solid fa-location-dot" style="color:#7c3aed"></i> Bijapur, Karnataka</div>
+        <span class="coll-status">✓ Active Partner</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- ========================================================
+<!-- ====================================================
      HOW IT WORKS
-======================================================== -->
-<section id="how">
-    <div class="container">
-        <div class="section-header center">
-            <span class="section-tag">Process</span>
-            <h2 class="section-title">How It Works</h2>
-            <p class="section-sub">Simple, structured, and fully online — from enrollment to completion</p>
-        </div>
-        <div class="steps-grid">
-            <div class="step-card fade-up">
-                <div class="step-num">1</div>
-                <div class="step-title">College Partners with Us</div>
-                <div class="step-desc">The college signs up with Easy Learn Academy to run a technical bootcamp program for their students online.</div>
-            </div>
-            <div class="step-card fade-up">
-                <div class="step-num">2</div>
-                <div class="step-title">Trainer is Assigned</div>
-                <div class="step-desc">An expert corporate trainer is assigned and approved by our admin team to deliver structured daily online sessions.</div>
-            </div>
-            <div class="step-card fade-up">
-                <div class="step-num">3</div>
-                <div class="step-title">Live Online Sessions</div>
-                <div class="step-desc">Students attend 2–3 live online sessions per day. Trainers log daily progress, topics covered, and upload class notes.</div>
-            </div>
-            <div class="step-card fade-up">
-                <div class="step-num">4</div>
-                <div class="step-title">Certificate & Completion</div>
-                <div class="step-desc">Students complete assignments and receive a course completion certificate verified by Easy Learn Academy.</div>
-            </div>
-        </div>
+==================================================== -->
+<section class="section" id="how-it-works">
+  <div class="container">
+    <div class="sec-header center">
+      <span class="sec-tag">Process</span>
+      <h2 class="sec-title">How It Works</h2>
+      <p class="sec-sub">Simple, structured and 100% online — from enrollment to certification</p>
     </div>
+    <div class="steps-row">
+      <div class="step reveal">
+        <div class="step-dot">1</div>
+        <div class="step-title">College Partners With Us</div>
+        <div class="step-desc">The college signs up with Easy Learn to run an online technical bootcamp for their students.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-dot">2</div>
+        <div class="step-title">Trainer Gets Assigned</div>
+        <div class="step-desc">An expert trainer is approved by our admin and assigned to deliver structured live online sessions.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-dot">3</div>
+        <div class="step-title">Live Online Classes</div>
+        <div class="step-desc">Students attend 2–3 live sessions daily. Trainers log progress, topics and upload class notes each day.</div>
+      </div>
+      <div class="step reveal">
+        <div class="step-dot">4</div>
+        <div class="step-title">Certificate & Completion</div>
+        <div class="step-desc">Students complete assignments and receive a verified Easy Learn Academy completion certificate.</div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- ========================================================
-     WHY EASY LEARN
-======================================================== -->
-<section id="why" class="why-section">
-    <div class="container">
-        <div class="section-header center">
-            <span class="section-tag">Why Us</span>
-            <h2 class="section-title">Why Easy Learn Academy?</h2>
-            <p class="section-sub" style="color:rgba(255,255,255,.7);">We deliver quality technical education with zero compromise</p>
+<!-- ====================================================
+     WHY US
+==================================================== -->
+<section class="section why-section" id="why-us">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-left">
+        <span class="sec-tag">Why Easy Learn</span>
+        <h2 class="sec-title">The Smarter Way to<br>Skill Up Students</h2>
+        <p class="sec-sub">We deliver quality technical education with zero compromise and full transparency</p>
+        <div class="why-features">
+          <div class="why-feat">
+            <div class="wf-icon">🌐</div>
+            <div>
+              <div class="wf-title">100% Online Delivery</div>
+              <div class="wf-desc">All sessions are conducted live online — students learn from anywhere in India without any travel.</div>
+            </div>
+          </div>
+          <div class="why-feat">
+            <div class="wf-icon">👨‍💼</div>
+            <div>
+              <div class="wf-title">Industry Expert Trainers</div>
+              <div class="wf-desc">Every trainer is a verified corporate professional — approved by our admin before any session begins.</div>
+            </div>
+          </div>
+          <div class="why-feat">
+            <div class="wf-icon">📊</div>
+            <div>
+              <div class="wf-title">Daily Progress Tracking</div>
+              <div class="wf-desc">Trainers log daily topics, upload class notes and submit session reports — full transparency every day.</div>
+            </div>
+          </div>
+          <div class="why-feat">
+            <div class="wf-icon">🏆</div>
+            <div>
+              <div class="wf-title">Placement-Ready Curriculum</div>
+              <div class="wf-desc">Programs mapped to university syllabi and industry needs — designed for real-world placement readiness.</div>
+            </div>
+          </div>
         </div>
-        <div class="why-grid">
-            <div class="why-card fade-up">
-                <div class="why-icon">🌐</div>
-                <div class="why-title">100% Online Delivery</div>
-                <div class="why-desc">All sessions conducted live online — students learn from the comfort of their college or home, anywhere in India.</div>
-            </div>
-            <div class="why-card fade-up">
-                <div class="why-icon">👨‍💼</div>
-                <div class="why-title">Industry Expert Trainers</div>
-                <div class="why-desc">Every trainer is a verified corporate professional with hands-on experience in their domain.</div>
-            </div>
-            <div class="why-card fade-up">
-                <div class="why-icon">📊</div>
-                <div class="why-title">Daily Progress Tracking</div>
-                <div class="why-desc">Trainers log daily session workloads, topics covered and upload class notes — complete transparency.</div>
-            </div>
-            <div class="why-card fade-up">
-                <div class="why-icon">🎯</div>
-                <div class="why-title">Curriculum Aligned</div>
-                <div class="why-desc">Programs are mapped to university syllabi and designed for final year placement readiness.</div>
-            </div>
-            <div class="why-card fade-up">
-                <div class="why-icon">⚡</div>
-                <div class="why-title">Quick Setup</div>
-                <div class="why-desc">A program can be set up and started within days — no infrastructure required from the college side.</div>
-            </div>
-            <div class="why-card fade-up">
-                <div class="why-icon">🏆</div>
-                <div class="why-title">Verified Certification</div>
-                <div class="why-desc">Students receive Easy Learn Academy certificates that are valued by employers and recognized by the colleges.</div>
-            </div>
-        </div>
+      </div>
+      <div class="why-right-visual reveal">
+        <div style="font-size:13px;color:rgba(255,255,255,.5);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Academy At A Glance</div>
+        <div class="wr-stat"><span class="wr-stat-label">Partner Colleges</span><span class="wr-stat-val">4+</span></div>
+        <div class="wr-stat"><span class="wr-stat-label">Students Trained</span><span class="wr-stat-val">500+</span></div>
+        <div class="wr-stat"><span class="wr-stat-label">Active Programs</span><span class="wr-stat-val">6+</span></div>
+        <div class="wr-stat"><span class="wr-stat-label">Delivery Mode</span><span class="wr-stat-val">Online</span></div>
+        <div class="wr-stat"><span class="wr-stat-label">Session Logs / Day</span><span class="wr-stat-val">2–3</span></div>
+        <div class="wr-stat"><span class="wr-stat-label">Satisfaction Rate</span><span class="wr-stat-val">98%</span></div>
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- ========================================================
+<!-- ====================================================
      TESTIMONIALS
-======================================================== -->
-<section class="testimonials-section">
-    <div class="container">
-        <div class="section-header center">
-            <span class="section-tag">Testimonials</span>
-            <h2 class="section-title">What Students Say</h2>
-            <p class="section-sub">Real feedback from students who completed our online programs</p>
-        </div>
-        <div class="testimonials-grid">
-            <div class="testi-card fade-up">
-                <div class="stars">★★★★★</div>
-                <p class="testi-text">The Python Full Stack program was incredibly well-structured. The online sessions were interactive and the trainer explained everything clearly. Got placed within 2 months!</p>
-                <div class="testi-author">
-                    <div class="testi-avatar">AK</div>
-                    <div>
-                        <div class="testi-name">Akash Kumar</div>
-                        <div class="testi-role">B.Tech CSE &bull; RYMEC, Bellary</div>
-                    </div>
-                </div>
-            </div>
-            <div class="testi-card fade-up">
-                <div class="stars">★★★★★</div>
-                <p class="testi-text">Attending the Java Full Stack bootcamp online was the best decision. The daily sessions, notes uploads and weekly tests kept me on track throughout the program.</p>
-                <div class="testi-author">
-                    <div class="testi-avatar">PR</div>
-                    <div>
-                        <div class="testi-name">Priya Rao</div>
-                        <div class="testi-role">B.E. IT &bull; SMVITM, Udupi</div>
-                    </div>
-                </div>
-            </div>
-            <div class="testi-card fade-up">
-                <div class="stars">★★★★★</div>
-                <p class="testi-text">Easy Learn's Data Science program gave me the foundation I needed for my internship. The trainer was patient, the content was industry-relevant and fully online!</p>
-                <div class="testi-author">
-                    <div class="testi-avatar">MS</div>
-                    <div>
-                        <div class="testi-name">Mohammed Saad</div>
-                        <div class="testi-role">B.E. CSE &bull; BLDEA, Vijayapur</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+==================================================== -->
+<section class="section testi-section">
+  <div class="container">
+    <div class="sec-header center">
+      <span class="sec-tag">Testimonials</span>
+      <h2 class="sec-title">What Students Say</h2>
+      <p class="sec-sub">Real feedback from students who completed our online training programs</p>
     </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">The Python Full Stack program was incredibly well-structured. The live online sessions were interactive and the trainer explained everything clearly. Got placed within 2 months!</div>
+        <div class="testi-author">
+          <div class="testi-av" style="background:linear-gradient(135deg,#16a34a,#4ade80)">AK</div>
+          <div>
+            <div class="testi-name">Akash Kumar</div>
+            <div class="testi-role">B.Tech CSE · RYMEC, Bellary</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">The Java Full Stack bootcamp online was the best decision I made. Daily sessions, notes uploads and weekly tests kept me on track throughout the entire program.</div>
+        <div class="testi-author">
+          <div class="testi-av" style="background:linear-gradient(135deg,#2563eb,#60a5fa)">PR</div>
+          <div>
+            <div class="testi-name">Priya Rao</div>
+            <div class="testi-role">B.E. IT · SMVITM, Udupi</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">Easy Learn's Data Science program gave me the foundation I needed for my internship. Industry-relevant content and fully online — no commute, no hassle!</div>
+        <div class="testi-author">
+          <div class="testi-av" style="background:linear-gradient(135deg,#f97316,#fbbf24)">MS</div>
+          <div>
+            <div class="testi-name">Mohammed Saad</div>
+            <div class="testi-role">B.E. CSE · BLDEA, Vijayapur</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- ========================================================
-     CTA BANNER
-======================================================== -->
+<!-- ====================================================
+     CTA SECTION
+==================================================== -->
 <section class="cta-section" id="contact">
-    <div class="container" style="text-align:center;">
-        <h2>Ready to Skill Up Your Students?</h2>
-        <p>Partner with Easy Learn Academy and bring world-class online technical training to your college.</p>
-        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-            <a href="mailto:manager.projects@easy-learn-academy.com" class="btn-cta-white">
-                <i class="fa-solid fa-envelope"></i> Contact Us
-            </a>
-            <a href="{% url 'trainer_signup' %}" class="btn-cta-white" style="background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.4);">
-                <i class="fa-solid fa-chalkboard-user"></i> Apply as Trainer
-            </a>
-        </div>
-    </div>
+  <h2>Ready to Skill Up Your Students?</h2>
+  <p>Partner with Easy Learn Academy and bring world-class online technical training to your college — fully managed, zero infrastructure needed.</p>
+  <a href="mailto:manager.projects@easy-learn-academy.com" class="btn-cta-white">
+    <i class="fa-solid fa-envelope"></i> Contact Us Today
+  </a>
+  <a href="{% url 'trainer_signup' %}" class="btn-cta-outline">
+    <i class="fa-solid fa-chalkboard-user"></i> Apply as Trainer
+  </a>
 </section>
 
-<!-- ========================================================
+<!-- ====================================================
      FOOTER
-======================================================== -->
-<footer class="footer" id="footer">
-    <div class="footer-grid">
-        <div class="footer-brand">
-            <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Logo" style="width:56px;height:56px;">
-            <div class="footer-brand-name"><span class="easy">Easy</span><span class="learn">Learn</span> Academy</div>
-            <p class="footer-desc">Empowering engineering college students with industry-standard online technical training across India.</p>
-            <div class="footer-contact">
-                <a href="mailto:manager.projects@easy-learn-academy.com">
-                    <i class="fa-solid fa-envelope"></i> manager.projects@easy-learn-academy.com
-                </a>
-                <a href="#">
-                    <i class="fa-solid fa-globe"></i> www.easy-learn-academy.com
-                </a>
-            </div>
-        </div>
-        <div>
-            <div class="footer-col-title">Programs</div>
-            <ul class="footer-links">
-                <li><a href="#programs">Python Full Stack</a></li>
-                <li><a href="#programs">Java Full Stack</a></li>
-                <li><a href="#programs">Data Science & ML</a></li>
-                <li><a href="#programs">Web Development</a></li>
-                <li><a href="#programs">C / C++ Programming</a></li>
-                <li><a href="#programs">Cyber Security</a></li>
-            </ul>
-        </div>
-        <div>
-            <div class="footer-col-title">Quick Links</div>
-            <ul class="footer-links">
-                <li><a href="#colleges">Our Colleges</a></li>
-                <li><a href="#how">How It Works</a></li>
-                <li><a href="#why">Why Easy Learn</a></li>
-                <li><a href="{% url 'login' %}">Trainer Login</a></li>
-                <li><a href="{% url 'trainer_signup' %}">Register as Trainer</a></li>
-                <li><a href="{% url 'login' %}">Admin Access</a></li>
-            </ul>
-        </div>
+==================================================== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="f-brand">
+      <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn">
+      <div class="f-brand-name"><span class="e">Easy</span><span class="l">Learn</span> Academy</div>
+      <p class="f-desc">Empowering engineering college students with expert online technical training across India. Fully live, fully structured, fully online.</p>
+      <div class="f-contact">
+        <a href="mailto:manager.projects@easy-learn-academy.com"><i class="fa-solid fa-envelope"></i> manager.projects@easy-learn-academy.com</a>
+        <a href="#"><i class="fa-solid fa-globe"></i> www.easy-learn-academy.com</a>
+      </div>
     </div>
-    <div class="footer-bottom">
-        <span>&copy; 2026 Easy Learn Academy. All rights reserved. | Stephen Jebadurai</span>
-        <a href="{% url 'login' %}"><i class="fa-solid fa-user-shield"></i> Operations Login</a>
+    <div>
+      <div class="f-col-title">Programs</div>
+      <div class="f-links">
+        <a href="#courses">Python Full Stack</a>
+        <a href="#courses">Java Full Stack</a>
+        <a href="#courses">Data Science & ML</a>
+        <a href="#courses">Web Development</a>
+        <a href="#courses">C / C++ Programming</a>
+        <a href="#courses">Cyber Security</a>
+      </div>
     </div>
+    <div>
+      <div class="f-col-title">Company</div>
+      <div class="f-links">
+        <a href="#colleges">Our Colleges</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#why-us">Why Easy Learn</a>
+        <a href="#contact">Contact Us</a>
+      </div>
+    </div>
+    <div>
+      <div class="f-col-title">Portal Access</div>
+      <div class="f-links">
+        <a href="{% url 'login' %}">Trainer Login</a>
+        <a href="{% url 'trainer_signup' %}">Register as Trainer</a>
+        <a href="{% url 'login' %}">Admin Login</a>
+      </div>
+      <div style="margin-top:24px">
+        <div class="f-col-title">Credentials</div>
+        <div style="font-size:12.5px;color:#64748b;line-height:2">
+          Admin: <code style="color:#4ade80">admin</code><br>
+          Pass: <code style="color:#4ade80">adminpassword123</code><br>
+          Trainer: <code style="color:#4ade80">stephenjebadurai</code><br>
+          Pass: <code style="color:#4ade80">trainerpassword123</code>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Easy Learn Academy · Built by Stephen Jebadurai</span>
+    <a href="{% url 'login' %}"><i class="fa-solid fa-user-shield"></i> Operations Login</a>
+  </div>
 </footer>
 
-<!-- ========================================================
+<!-- ====================================================
      SCRIPTS
-======================================================== -->
+==================================================== -->
 <script>
-// --- Splash Screen ---
+// Splash
 (function(){
-    var splash = document.getElementById('ela-splash');
-    var logo   = document.getElementById('sp-logo');
-    if(!splash) return;
+  var sp=document.getElementById('splash');
+  var img=document.getElementById('sp-img');
+  if(!sp)return;
+  setTimeout(function(){
+    if(img)img.classList.add('out');
     setTimeout(function(){
-        if(logo) logo.classList.add('out');
-        setTimeout(function(){
-            splash.classList.add('exiting');
-            setTimeout(function(){ splash.style.display='none'; }, 700);
-        }, 300);
-    }, 2200);
+      sp.classList.add('hide');
+      setTimeout(function(){sp.style.display='none'},700);
+    },300);
+  },2300);
 })();
 
-// --- Hamburger ---
-var ham = document.getElementById('hamburger');
-var menu = document.getElementById('navMenu');
-ham.addEventListener('click', function(){
-    menu.classList.toggle('open');
+// Navbar scroll
+window.addEventListener('scroll',function(){
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>10);
 });
 
-// --- Navbar scroll shadow ---
-window.addEventListener('scroll', function(){
-    var nav = document.getElementById('mainNav');
-    if(window.scrollY > 20){
-        nav.style.boxShadow = '0 4px 30px rgba(0,0,0,.12)';
-    } else {
-        nav.style.boxShadow = '0 2px 16px rgba(0,0,0,.06)';
-    }
+// Hamburger
+document.getElementById('ham').addEventListener('click',function(){
+  document.getElementById('mobileMenu').classList.toggle('open');
 });
 
-// --- Scroll fade-in ---
-var fadeEls = document.querySelectorAll('.fade-up');
-var observer = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-        if(e.isIntersecting){
-            e.target.classList.add('visible');
-            observer.unobserve(e.target);
-        }
-    });
-}, { threshold: 0.12 });
-fadeEls.forEach(function(el){ observer.observe(el); });
-
-// --- Smooth anchor scroll ---
+// Smooth anchors + close mobile menu
 document.querySelectorAll('a[href^="#"]').forEach(function(a){
-    a.addEventListener('click', function(e){
-        var target = document.querySelector(this.getAttribute('href'));
-        if(target){
-            e.preventDefault();
-            target.scrollIntoView({ behavior:'smooth', block:'start' });
-            if(menu.classList.contains('open')) menu.classList.remove('open');
-        }
-    });
+  a.addEventListener('click',function(e){
+    var t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+    document.getElementById('mobileMenu').classList.remove('open');
+  });
 });
+
+// Scroll reveal
+var ro=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}
+  });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
+
+// Counter animation for stats
+function animateCounters(){
+  document.querySelectorAll('.stat-num span').forEach(function(el){
+    var target=parseInt(el.textContent);
+    var start=0;
+    var step=Math.ceil(target/40);
+    var timer=setInterval(function(){
+      start=Math.min(start+step,target);
+      el.textContent=start;
+      if(start>=target)clearInterval(timer);
+    },30);
+  });
+}
+var statsObs=new IntersectionObserver(function(entries){
+  if(entries[0].isIntersecting){animateCounters();statsObs.disconnect();}
+},{threshold:.3});
+var statsEl=document.querySelector('.stats-bar');
+if(statsEl)statsObs.observe(statsEl);
 </script>
 </body>
 </html>
