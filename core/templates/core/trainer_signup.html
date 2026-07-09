@@ -25,7 +25,7 @@
         font-weight: 800;
         margin-bottom: 12px;
         letter-spacing: -0.5px;
-        color: #fff;
+        color: var(--primary);
     }
 
     .signup-subtitle {
@@ -47,7 +47,7 @@
 
     .section-num-title {
         font-size: 18px;
-        color: #fff;
+        color: var(--primary);
         font-weight: 800;
         margin-bottom: 20px;
         display: flex;
@@ -61,8 +61,7 @@
         justify-content: center;
         width: 28px;
         height: 28px;
-        background: var(--primary);
-        box-shadow: 0 0 15px var(--primary-glow);
+        background: var(--accent);
         color: white;
         border-radius: 50%;
         font-size: 13px;
@@ -95,15 +94,15 @@
         display: flex;
         align-items: flex-start;
         gap: 12px;
-        background: rgba(0,0,0,0.2);
+        background: var(--primary-light);
         padding: 16px;
         border-radius: var(--radius-md);
-        border: 1px solid var(--border);
+        border: 1px solid rgba(11, 67, 133, 0.1);
     }
 
     .terms-text input {
         margin-top: 4px;
-        accent-color: var(--accent);
+        accent-color: var(--primary);
     }
 </style>
 {% endblock %}
@@ -158,7 +157,7 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="project" class="form-label">Select Project College</label>
-                            <select id="project" name="project" class="form-control" required style="background-color: rgba(0,0,0,0.8); color: #fff;">
+                            <select id="project" name="project" class="form-control" required>
                                 <option value="" disabled selected>-- Choose college project --</option>
                                 {% for proj in projects %}
                                     <option value="{{ proj.id }}">{{ proj.name }} ({{ proj.technology }})</option>
@@ -168,11 +167,11 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Quoted Rate Payment Structure</label>
-                            <div style="display: flex; gap: 15px; margin-top: 10px; padding: 12px; background: rgba(0,0,0,0.2); border-radius: var(--radius-md); border: 1px solid var(--border);">
-                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #fff;">
+                            <div style="display: flex; gap: 15px; margin-top: 10px; padding: 12px; background: var(--bg-base); border-radius: 8px; border: 1px solid var(--border);">
+                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--text-dark);">
                                     <input type="radio" name="quoted_type" value="Daily" checked> Daily Rate
                                 </label>
-                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #fff;">
+                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--text-dark);">
                                     <input type="radio" name="quoted_type" value="Monthly"> Monthly Quoted Rate
                                 </label>
                             </div>
@@ -201,12 +200,12 @@
                         </div>
                         <div class="form-group">
                             <label for="photo" class="form-label">Trainer Profile Photo</label>
-                            <input type="file" id="photo" name="photo" class="form-control" accept="image/*" required style="background: rgba(0,0,0,0.4);">
+                            <input type="file" id="photo" name="photo" class="form-control" accept="image/*" required>
                             <span class="hint-text">Upload a clear professional passport size photo (JPG/PNG).</span>
                         </div>
                         <div class="form-group">
                             <label for="aadhaar_file" class="form-label">Aadhaar Card Document (PDF)</label>
-                            <input type="file" id="aadhaar_file" name="aadhaar_file" class="form-control" accept="application/pdf" required style="background: rgba(0,0,0,0.4);">
+                            <input type="file" id="aadhaar_file" name="aadhaar_file" class="form-control" accept="application/pdf" required>
                         </div>
                     </div>
                 </div>
