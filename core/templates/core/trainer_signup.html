@@ -7,12 +7,6 @@
     .signup-wrapper {
         max-width: 900px;
         margin: 40px auto;
-        animation: slideUp 0.5s ease;
-    }
-
-    @keyframes slideUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
     }
 
     .signup-header {
@@ -25,7 +19,7 @@
         font-weight: 800;
         margin-bottom: 12px;
         letter-spacing: -0.5px;
-        color: #FFF;
+        color: var(--text-dark);
     }
 
     .signup-subtitle {
@@ -47,7 +41,7 @@
 
     .section-num-title {
         font-size: 18px;
-        color: #FFF;
+        color: var(--text-dark);
         font-weight: 800;
         margin-bottom: 20px;
         display: flex;
@@ -61,11 +55,11 @@
         justify-content: center;
         width: 28px;
         height: 28px;
-        background: var(--primary);
-        color: white;
+        background: var(--primary-light);
+        color: var(--primary);
         border-radius: 50%;
         font-size: 13px;
-        font-weight: 700;
+        font-weight: 800;
     }
 
     .form-grid {
@@ -94,9 +88,9 @@
         display: flex;
         align-items: flex-start;
         gap: 12px;
-        background: rgba(255,255,255,0.03);
+        background: var(--bg-base);
         padding: 16px;
-        border-radius: var(--radius-md);
+        border-radius: var(--radius-sm);
         border: 1px solid var(--border);
     }
 
@@ -109,7 +103,7 @@
 
 {% block content %}
 
-    <div class="signup-wrapper">
+    <div class="signup-wrapper" data-aos="fade-up">
         <div class="glass-card">
             <div class="signup-header">
                 <h2 class="signup-title">Partner Trainer Application</h2>
@@ -167,11 +161,11 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Quoted Rate Payment Structure</label>
-                            <div style="display: flex; gap: 15px; margin-top: 10px; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid var(--border);">
-                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #FFF;">
+                            <div style="display: flex; gap: 15px; margin-top: 10px; padding: 12px; background: var(--bg-base); border-radius: var(--radius-sm); border: 1px solid var(--border);">
+                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--text-dark);">
                                     <input type="radio" name="quoted_type" value="Daily" checked> Daily Rate
                                 </label>
-                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #FFF;">
+                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--text-dark);">
                                     <input type="radio" name="quoted_type" value="Monthly"> Monthly Quoted Rate
                                 </label>
                             </div>
