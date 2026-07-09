@@ -5,500 +5,489 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Easy Learn Academy | Online Technical Training</title>
-<meta name="description" content="Structured live online technical training for engineering college students.">
+<meta name="description" content="Expert-led live online technical training for engineering college students.">
 <link rel="icon" type="image/png" href="{% static 'core/images/logo.png' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 /* =========================================================
-   DESIGN TOKENS — TUF Style but White/Blue/Orange
+   THEME COLORS (White, Blue, Orange)
 ========================================================= */
 :root {
-  --blue:        #0B4385;       /* Primary brand */
-  --blue-hover:  #09356A;
-  --blue-light:  #E8F0FE;       /* Light bg for tags */
+  --blue:        #0B4385;
+  --blue-dark:   #062A5A;
+  --blue-light:  #F0F6FF;
+  --orange:      #FF7605;
+  --orange-dark: #E06300;
+  --orange-light:#FFF4EB;
+  --white:       #FFFFFF;
+  --off-white:   #F8FAFC;
+  --text-dark:   #0F172A;
+  --text-gray:   #475569;
+  --border:      #E2E8F0;
   
-  --orange:      #FF7605;       /* Accent */
-  --orange-hover:#E66A04;
-  --orange-light:#FFF3E8;
-
-  --bg:          #FFFFFF;
-  --bg-alt:      #F9FAFB;
-  --border:      #E5E7EB;       /* Crisp, clean borders */
-  --border-hover:#D1D5DB;
-
-  --text-main:   #111827;       /* Dark text */
-  --text-muted:  #4B5563;       /* Gray text */
-  --text-light:  #9CA3AF;
-
-  --radius:      8px;
-  --radius-lg:   16px;
-  --shadow-sm:   0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md:   0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --radius:      12px;
+  --radius-lg:   24px;
+  --shadow:      0 10px 30px rgba(11, 67, 133, 0.08);
+  --shadow-hover:0 20px 40px rgba(11, 67, 133, 0.12);
 }
 
-/* =========================================================
-   RESET
-========================================================= */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { font-family: 'Inter', sans-serif; color: var(--text-main); background: var(--bg); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Inter', sans-serif; color: var(--text-gray); background: var(--white); overflow-x: hidden; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; color: var(--text-dark); }
 a { text-decoration: none; color: inherit; }
 img { max-width: 100%; display: block; }
+ul { list-style: none; }
 
 /* =========================================================
-   NAVBAR - Clean, white, structured
+   NAVBAR
 ========================================================= */
 .navbar {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--bg);
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(255, 255, 255, 0.98);
   border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  padding: 12px 0; transition: all 0.3s ease;
 }
-.nav-inner {
-  max-width: 1200px; margin: 0 auto; padding: 0 24px;
-  height: 64px; display: flex; align-items: center; justify-content: space-between;
-}
-.nav-brand { display: flex; align-items: center; gap: 8px; }
-.nav-brand img { width: 36px; height: 36px; }
-.nav-brand-text { font-size: 1.25rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+.navbar.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+.nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+
+/* LOGO - Exact logo, no circles, one line */
+.nav-brand { display: flex; align-items: center; gap: 12px; }
+.nav-brand img { height: 50px; object-fit: contain; }
+.nav-brand-text { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; }
 .nav-brand-text span { color: var(--blue); }
 
-.nav-links { display: flex; align-items: center; gap: 24px; }
-.nav-links a {
-  font-size: 0.95rem; font-weight: 500; color: var(--text-muted);
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--blue); }
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a { font-size: 15px; font-weight: 600; color: var(--text-dark); transition: color 0.2s; }
+.nav-links a:hover { color: var(--orange); }
 
-.nav-actions { display: flex; align-items: center; gap: 12px; }
-.btn-login {
-  background: var(--blue); color: #fff !important;
-  font-size: 0.875rem; font-weight: 600;
-  padding: 8px 16px; border-radius: var(--radius);
-  transition: background 0.2s;
+.nav-login {
+  background: var(--blue); color: var(--white) !important;
+  font-weight: 700; font-size: 15px; padding: 10px 24px;
+  border-radius: 50px; transition: all 0.3s;
 }
-.btn-login:hover { background: var(--blue-hover); }
+.nav-login:hover { background: var(--orange); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,118,5,0.3); }
 
 /* Hamburger */
-.hamburger { display: none; background: none; border: none; font-size: 1.25rem; color: var(--text-main); cursor: pointer; }
+.hamburger { display: none; background: none; border: none; font-size: 24px; color: var(--text-dark); cursor: pointer; }
 
 /* =========================================================
-   HERO SECTION
+   HERO SECTION (Tap Academy Style but Trendy)
 ========================================================= */
 .hero {
-  max-width: 1200px; margin: 60px auto; padding: 0 24px;
-  display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: center;
+  padding: 80px 24px; background: linear-gradient(180deg, var(--blue-light) 0%, var(--white) 100%);
+  position: relative; overflow: hidden;
 }
-.hero-content h1 {
-  font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 800;
-  line-height: 1.2; letter-spacing: -1px; margin-bottom: 16px; color: var(--text-main);
+.hero-container {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center;
 }
-.hero-content h1 span { color: var(--blue); }
-.hero-content p {
-  font-size: 1.125rem; color: var(--text-muted);
-  margin-bottom: 32px; max-width: 540px;
+
+.hero-text h1 {
+  font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 24px;
+  letter-spacing: -1px;
 }
-.hero-btns { display: flex; gap: 16px; }
+.hero-text h1 span { color: var(--blue); }
+.hero-text p {
+  font-size: 1.15rem; line-height: 1.7; margin-bottom: 40px; color: var(--text-gray); max-width: 550px;
+}
+
+.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
 .btn-primary {
-  display: inline-flex; align-items: center; justify-content: center;
-  background: var(--blue); color: #fff; font-weight: 600;
-  padding: 12px 24px; border-radius: var(--radius);
-  transition: background 0.2s; gap: 8px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--orange); color: var(--white);
+  font-size: 16px; font-weight: 700; padding: 16px 36px; border-radius: 50px;
+  box-shadow: 0 8px 20px rgba(255,118,5,0.25); transition: all 0.3s;
 }
-.btn-primary:hover { background: var(--blue-hover); }
+.btn-primary:hover { background: var(--orange-dark); transform: translateY(-3px); box-shadow: 0 12px 25px rgba(255,118,5,0.35); }
 .btn-secondary {
-  display: inline-flex; align-items: center; justify-content: center;
-  background: var(--bg); color: var(--text-main); font-weight: 600;
-  border: 1px solid var(--border);
-  padding: 12px 24px; border-radius: var(--radius);
-  transition: border-color 0.2s, background 0.2s; gap: 8px;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--white); color: var(--blue); border: 2px solid var(--blue);
+  font-size: 16px; font-weight: 700; padding: 14px 34px; border-radius: 50px;
+  transition: all 0.3s;
 }
-.btn-secondary:hover { border-color: var(--blue); background: var(--bg-alt); }
+.btn-secondary:hover { background: var(--blue-light); }
 
-.hero-stats {
-  display: flex; gap: 32px; margin-top: 48px;
-  padding-top: 32px; border-top: 1px solid var(--border);
-}
-.stat-box { display: flex; flex-direction: column; }
-.stat-num { font-size: 1.5rem; font-weight: 800; color: var(--text-main); }
-.stat-label { font-size: 0.875rem; color: var(--text-muted); font-weight: 500; }
+.hero-badges { display: flex; gap: 32px; margin-top: 50px; align-items: center; }
+.badge-item { display: flex; align-items: center; gap: 12px; }
+.badge-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--white); display: flex; align-items: center; justify-content: center; color: var(--orange); font-size: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+.badge-text { font-size: 14px; font-weight: 700; color: var(--text-dark); line-height: 1.3; }
 
-.hero-visual {
-  display: flex; justify-content: center; align-items: center;
+/* AI Generated Hero Image */
+.hero-image { position: relative; }
+.hero-img-wrap {
+  position: relative; z-index: 2;
+  border-radius: 30px; overflow: hidden;
+  box-shadow: 0 25px 60px rgba(11,67,133,0.2);
+  border: 8px solid var(--white);
 }
-.hero-visual img {
-  width: 100%; max-width: 320px; 
-  /* No animations, clean static logo presentation */
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border);
-  padding: 24px; background: var(--bg);
+.hero-img-wrap img { width: 100%; height: auto; object-fit: cover; }
+.hero-blob {
+  position: absolute; width: 120%; height: 120%; top: -10%; left: -10%;
+  background: linear-gradient(135deg, var(--orange) 0%, var(--blue) 100%);
+  opacity: 0.1; filter: blur(60px); z-index: 1; border-radius: 50%;
 }
 
 /* =========================================================
-   FEATURES / PLATFORM - Clean grid
+   STATS BAR (Dark section with huge numbers)
 ========================================================= */
-.section-wrapper { padding: 80px 24px; border-top: 1px solid var(--border); background: var(--bg-alt); }
-.section-wrapper.white { background: var(--bg); }
-.container { max-width: 1200px; margin: 0 auto; }
-
-.section-head { margin-bottom: 48px; }
-.section-title { font-size: 2rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; margin-bottom: 8px; }
-.section-sub { font-size: 1.125rem; color: var(--text-muted); }
-
-.features-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+.stats-section { background: var(--blue); padding: 60px 24px; position: relative; }
+.stats-container {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
 }
-.feat-card {
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 24px;
-  transition: box-shadow 0.2s, border-color 0.2s;
+.stat-box { text-align: center; border-right: 1px solid rgba(255,255,255,0.1); }
+.stat-box:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Outfit', sans-serif; font-size: 3.5rem; font-weight: 900;
+  color: var(--white); margin-bottom: 8px; line-height: 1;
 }
-.feat-card:hover { border-color: var(--blue); box-shadow: var(--shadow-md); }
-.feat-icon {
-  width: 48px; height: 48px; border-radius: 50%;
-  background: var(--blue-light); color: var(--blue);
+.stat-num span { color: var(--orange); }
+.stat-label { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 1px; }
+
+/* =========================================================
+   TRENDY COURSES (Tap Style Tabs)
+========================================================= */
+.courses-section { padding: 100px 24px; background: var(--off-white); }
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-tag { display: inline-block; background: var(--orange-light); color: var(--orange); font-weight: 700; font-size: 14px; padding: 6px 16px; border-radius: 50px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; }
+.section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: var(--blue); margin-bottom: 16px; letter-spacing: -0.5px; }
+
+.courses-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 300px 1fr; gap: 40px; align-items: start; }
+
+.course-tabs { display: flex; flex-direction: column; gap: 12px; }
+.c-tab {
+  padding: 20px 24px; background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius); cursor: pointer; font-weight: 700; font-size: 16px;
+  color: var(--text-dark); display: flex; justify-content: space-between; align-items: center;
+  transition: all 0.3s;
+}
+.c-tab:hover { border-color: var(--blue); color: var(--blue); }
+.c-tab.active { background: var(--blue); color: var(--white); border-color: var(--blue); box-shadow: 0 10px 25px rgba(11,67,133,0.2); }
+.c-tab i { font-size: 18px; }
+.c-tab.active i { color: var(--orange); }
+
+.course-content { position: relative; }
+.c-panel { display: none; background: var(--white); border-radius: var(--radius-lg); padding: 40px; box-shadow: var(--shadow); border: 1px solid var(--border); animation: fadeIn 0.4s ease forwards; }
+.c-panel.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.cp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+.cp-title { font-size: 2.2rem; font-weight: 800; color: var(--blue); margin-bottom: 8px; }
+.cp-subtitle { font-size: 16px; color: var(--orange); font-weight: 600; }
+.cp-duration { background: var(--blue-light); color: var(--blue); font-weight: 700; padding: 8px 16px; border-radius: 8px; font-size: 14px; }
+
+.cp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+.cp-desc { font-size: 16px; line-height: 1.7; color: var(--text-gray); }
+.cp-features { display: flex; flex-direction: column; gap: 12px; }
+.cp-feat { display: flex; align-items: center; gap: 12px; font-weight: 500; color: var(--text-dark); }
+.cp-feat i { color: var(--orange); font-size: 16px; }
+
+.cp-footer { display: flex; gap: 16px; }
+.btn-enroll { background: var(--blue); color: var(--white); font-weight: 700; padding: 14px 32px; border-radius: 50px; transition: all 0.3s; }
+.btn-enroll:hover { background: var(--orange); }
+
+/* =========================================================
+   WHY CHOOSE US
+========================================================= */
+.why-section { padding: 100px 24px; background: var(--white); }
+.why-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.why-card {
+  padding: 40px; border-radius: var(--radius-lg); background: var(--off-white);
+  border: 1px solid var(--border); transition: all 0.3s;
+}
+.why-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: var(--blue); background: var(--white); }
+.why-icon { width: 64px; height: 64px; background: var(--blue); color: var(--white); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 24px; transition: transform 0.3s; }
+.why-card:hover .why-icon { transform: scale(1.1); background: var(--orange); }
+.why-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 12px; color: var(--text-dark); }
+.why-desc { font-size: 15px; line-height: 1.6; color: var(--text-gray); }
+
+/* =========================================================
+   COLLEGES MARQUEE
+========================================================= */
+.colleges-section { padding: 80px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--white); overflow: hidden; }
+.marquee-wrapper { display: flex; width: max-content; animation: scrollMarquee 30s linear infinite; gap: 40px; }
+.marquee-wrapper:hover { animation-play-state: paused; }
+@keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.college-logo-box {
+  background: var(--off-white); border: 1px solid var(--border);
+  padding: 20px 40px; border-radius: 16px;
+  font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 20px; color: var(--blue);
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.25rem; margin-bottom: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.02);
 }
-.feat-card.orange .feat-icon { background: var(--orange-light); color: var(--orange); }
-.feat-title { font-size: 1.125rem; font-weight: 700; margin-bottom: 8px; }
-.feat-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
 
 /* =========================================================
-   PROGRAMS / COURSES - TUF Style Cards
+   FOOTER - Exact logo
 ========================================================= */
-.programs-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-}
-.program-card {
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: var(--radius); overflow: hidden;
-  display: flex; flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.program-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--border-hover); }
+.footer { background: var(--text-dark); color: rgba(255,255,255,0.7); padding: 80px 24px 30px; }
+.footer-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; margin-bottom: 60px; }
 
-.pc-top { padding: 24px 24px 16px; border-bottom: 1px solid var(--border); background: var(--bg-alt); }
-.pc-tags { display: flex; gap: 8px; margin-bottom: 12px; }
-.tag {
-  font-size: 0.75rem; font-weight: 600; padding: 4px 10px;
-  border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.5px;
-}
-.tag-blue { background: var(--blue-light); color: var(--blue); }
-.tag-orange { background: var(--orange-light); color: var(--orange); }
-.tag-dark { background: #E5E7EB; color: #374151; }
+/* LOGO in footer without borders */
+.footer-brand { display: flex; flex-direction: column; gap: 20px; }
+.footer-brand img { height: 60px; object-fit: contain; align-self: flex-start; background: #fff; padding: 10px; border-radius: 12px; } /* Adding white bg just so it's visible on dark background, but no circle */
+.footer-brand p { font-size: 15px; line-height: 1.6; max-width: 350px; }
 
-.pc-title { font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
-.pc-sub { font-size: 0.875rem; color: var(--text-muted); }
+.footer-heading { color: var(--white); font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 24px; }
+.footer-links { display: flex; flex-direction: column; gap: 12px; }
+.footer-links a { color: rgba(255,255,255,0.7); transition: color 0.3s; font-size: 15px; }
+.footer-links a:hover { color: var(--orange); }
 
-.pc-body { padding: 24px; flex-grow: 1; }
-.pc-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
-.pc-list-item { display: flex; align-items: flex-start; gap: 8px; font-size: 0.875rem; color: var(--text-main); }
-.pc-list-item i { color: var(--blue); font-size: 1rem; margin-top: 2px; }
-
-.pc-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--bg-alt); }
-.pc-meta { font-size: 0.875rem; color: var(--text-muted); font-weight: 500; }
-.pc-link { font-size: 0.875rem; font-weight: 600; color: var(--blue); display: flex; align-items: center; gap: 4px; transition: gap 0.2s; }
-.program-card:hover .pc-link { gap: 8px; }
-
-/* =========================================================
-   COLLEGES
-========================================================= */
-.colleges-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;
-}
-.college-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 16px; border: 1px solid var(--border);
-  border-radius: var(--radius); background: var(--bg);
-}
-.ci-abbr {
-  width: 40px; height: 40px; border-radius: 8px;
-  background: var(--bg-alt); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 0.875rem; color: var(--text-main);
-}
-.ci-info { display: flex; flex-direction: column; }
-.ci-name { font-size: 0.875rem; font-weight: 600; color: var(--text-main); }
-.ci-loc { font-size: 0.75rem; color: var(--text-muted); }
-
-/* =========================================================
-   FOOTER
-========================================================= */
-.footer { border-top: 1px solid var(--border); background: var(--bg); padding: 48px 24px 24px; }
-.footer-grid {
-  max-width: 1200px; margin: 0 auto;
-  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px;
-}
-.ft-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
-.ft-logo img { width: 32px; height: 32px; }
-.ft-logo span { font-weight: 800; font-size: 1.1rem; color: var(--text-main); }
-.ft-desc { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 16px; max-width: 320px; }
-.ft-head { font-size: 0.875rem; font-weight: 700; color: var(--text-main); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
-.ft-list { display: flex; flex-direction: column; gap: 12px; }
-.ft-list a { font-size: 0.95rem; color: var(--text-muted); transition: color 0.2s; }
-.ft-list a:hover { color: var(--blue); }
-
-.footer-bottom {
-  max-width: 1200px; margin: 0 auto;
-  padding-top: 24px; border-top: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center;
-  font-size: 0.875rem; color: var(--text-muted);
-}
-.creds { background: var(--bg-alt); padding: 12px; border-radius: 8px; border: 1px solid var(--border); margin-top: 16px; font-size: 0.8rem; }
-.creds strong { color: var(--text-main); }
+.footer-bottom { max-width: 1280px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
 
 /* =========================================================
    RESPONSIVE
 ========================================================= */
-@media (max-width: 992px) {
-  .hero { grid-template-columns: 1fr; text-align: center; }
-  .hero-content p { margin: 0 auto 32px; }
-  .hero-btns, .hero-stats { justify-content: center; }
-  .features-grid, .programs-grid { grid-template-columns: repeat(2, 1fr); }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
+@media (max-width: 1024px) {
+  .hero-container { grid-template-columns: 1fr; text-align: center; }
+  .hero-text p { margin: 0 auto 40px; }
+  .hero-btns, .hero-badges { justify-content: center; }
+  .courses-container { grid-template-columns: 1fr; }
+  .course-tabs { flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+  .c-tab { white-space: nowrap; }
+  .why-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-container { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+  .stat-box:nth-child(2) { border-right: none; }
 }
 @media (max-width: 768px) {
-  .nav-links, .nav-actions .btn-login { display: none; }
+  .nav-links, .nav-login { display: none; }
   .hamburger { display: block; }
-  .features-grid, .programs-grid { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+  .cp-grid { grid-template-columns: 1fr; }
+  .cp-header { flex-direction: column; gap: 16px; }
+  .why-grid { grid-template-columns: 1fr; }
+  .footer-container { grid-template-columns: 1fr; gap: 40px; }
 }
 
 /* Mobile Menu */
 .mobile-menu {
-  display: none; position: fixed; inset: 65px 0 0 0; background: var(--bg);
-  padding: 24px; z-index: 99; border-top: 1px solid var(--border);
+  display: none; position: fixed; inset: 75px 0 0 0; background: var(--white);
+  padding: 30px; z-index: 999; flex-direction: column; gap: 20px;
+  border-top: 1px solid var(--border);
 }
-.mobile-menu.active { display: flex; flex-direction: column; gap: 16px; }
-.mobile-menu a { font-size: 1.1rem; font-weight: 500; color: var(--text-main); padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.mobile-menu.open { display: flex; }
+.mobile-menu a { font-size: 20px; font-weight: 700; color: var(--text-dark); padding-bottom: 15px; border-bottom: 1px solid var(--border); }
 </style>
 </head>
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar">
-  <div class="nav-inner">
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
     <a href="/" class="nav-brand">
       <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Logo">
-      <div class="nav-brand-text"><span>Easy</span>Learn</div>
     </a>
     <div class="nav-links">
-      <a href="#platform">Platform</a>
-      <a href="#programs">Programs</a>
-      <a href="#colleges">Partners</a>
+      <a href="#courses">Programs</a>
+      <a href="#why-us">Why Us</a>
+      <a href="#colleges">Colleges</a>
     </div>
-    <div class="nav-actions">
-      <a href="{% url 'login' %}" class="btn-login">Login <i class="fa-solid fa-arrow-right" style="margin-left:4px; font-size:0.8em"></i></a>
-      <button class="hamburger" id="hamburger"><i class="fa-solid fa-bars"></i></button>
-    </div>
+    <a href="{% url 'login' %}" class="nav-login">Portal Login</a>
+    <button class="hamburger" id="ham"><i class="fa-solid fa-bars"></i></button>
   </div>
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#platform">Platform</a>
-  <a href="#programs">Programs</a>
-  <a href="#colleges">Partners</a>
-  <a href="{% url 'login' %}" style="color:var(--blue); font-weight:600; border-bottom:none;">Portal Login &rarr;</a>
+  <a href="#courses">Programs</a>
+  <a href="#why-us">Why Us</a>
+  <a href="#colleges">Colleges</a>
+  <a href="{% url 'login' %}" style="color:var(--orange); border:none;">Portal Login</a>
 </div>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-content">
-    <h1>Structure Your <br><span>Tech Career</span>.</h1>
-    <p>We deliver verified, live online technical bootcamps straight to engineering colleges. No fluff, just pure skill-building with industry experts.</p>
-    <div class="hero-btns">
-      <a href="#programs" class="btn-primary">View Programs</a>
-      <a href="{% url 'trainer_signup' %}" class="btn-secondary">Apply to Teach</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat-box"><span class="stat-num">20+</span><span class="stat-label">Colleges</span></div>
-      <div class="stat-box"><span class="stat-num">15k+</span><span class="stat-label">Students</span></div>
-      <div class="stat-box"><span class="stat-num">100%</span><span class="stat-label">Online</span></div>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn">
-  </div>
-</section>
-
-<!-- PLATFORM FEATURES -->
-<section id="platform" class="section-wrapper">
-  <div class="container">
-    <div class="section-head">
-      <h2 class="section-title">How It Works</h2>
-      <p class="section-sub">A straightforward, transparent learning ecosystem.</p>
-    </div>
-    <div class="features-grid">
-      <div class="feat-card">
-        <div class="feat-icon"><i class="fa-solid fa-users-rectangle"></i></div>
-        <h3 class="feat-title">Live Cohorts</h3>
-        <p class="feat-desc">Every batch is taught live. Real-time interaction, daily doubt clearing, and continuous engagement.</p>
+  <div class="hero-container">
+    <div class="hero-text">
+      <h1>Elevate Your Tech <span>Career.</span></h1>
+      <p>Easy Learn Academy partners with top engineering colleges to deliver intensive, live online technical bootcamps led by industry experts. Real skills, real code, zero commute.</p>
+      <div class="hero-btns">
+        <a href="#courses" class="btn-primary">Explore Courses</a>
+        <a href="{% url 'trainer_signup' %}" class="btn-secondary">Apply as Trainer</a>
       </div>
-      <div class="feat-card orange">
-        <div class="feat-icon"><i class="fa-solid fa-shield-check"></i></div>
-        <h3 class="feat-title">Verified Trainers</h3>
-        <p class="feat-desc">Instructors are working professionals heavily vetted by our admin team before assigning any batch.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon"><i class="fa-solid fa-chart-bar"></i></div>
-        <h3 class="feat-title">Daily Logging</h3>
-        <p class="feat-desc">Topics covered and attendance are logged daily, providing complete transparency to college management.</p>
-      </div>
-      <div class="feat-card orange">
-        <div class="feat-icon"><i class="fa-solid fa-laptop-code"></i></div>
-        <h3 class="feat-title">Hands-on Coding</h3>
-        <p class="feat-desc">Theory is minimal. Programs are heavily focused on writing code, building projects, and solving problems.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon"><i class="fa-solid fa-building"></i></div>
-        <h3 class="feat-title">Zero Infrastructure</h3>
-        <p class="feat-desc">Colleges don't need to arrange computer labs or travel. It's 100% remote and cloud-based.</p>
-      </div>
-      <div class="feat-card orange">
-        <div class="feat-icon"><i class="fa-solid fa-certificate"></i></div>
-        <h3 class="feat-title">Certification</h3>
-        <p class="feat-desc">Upon successful completion and project submission, students receive verifiable certificates.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROGRAMS -->
-<section id="programs" class="section-wrapper white">
-  <div class="container">
-    <div class="section-head">
-      <h2 class="section-title">Training Programs</h2>
-      <p class="section-sub">Industry-aligned curricula designed for placement readiness.</p>
-    </div>
-    <div class="programs-grid">
-      
-      <!-- Python -->
-      <div class="program-card">
-        <div class="pc-top">
-          <div class="pc-tags"><span class="tag tag-blue">Trending</span><span class="tag tag-dark">45 Days</span></div>
-          <h3 class="pc-title">Python Full Stack</h3>
-          <p class="pc-sub">Django, REST API, PostgreSQL</p>
+      <div class="hero-badges">
+        <div class="badge-item">
+          <div class="badge-icon"><i class="fa-solid fa-certificate"></i></div>
+          <div class="badge-text">Verified<br>Trainers</div>
         </div>
-        <div class="pc-body">
-          <div class="pc-list">
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Python Data Structures & OOPs</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Django MVT Architecture</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Building RESTful APIs</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Database Integration</div>
+        <div class="badge-item">
+          <div class="badge-icon"><i class="fa-solid fa-video"></i></div>
+          <div class="badge-text">100% Live<br>Online</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="hero-blob"></div>
+      <div class="hero-img-wrap">
+        <!-- AI Generated Image used to fill interface -->
+        <img src="{% static 'core/images/hero_image.png' %}" alt="Student learning online">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<section class="stats-section">
+  <div class="stats-container">
+    <div class="stat-box">
+      <div class="stat-num">20<span>+</span></div>
+      <div class="stat-label">Partner Colleges</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">15<span>k+</span></div>
+      <div class="stat-label">Students Trained</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">6<span>+</span></div>
+      <div class="stat-label">Tech Programs</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">98<span>%</span></div>
+      <div class="stat-label">Satisfaction Rate</div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES (Tap Academy style tabs) -->
+<section class="courses-section" id="courses">
+  <div class="section-header">
+    <span class="section-tag">Curriculum</span>
+    <h2 class="section-title">Industry-Ready Programs</h2>
+    <p>Comprehensive syllabi designed to crack product and service companies.</p>
+  </div>
+  
+  <div class="courses-container">
+    <div class="course-tabs">
+      <div class="c-tab active" data-target="python">Python Full Stack <i class="fa-brands fa-python"></i></div>
+      <div class="c-tab" data-target="java">Java Full Stack <i class="fa-brands fa-java"></i></div>
+      <div class="c-tab" data-target="ds">Data Science & ML <i class="fa-solid fa-chart-line"></i></div>
+      <div class="c-tab" data-target="web">Web Development <i class="fa-brands fa-react"></i></div>
+      <div class="c-tab" data-target="cyber">Cyber Security <i class="fa-solid fa-shield-halved"></i></div>
+    </div>
+    
+    <div class="course-content">
+      <!-- Python -->
+      <div class="c-panel active" id="c-python">
+        <div class="cp-header">
+          <div>
+            <h3 class="cp-title">Python Full Stack Engineering</h3>
+            <div class="cp-subtitle">Django &bull; PostgreSQL &bull; APIs</div>
+          </div>
+          <div class="cp-duration">45 Days</div>
+        </div>
+        <div class="cp-grid">
+          <div>
+            <p class="cp-desc">Transform into a deployment-ready backend engineer. We cover everything from core Python Data Structures to advanced Django MVT architecture and RESTful APIs.</p>
+          </div>
+          <div class="cp-features">
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Python Core & OOPs</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Django Web Framework</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Database Design & SQL</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> 3 Real-world Projects</div>
           </div>
         </div>
-        <div class="pc-footer">
-          <span class="pc-meta">Live Online</span>
-          <a href="{% url 'login' %}" class="pc-link">Login to Access <i class="fa-solid fa-arrow-right"></i></a>
+        <div class="cp-footer">
+          <a href="{% url 'login' %}" class="btn-enroll">Enroll via Portal</a>
         </div>
       </div>
 
       <!-- Java -->
-      <div class="program-card">
-        <div class="pc-top">
-          <div class="pc-tags"><span class="tag tag-orange">Enterprise</span><span class="tag tag-dark">45 Days</span></div>
-          <h3 class="pc-title">Java Full Stack</h3>
-          <p class="pc-sub">Spring Boot, React, MySQL</p>
+      <div class="c-panel" id="c-java">
+        <div class="cp-header">
+          <div>
+            <h3 class="cp-title">Java Full Stack Architecture</h3>
+            <div class="cp-subtitle">Spring Boot &bull; React &bull; Microservices</div>
+          </div>
+          <div class="cp-duration">45 Days</div>
         </div>
-        <div class="pc-body">
-          <div class="pc-list">
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Core & Advanced Java</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Spring Boot Fundamentals</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Frontend with React.js</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Microservices overview</div>
+        <div class="cp-grid">
+          <div>
+            <p class="cp-desc">Master the enterprise standard. This bootcamp takes you through Core Java, Advanced Java, Spring Boot, and connects it to a modern React frontend.</p>
+          </div>
+          <div class="cp-features">
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Core Java Mastery</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Spring Boot Fundamentals</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> React UI Development</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Enterprise Grade Projects</div>
           </div>
         </div>
-        <div class="pc-footer">
-          <span class="pc-meta">Live Online</span>
-          <a href="{% url 'login' %}" class="pc-link">Login to Access <i class="fa-solid fa-arrow-right"></i></a>
+        <div class="cp-footer">
+          <a href="{% url 'login' %}" class="btn-enroll">Enroll via Portal</a>
+        </div>
+      </div>
+      
+      <!-- Other panels hidden for brevity, but functional via JS -->
+      <div class="c-panel" id="c-ds">
+        <div class="cp-header">
+          <div>
+            <h3 class="cp-title">Data Science & Machine Learning</h3>
+            <div class="cp-subtitle">Pandas &bull; Scikit-Learn &bull; Analytics</div>
+          </div>
+          <div class="cp-duration">30 Days</div>
+        </div>
+        <div class="cp-grid">
+          <div>
+            <p class="cp-desc">Learn how to extract insights from raw data using Python's powerful analytics libraries and build predictive models using machine learning algorithms.</p>
+          </div>
+          <div class="cp-features">
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Exploratory Data Analysis</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Regression & Classification</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Data Visualization</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Hands-on Datasets</div>
+          </div>
+        </div>
+        <div class="cp-footer">
+          <a href="{% url 'login' %}" class="btn-enroll">Enroll via Portal</a>
         </div>
       </div>
 
-      <!-- Data Science -->
-      <div class="program-card">
-        <div class="pc-top">
-          <div class="pc-tags"><span class="tag tag-blue">Analytics</span><span class="tag tag-dark">30 Days</span></div>
-          <h3 class="pc-title">Data Science & ML</h3>
-          <p class="pc-sub">Pandas, Scikit-Learn, Stats</p>
+      <div class="c-panel" id="c-web">
+        <div class="cp-header">
+          <div>
+            <h3 class="cp-title">Modern Web Development</h3>
+            <div class="cp-subtitle">React &bull; JS &bull; UI/UX</div>
+          </div>
+          <div class="cp-duration">30 Days</div>
         </div>
-        <div class="pc-body">
-          <div class="pc-list">
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Exploratory Data Analysis</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Machine Learning Algorithms</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Data Visualization</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Predictive Modeling</div>
+        <div class="cp-grid">
+          <div>
+            <p class="cp-desc">Build stunning user interfaces from scratch. Master the frontend ecosystem including HTML, CSS, modern JavaScript, and React framework.</p>
+          </div>
+          <div class="cp-features">
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Advanced DOM Manipulation</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> React Hooks & State</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Responsive Layouts</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Portfolio Ready</div>
           </div>
         </div>
-        <div class="pc-footer">
-          <span class="pc-meta">Live Online</span>
-          <a href="{% url 'login' %}" class="pc-link">Login to Access <i class="fa-solid fa-arrow-right"></i></a>
+        <div class="cp-footer">
+          <a href="{% url 'login' %}" class="btn-enroll">Enroll via Portal</a>
         </div>
       </div>
 
-      <!-- Web Dev -->
-      <div class="program-card">
-        <div class="pc-top">
-          <div class="pc-tags"><span class="tag tag-orange">Frontend</span><span class="tag tag-dark">30 Days</span></div>
-          <h3 class="pc-title">Web Development</h3>
-          <p class="pc-sub">HTML, CSS, JavaScript, React</p>
+      <div class="c-panel" id="c-cyber">
+        <div class="cp-header">
+          <div>
+            <h3 class="cp-title">Cyber Security</h3>
+            <div class="cp-subtitle">Networking &bull; Kali Linux &bull; Pentesting</div>
+          </div>
+          <div class="cp-duration">21 Days</div>
         </div>
-        <div class="pc-body">
-          <div class="pc-list">
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Responsive UI / UX</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Modern JavaScript (ES6+)</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> State Management in React</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> API Consumption</div>
+        <div class="cp-grid">
+          <div>
+            <p class="cp-desc">Learn the fundamentals of network security, ethical hacking, and vulnerability assessment using industry-standard tools and methodologies.</p>
+          </div>
+          <div class="cp-features">
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Network Protocols</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Linux Command Line</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Ethical Hacking Basics</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Security Auditing</div>
           </div>
         </div>
-        <div class="pc-footer">
-          <span class="pc-meta">Live Online</span>
-          <a href="{% url 'login' %}" class="pc-link">Login to Access <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </div>
-
-      <!-- C/C++ -->
-      <div class="program-card">
-        <div class="pc-top">
-          <div class="pc-tags"><span class="tag tag-blue">Foundation</span><span class="tag tag-dark">21 Days</span></div>
-          <h3 class="pc-title">C / C++ & DSA</h3>
-          <p class="pc-sub">Pointers, Memory, Structures</p>
-        </div>
-        <div class="pc-body">
-          <div class="pc-list">
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Core Programming Logic</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Object Oriented Concepts</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Basic Data Structures</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Problem Solving</div>
-          </div>
-        </div>
-        <div class="pc-footer">
-          <span class="pc-meta">Live Online</span>
-          <a href="{% url 'login' %}" class="pc-link">Login to Access <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </div>
-
-      <!-- Cyber -->
-      <div class="program-card">
-        <div class="pc-top">
-          <div class="pc-tags"><span class="tag tag-orange">Security</span><span class="tag tag-dark">21 Days</span></div>
-          <h3 class="pc-title">Cyber Security</h3>
-          <p class="pc-sub">Linux, Networking, Pentesting</p>
-        </div>
-        <div class="pc-body">
-          <div class="pc-list">
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Network Fundamentals</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Kali Linux & Tools</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Ethical Hacking Concepts</div>
-            <div class="pc-list-item"><i class="fa-solid fa-check"></i> Vulnerability Assessment</div>
-          </div>
-        </div>
-        <div class="pc-footer">
-          <span class="pc-meta">Live Online</span>
-          <a href="{% url 'login' %}" class="pc-link">Login to Access <i class="fa-solid fa-arrow-right"></i></a>
+        <div class="cp-footer">
+          <a href="{% url 'login' %}" class="btn-enroll">Enroll via Portal</a>
         </div>
       </div>
 
@@ -506,80 +495,130 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- COLLEGES -->
-<section id="colleges" class="section-wrapper">
-  <div class="container">
-    <div class="section-head">
-      <h2 class="section-title">Trusted By Institutions</h2>
-      <p class="section-sub">We partner with over 20+ engineering colleges across the state.</p>
+<!-- WHY CHOOSE US -->
+<section class="why-section" id="why-us">
+  <div class="section-header">
+    <span class="section-tag">Advantages</span>
+    <h2 class="section-title">Why Easy Learn Academy?</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon"><i class="fa-solid fa-wifi"></i></div>
+      <h3 class="why-title">100% Live Online</h3>
+      <p class="why-desc">No recorded boring lectures. Every session is interactive, live, and taught by an expert instructor via our cloud platform.</p>
     </div>
-    <div class="colleges-grid">
-      <div class="college-item"><div class="ci-abbr">RYM</div><div class="ci-info"><span class="ci-name">RYMEC</span><span class="ci-loc">Bellary</span></div></div>
-      <div class="college-item"><div class="ci-abbr">SMV</div><div class="ci-info"><span class="ci-name">SMVITM</span><span class="ci-loc">Udupi</span></div></div>
-      <div class="college-item"><div class="ci-abbr">BLD</div><div class="ci-info"><span class="ci-name">BLDEA</span><span class="ci-loc">Vijayapur</span></div></div>
-      <div class="college-item"><div class="ci-abbr">KLE</div><div class="ci-info"><span class="ci-name">KLE Tech</span><span class="ci-loc">Belagavi</span></div></div>
-      <div class="college-item"><div class="ci-abbr">BVB</div><div class="ci-info"><span class="ci-name">BVB</span><span class="ci-loc">Hubballi</span></div></div>
-      <div class="college-item"><div class="ci-abbr">SDM</div><div class="ci-info"><span class="ci-name">SDMCET</span><span class="ci-loc">Dharwad</span></div></div>
-      <div class="college-item"><div class="ci-abbr">PES</div><div class="ci-info"><span class="ci-name">PESITM</span><span class="ci-loc">Shivamogga</span></div></div>
-      <div class="college-item"><div class="ci-abbr">ALV</div><div class="ci-info"><span class="ci-name">Alva's</span><span class="ci-loc">Mangaluru</span></div></div>
+    <div class="why-card">
+      <div class="why-icon"><i class="fa-solid fa-user-shield"></i></div>
+      <h3 class="why-title">Verified Trainers</h3>
+      <p class="why-desc">We don't use freshers to teach. All our trainers are vetted corporate professionals with real-world development experience.</p>
     </div>
+    <div class="why-card">
+      <div class="why-icon"><i class="fa-solid fa-laptop-code"></i></div>
+      <h3 class="why-title">Code First Approach</h3>
+      <p class="why-desc">Theory is kept to a minimum. Our focus is 80% practical coding, building real projects that students can showcase in interviews.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COLLEGES MARQUEE -->
+<section class="colleges-section" id="colleges">
+  <div class="section-header" style="margin-bottom: 40px;">
+    <h2 class="section-title">Our Partner Institutions</h2>
+  </div>
+  <div class="marquee-wrapper">
+    <!-- Repeated twice for seamless scroll -->
+    <div class="college-logo-box">RYMEC Bellary</div>
+    <div class="college-logo-box">SMVITM Udupi</div>
+    <div class="college-logo-box">BLDEA Vijayapur</div>
+    <div class="college-logo-box">KLE Tech Belagavi</div>
+    <div class="college-logo-box">BVB Hubballi</div>
+    <div class="college-logo-box">SDMCET Dharwad</div>
+    <div class="college-logo-box">PESITM Shivamogga</div>
+    <div class="college-logo-box">Alva's Mangaluru</div>
+    
+    <div class="college-logo-box">RYMEC Bellary</div>
+    <div class="college-logo-box">SMVITM Udupi</div>
+    <div class="college-logo-box">BLDEA Vijayapur</div>
+    <div class="college-logo-box">KLE Tech Belagavi</div>
+    <div class="college-logo-box">BVB Hubballi</div>
+    <div class="college-logo-box">SDMCET Dharwad</div>
+    <div class="college-logo-box">PESITM Shivamogga</div>
+    <div class="college-logo-box">Alva's Mangaluru</div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-grid">
-    <div>
-      <div class="ft-logo"><img src="{% static 'core/images/logo.png' %}" alt="Logo"><span>Easy Learn</span></div>
-      <p class="ft-desc">Live online technical training tailored for engineering students. Built for scale, transparency, and skill.</p>
+  <div class="footer-container">
+    <div class="footer-brand">
+      <!-- EXACT LOGO without border/circle CSS -->
+      <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn">
+      <p>Easy Learn Academy delivers expert-led live online technical bootcamps directly to engineering college students.</p>
     </div>
     <div>
-      <div class="ft-head">Platform</div>
-      <div class="ft-list">
-        <a href="#platform">How It Works</a>
-        <a href="#programs">Courses</a>
-        <a href="#colleges">Partners</a>
+      <h4 class="footer-heading">Programs</h4>
+      <div class="footer-links">
+        <a href="#courses">Python Full Stack</a>
+        <a href="#courses">Java Full Stack</a>
+        <a href="#courses">Data Science</a>
+        <a href="#courses">Web Development</a>
       </div>
     </div>
     <div>
-      <div class="ft-head">Access</div>
-      <div class="ft-list">
-        <a href="{% url 'login' %}">Trainer Dashboard</a>
+      <h4 class="footer-heading">Portals</h4>
+      <div class="footer-links">
+        <a href="{% url 'login' %}">Admin Dashboard</a>
+        <a href="{% url 'login' %}">Trainer Login</a>
         <a href="{% url 'trainer_signup' %}">Apply to Teach</a>
-        <a href="{% url 'login' %}">Admin Login</a>
       </div>
     </div>
     <div>
-      <div class="ft-head">Contact</div>
-      <div class="ft-list">
-        <a href="mailto:manager.projects@easy-learn-academy.com">Email Us</a>
-      </div>
-      <div class="creds">
-        <strong>Demo Login:</strong><br>
-        Admin: admin / adminpassword123<br>
-        Trainer: stephenjebadurai / trainerpassword123
+      <h4 class="footer-heading">Contact</h4>
+      <div class="footer-links">
+        <a href="mailto:manager.projects@easy-learn-academy.com">manager.projects@easy-learn-academy.com</a>
       </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <div>&copy; 2026 Easy Learn Academy. All rights reserved.</div>
-    <div>Built by Stephen Jebadurai</div>
+    <p>&copy; 2026 Easy Learn Academy. All rights reserved.</p>
+    <p>Built by Stephen Jebadurai</p>
   </div>
 </footer>
 
 <script>
-// Simple Mobile Menu Toggle
-const ham = document.getElementById('hamburger');
+// Navbar Scrolled
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+// Mobile Menu
+const ham = document.getElementById('ham');
 const menu = document.getElementById('mobileMenu');
 ham.addEventListener('click', () => {
-  menu.classList.toggle('active');
-  const isActive = menu.classList.contains('active');
-  ham.innerHTML = isActive ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+  menu.classList.toggle('open');
+  ham.innerHTML = menu.classList.contains('open') ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
 });
 document.querySelectorAll('.mobile-menu a').forEach(link => {
   link.addEventListener('click', () => {
-    menu.classList.remove('active');
+    menu.classList.remove('open');
     ham.innerHTML = '<i class="fa-solid fa-bars"></i>';
+  });
+});
+
+// Tabs
+const tabs = document.querySelectorAll('.c-tab');
+const panels = document.querySelectorAll('.c-panel');
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    // Remove active from all
+    tabs.forEach(t => t.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    
+    // Add active to clicked
+    tab.classList.add('active');
+    const target = tab.getAttribute('data-target');
+    document.getElementById('c-' + target).classList.add('active');
   });
 });
 </script>
