@@ -1,0 +1,733 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Operations Dashboard - Easy Learn Academy{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-layout {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 30px;
+    }
+
+    @media (max-width: 992px) {
+        .dashboard-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Sidebar tabs styling */
+    .sidebar-menu {
+        background-color: white;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 24px 16px;
+        box-shadow: var(--shadow-premium);
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .tab-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: var(--radius-md);
+        border: none;
+        background: none;
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+        background-color: #F1F5F9;
+        color: var(--primary-color);
+    }
+
+    .tab-btn.active {
+        background: var(--primary-gradient);
+        color: white;
+        box-shadow: 0 4px 12px rgba(11, 67, 133, 0.15);
+    }
+
+    /* Main Dashboard Cards */
+    .dashboard-pane {
+        display: none;
+        animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .dashboard-pane.active {
+        display: block;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .form-group-full {
+        grid-column: 1 / -1;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 700;
+        font-size: 13px;
+        color: var(--text-main);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        font-family: inherit;
+        font-size: 14px;
+        transition: all 0.2s ease;
+        background-color: #F8FAFC;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 4px rgba(11, 67, 133, 0.1);
+        background-color: white;
+    }
+
+    .hint-text {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 4px;
+        display: block;
+    }
+
+    /* Analytical Charts Styles */
+    .analytics-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    @media (max-width: 768px) {
+        .analytics-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .chart-container {
+        background-color: #F8FAFC;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 24px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .chart-title {
+        font-size: 16px;
+        color: var(--primary-color);
+        margin-bottom: 16px;
+        font-weight: 700;
+    }
+
+    /* Elegant Custom Bar Chart Styling using HTML/CSS */
+    .bar-chart {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 10px;
+    }
+
+    .chart-row {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .chart-row-label {
+        width: 130px;
+        text-align: right;
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .chart-row-bar-container {
+        flex: 1;
+        height: 18px;
+        background-color: #E2E8F0;
+        border-radius: 9px;
+        overflow: hidden;
+    }
+
+    .chart-row-bar {
+        height: 100%;
+        background: var(--primary-gradient);
+        border-radius: 9px;
+        transition: width 1s ease-in-out;
+    }
+
+    .chart-row-bar-orange {
+        background: var(--secondary-gradient);
+    }
+
+    .chart-row-val {
+        width: 80px;
+        text-align: left;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-main);
+    }
+
+    /* Modal dialog mock overlay style */
+    .quick-edit-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="dashboard-layout">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar-menu">
+            <div style="text-align: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color);">
+                <span class="badge badge-active" style="font-size: 12px; padding: 6px 12px;">Admin Operations</span>
+            </div>
+            <button class="tab-btn active" onclick="switchTab(event, 'tab-projects')">
+                <i class="fa-solid fa-school"></i> Project Manager
+            </button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-trainers')">
+                <i class="fa-solid fa-users-gear"></i> Trainer Manager
+            </button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-expenses')">
+                <i class="fa-solid fa-chart-line"></i> Expense Tracker
+            </button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-invoices')">
+                <i class="fa-solid fa-receipt"></i> Invoice Manager
+            </button>
+        </aside>
+
+        <!-- Main Content Area -->
+        <section style="display: flex; flex-direction: column; gap: 30px;">
+            
+            <!-- Welcome Header -->
+            <div class="glass-card" style="padding: 20px 30px;">
+                <h2 style="color: var(--primary-color); font-size: 24px; font-weight: 800;">
+                    <i class="fa-solid fa-gauge-high"></i> Operations Command Center
+                </h2>
+                <p style="color: var(--text-muted); margin-top: 4px;">Welcome back, Admin. Oversee active college courses, approve budgets, and verify trainers.</p>
+            </div>
+
+            <!-- Tab 1: Project Manager -->
+            <div id="tab-projects" class="dashboard-pane active">
+                <!-- Add Project Form -->
+                <div class="glass-card" style="margin-bottom: 30px;">
+                    <h3 class="section-title" style="margin-bottom: 24px;">Create New College Project</h3>
+                    
+                    <form action="{% url 'admin_add_project' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="name" class="form-label">College Name / ID</label>
+                                <input type="text" id="name" name="name" class="form-control" placeholder="e.g. SMVITM - Udupi" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="duration_days" class="form-label">Duration (Days)</label>
+                                <input type="number" id="duration_days" name="duration_days" class="form-control" placeholder="e.g. 40" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="start_date" class="form-label">Start Date</label>
+                                <input type="date" id="start_date" name="start_date" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="end_date" class="form-label">End Date</label>
+                                <input type="date" id="end_date" name="end_date" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="technology" class="form-label">Technology Stack</label>
+                                <input type="text" id="technology" name="technology" class="form-control" placeholder="e.g. Django Fullstack" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="semester_year" class="form-label">Semester & Year</label>
+                                <input type="text" id="semester_year" name="semester_year" class="form-control" placeholder="e.g. 4th & 6th Sem" required>
+                            </div>
+                            
+                            <div class="form-group-full" style="padding-top: 10px;">
+                                <button type="submit" class="btn btn-primary" style="padding: 12px 30px;">
+                                    <i class="fa-solid fa-circle-plus"></i> Initialize College Course
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Projects List -->
+                <div class="glass-card">
+                    <h3 class="section-title" style="margin-bottom: 24px;">Ongoing & Completed College Programs</h3>
+                    
+                    <div class="table-responsive">
+                        <table class="premium-table">
+                            <thead>
+                                <tr>
+                                    <th>College Name</th>
+                                    <th>Technology</th>
+                                    <th>Duration</th>
+                                    <th>Date Range</th>
+                                    <th>Target Year</th>
+                                    <th>Status Badge</th>
+                                    <th>Project Controls</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if projects %}
+                                    {% for proj in projects %}
+                                        <tr>
+                                            <td><strong>{{ proj.name }}</strong></td>
+                                            <td>{{ proj.technology }}</td>
+                                            <td>{{ proj.duration_days }} Working Days</td>
+                                            <td><small>{{ proj.start_date|date:"Y-m-d" }} to {{ proj.end_date|date:"Y-m-d" }}</small></td>
+                                            <td>{{ proj.semester_year }}</td>
+                                            <td>
+                                                <span class="badge {% if proj.status == 'Active' %}badge-active{% else %}badge-completed{% endif %}">
+                                                    {{ proj.status }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <form action="{% url 'admin_toggle_project_status' proj.id %}" method="POST" style="display:inline;">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-outline quick-edit-btn" style="border-color: {% if proj.status == 'Active' %}#D97706; color: #D97706;{% else %}#059669; color: #059669;{% endif %}">
+                                                        <i class="fa-solid {% if proj.status == 'Active' %}fa-flag-checkered{% else %}fa-rotate-left{% endif %}"></i>
+                                                        {% if proj.status == 'Active' %}Mark Completed{% else %}Re-activate{% endif %}
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                                            <i class="fa-solid fa-graduation-cap" style="font-size: 32px; opacity: 0.5; margin-bottom: 10px;"></i>
+                                            <p>No college programs configured yet.</p>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Trainer Manager -->
+            <div id="tab-trainers" class="dashboard-pane">
+                <div class="glass-card">
+                    <h3 class="section-title" style="margin-bottom: 24px;">Onboarded Academy Trainers</h3>
+                    
+                    <div class="table-responsive">
+                        <table class="premium-table">
+                            <thead>
+                                <tr>
+                                    <th>Photo</th>
+                                    <th>Trainer Name</th>
+                                    <th>Verification details</th>
+                                    <th>Quoted Rate</th>
+                                    <th>Allocated Projects</th>
+                                    <th>Acc Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if trainers %}
+                                    {% for tr in trainers %}
+                                        <tr>
+                                            <td>
+                                                {% if tr.photo %}
+                                                    <img src="{{ tr.photo.url }}" alt="Trainer" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-color);">
+                                                {% else %}
+                                                    <div style="width: 44px; height: 44px; border-radius: 50%; background-color: #E2E8F0; display:flex; align-items:center; justify-content:center; font-size: 20px; color: var(--text-muted);">
+                                                        <i class="fa-solid fa-user"></i>
+                                                    </div>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <strong>{{ tr.user.first_name }} {{ tr.user.last_name }}</strong><br>
+                                                <small style="color: var(--text-muted)">{{ tr.user.email }}</small>
+                                            </td>
+                                            <td>
+                                                <small>
+                                                    <strong>PAN:</strong> {{ tr.pan_card }}<br>
+                                                    <strong>Aadhaar:</strong> {{ tr.aadhaar_number }}
+                                                    {% if tr.aadhaar_file %}
+                                                        <a href="{{ tr.aadhaar_file.url }}" target="_blank" style="color: var(--secondary-color); font-weight:700;"><i class="fa-solid fa-file-pdf"></i> View Doc</a>
+                                                    {% endif %}
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <strong>₹{{ tr.quoted_amount }}</strong><br>
+                                                <small class="badge badge-active" style="padding: 2px 6px; font-size: 9px;">{{ tr.quoted_type }}</small>
+                                            </td>
+                                            <td>
+                                                <div style="display:flex; flex-direction:column; gap: 4px;">
+                                                    {% for p in tr.projects.all %}
+                                                        <small class="badge {% if p.status == 'Active' %}badge-active{% else %}badge-completed{% endif %}" style="font-size: 10px; padding: 2px 6px;">
+                                                            {{ p.name }}
+                                                        </small>
+                                                    {% empty %}
+                                                        <small style="color: var(--text-muted);">Not assigned</small>
+                                                    {% endfor %}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge {% if tr.is_active and not tr.is_deactivated_by_projects %}badge-active{% else %}badge-pending{% endif %}" style="font-size: 10px;">
+                                                    {% if not tr.is_active %}Deactivated{% elif tr.is_deactivated_by_projects %}Lock (Project Over){% else %}Active{% endif %}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div style="display: flex; gap: 8px;">
+                                                    <a href="{% url 'admin_view_trainer' tr.id %}" class="btn btn-primary quick-edit-btn" title="View details, syllabus logs and report downloads">
+                                                        <i class="fa-solid fa-eye"></i> Details
+                                                    </a>
+                                                    
+                                                    <form action="{% url 'admin_toggle_trainer_status' tr.id %}" method="POST" style="display:inline;">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-outline quick-edit-btn" style="border-color: {% if tr.is_active %}#DC2626; color: #DC2626;{% else %}#059669; color: #059669;{% endif %}">
+                                                            <i class="fa-solid {% if tr.is_active %}fa-user-slash{% else %}fa-user-check{% endif %}"></i>
+                                                            {% if tr.is_active %}Block{% else %}Activate{% endif %}
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                                            <i class="fa-solid fa-users-slash" style="font-size: 32px; opacity: 0.5; margin-bottom: 10px;"></i>
+                                            <p>No trainers onboarded yet.</p>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3: Expense Tracker -->
+            <div id="tab-expenses" class="dashboard-pane">
+                
+                <!-- Log Expense Form -->
+                <div class="glass-card" style="margin-bottom: 30px;">
+                    <h3 class="section-title" style="margin-bottom: 24px;">Log Training Expenditure</h3>
+                    
+                    <form action="{% url 'admin_add_expense' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="expense_project" class="form-label">Associate Project College</label>
+                                <select id="expense_project" name="project" class="form-control" required>
+                                    <option value="" disabled selected>-- Choose college --</option>
+                                    {% for proj in active_projects %}
+                                        <option value="{{ proj.id }}">{{ proj.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="expense_date" class="form-label">Expense Date</label>
+                                <input type="date" id="expense_date" name="date" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="expense_category" class="form-label">Category</label>
+                                <select id="expense_category" name="category" class="form-control" required>
+                                    <option value="" disabled selected>-- Select category --</option>
+                                    {% for cat in expense_categories %}
+                                        <option value="{{ cat }}">{{ cat }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="expense_amount" class="form-label">Amount (INR)</label>
+                                <input type="number" id="expense_amount" name="amount" class="form-control" placeholder="₹" step="0.01" required>
+                            </div>
+
+                            <div class="form-group form-group-full">
+                                <label for="expense_description" class="form-label">Expense description & Details</label>
+                                <textarea id="expense_description" name="description" class="form-control" placeholder="e.g. Travel tickets reimbursement, handbook printing charges" rows="2" required></textarea>
+                            </div>
+                            
+                            <div class="form-group-full" style="padding-top: 10px;">
+                                <button type="submit" class="btn btn-secondary" style="padding: 12px 30px;">
+                                    <i class="fa-solid fa-calculator"></i> Log Academy Expense
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Premium Analytics Dashboard -->
+                <div class="glass-card" style="margin-bottom: 30px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px; flex-wrap:wrap; gap:10px;">
+                        <h3 class="section-title" style="margin: 0;">Academy Expenditure Analytics</h3>
+                        <a href="{% url 'admin_download_expenses_excel' %}" class="btn btn-primary">
+                            <i class="fa-solid fa-file-excel"></i> Export Expense Spreadsheet
+                        </a>
+                    </div>
+                    
+                    <div class="analytics-grid">
+                        <!-- Category Distribution Chart (Pure HTML/CSS) -->
+                        <div class="chart-container">
+                            <h4 class="chart-title"><i class="fa-solid fa-chart-pie"></i> Distribution by Expense Category</h4>
+                            <div class="bar-chart">
+                                {% if chart_labels %}
+                                    {% for label in chart_labels %}
+                                        <div class="chart-row">
+                                            <span class="chart-row-label" title="{{ label }}">{{ label }}</span>
+                                            <div class="chart-row-bar-container">
+                                                <!-- Javascript will dynamically scale widths on load -->
+                                                <div class="chart-row-bar chart-row-bar-orange" data-val="{% widthratio chart_values|slice:forloop.counter0|first chart_values|first 100 %}" style="width: 0%;"></div>
+                                            </div>
+                                            <!-- Lookup exact value index -->
+                                            <span class="chart-row-val">₹{{ chart_values|slice:forloop.counter0|first }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p style="color: var(--text-muted); font-size:13px; padding: 20px;">No expense data compiled yet.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Project Distribution Chart -->
+                        <div class="chart-container">
+                            <h4 class="chart-title"><i class="fa-solid fa-chart-bar"></i> Distribution by College Project</h4>
+                            <div class="bar-chart">
+                                {% if proj_labels %}
+                                    {% for label in proj_labels %}
+                                        <div class="chart-row">
+                                            <span class="chart-row-label" title="{{ label }}">{{ label }}</span>
+                                            <div class="chart-row-bar-container">
+                                                <div class="chart-row-bar" data-val="{% widthratio proj_values|slice:forloop.counter0|first proj_values|first 100 %}" style="width: 0%;"></div>
+                                            </div>
+                                            <span class="chart-row-val">₹{{ proj_values|slice:forloop.counter0|first }}</span>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p style="color: var(--text-muted); font-size:13px; padding: 20px;">No project expense data compiled yet.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ledger Table -->
+                    <h4 style="color:var(--primary-color); font-weight:800; font-size:16px; margin: 20px 0 12px 0;">Expenses Ledger</h4>
+                    <div class="table-responsive">
+                        <table class="premium-table">
+                            <thead>
+                                <tr>
+                                    <th>Associated College</th>
+                                    <th>Date</th>
+                                    <th>Category</th>
+                                    <th>Description Details</th>
+                                    <th>Amount (INR)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if expenses %}
+                                    {% for exp in expenses %}
+                                        <tr>
+                                            <td><strong>{{ exp.project.name }}</strong></td>
+                                            <td>{{ exp.date|date:"Y-m-d" }}</td>
+                                            <td><span class="badge badge-active">{{ exp.category }}</span></td>
+                                            <td>{{ exp.description|default:"-" }}</td>
+                                            <td><strong>₹{{ exp.amount }}</strong></td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                                            <i class="fa-solid fa-wallet" style="font-size: 32px; opacity: 0.5; margin-bottom: 10px;"></i>
+                                            <p>No logged expenses found.</p>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Tab 4: Invoice Manager -->
+            <div id="tab-invoices" class="dashboard-pane">
+                
+                <!-- Monthly totals received board -->
+                <div class="glass-card" style="margin-bottom:30px;">
+                    <h3 class="section-title" style="margin-bottom: 24px;">Monthly Invoices Billing Overview</h3>
+                    
+                    <div class="info-summary-grid" style="margin-bottom:0;">
+                        {% if monthly_invoice_sums %}
+                            {% for record in monthly_invoice_sums %}
+                                <div class="summary-card" style="background-color: white;">
+                                    <div class="summary-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                                    <div>
+                                        <div class="summary-value" style="font-size:18px;">₹{{ record.total }}</div>
+                                        <div class="summary-label">{{ record.month }} | {{ record.count }} Raised</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div style="color: var(--text-muted); font-size:14px; text-align:center; grid-column: 1/-1; padding:20px;">
+                                No monthly invoice totals logged yet.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Received Invoices Table -->
+                <div class="glass-card">
+                    <h3 class="section-title" style="margin-bottom: 24px;">Direct Trainer Invoices Board</h3>
+                    
+                    <div class="table-responsive">
+                        <table class="premium-table">
+                            <thead>
+                                <tr>
+                                    <th>Trainer Name</th>
+                                    <th>Project College</th>
+                                    <th>Month</th>
+                                    <th>Working Days</th>
+                                    <th>Sick Leaves</th>
+                                    <th>Net Amount</th>
+                                    <th>Status Badge</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if invoices %}
+                                    {% for inv in invoices %}
+                                        <tr>
+                                            <td>
+                                                <strong>{{ inv.trainer.first_name }} {{ inv.trainer.last_name }}</strong><br>
+                                                <small style="color: var(--text-muted)">@{{ inv.trainer.username }}</small>
+                                            </td>
+                                            <td><strong>{{ inv.project.name }}</strong></td>
+                                            <td>{{ inv.month }}</td>
+                                            <td>{{ inv.total_working_days }} Days</td>
+                                            <td>{{ inv.sick_leaves }} Days</td>
+                                            <td><strong>₹{{ inv.total_amount }}</strong></td>
+                                            <td>
+                                                <span class="badge {% if inv.status == 'Approved' %}badge-active{% elif inv.status == 'Paid' %}badge-paid{% else %}badge-pending{% endif %}">
+                                                    {{ inv.get_status_display }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div style="display: flex; gap: 8px; align-items:center;">
+                                                    <a href="{% url 'download_invoice_pdf' inv.id %}" class="btn btn-outline quick-edit-btn" title="Download Printable PDF">
+                                                        <i class="fa-solid fa-file-pdf"></i> PDF
+                                                    </a>
+                                                    
+                                                    <form action="{% url 'admin_update_invoice_status' inv.id %}" method="POST" style="display:flex; gap: 4px; align-items:center;">
+                                                        {% csrf_token %}
+                                                        <select name="status" class="form-control" style="padding: 6px 12px; font-size:12px; width: 100px;" onchange="this.form.submit()">
+                                                            <option value="Pending" {% if inv.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                                            <option value="Approved" {% if inv.status == 'Approved' %}selected{% endif %}>Approve</option>
+                                                            <option value="Paid" {% if inv.status == 'Paid' %}selected{% endif %}>Paid</option>
+                                                        </select>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                                            <i class="fa-solid fa-receipt" style="font-size: 32px; opacity: 0.5; margin-bottom: 10px;"></i>
+                                            <p>No invoices raised by trainers yet.</p>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function switchTab(event, tabId) {
+        const panes = document.querySelectorAll('.dashboard-pane');
+        panes.forEach(pane => pane.classList.remove('active'));
+        
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+
+        // Draw/animate charts if Expense tab is loaded
+        if (tabId === 'tab-expenses') {
+            animateCharts();
+        }
+    }
+
+    function animateCharts() {
+        const bars = document.querySelectorAll('.chart-row-bar');
+        bars.forEach(bar => {
+            const val = bar.getAttribute('data-val') || "0";
+            // Handle division limits or scaling
+            let widthPercent = parseInt(val);
+            if (widthPercent > 100) widthPercent = 100;
+            if (widthPercent < 5 && widthPercent > 0) widthPercent = 5; // minimum width to be visible
+            bar.style.width = widthPercent + '%';
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        // Set default date in expense logger to today
+        const expenseDateInput = document.getElementById('expense_date');
+        if (expenseDateInput) {
+            expenseDateInput.value = new Date().toISOString().split('T')[0];
+        }
+    });
+</script>
+{% endblock %}

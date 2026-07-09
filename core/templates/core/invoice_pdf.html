@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice - {{ profile.user.first_name }} {{ profile.user.last_name }}</title>
+    <style>
+        @page {
+            size: a4 portrait;
+            margin: 1.5cm;
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-family: 'Segoe UI', Arial, sans-serif;
+                font-size: 9pt;
+                color: #64748b;
+            }
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #1e293b;
+            margin: 0;
+            padding: 0;
+            font-size: 10pt;
+            line-height: 1.4;
+        }
+        
+        /* Typography */
+        h1 { font-size: 24pt; color: #0b4385; margin: 0 0 4px 0; font-weight: bold; }
+        h2 { font-size: 14pt; color: #0b4385; margin: 0 0 10px 0; border-bottom: 2px solid #ff7605; padding-bottom: 4px; }
+        h3 { font-size: 11pt; color: #0b4385; margin: 0 0 6px 0; }
+        
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .header-logo-cell {
+            vertical-align: top;
+        }
+        .header-meta-cell {
+            text-align: right;
+            vertical-align: top;
+            font-size: 9pt;
+            color: #64748b;
+        }
+        .invoice-title {
+            color: #ff7605;
+            font-size: 20pt;
+            font-weight: bold;
+            margin: 0 0 4px 0;
+        }
+
+        .billing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .billing-cell {
+            width: 50%;
+            vertical-align: top;
+            padding-right: 15px;
+        }
+        
+        .card-bg {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        /* Items Ledger Table */
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .items-table th {
+            background-color: #0b4385;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: left;
+            padding: 8px 10px;
+            font-size: 9.5pt;
+        }
+        .items-table td {
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 9.5pt;
+        }
+        
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .summary-cell-empty {
+            width: 60%;
+        }
+        .summary-cell-labels {
+            width: 20%;
+            text-align: right;
+            padding: 6px 10px;
+            font-weight: bold;
+            font-size: 9.5pt;
+        }
+        .summary-cell-vals {
+            width: 20%;
+            text-align: right;
+            padding: 6px 10px;
+            font-size: 9.5pt;
+            font-weight: bold;
+        }
+        
+        .net-amount-box {
+            background-color: #ffe8d6;
+            border: 1px solid #ff7605;
+            color: #d94e00;
+            padding: 8px;
+            font-size: 12pt;
+            font-weight: bold;
+        }
+        
+        .footer-note {
+            margin-top: 40px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 15px;
+            text-align: center;
+            font-size: 8pt;
+            color: #64748b;
+        }
+        
+        .code-font {
+            font-family: monospace;
+            font-size: 9pt;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Block -->
+    <table class="header-table">
+        <tr>
+            <td class="header-logo-cell">
+                <h1>Easy Learn Academy</h1>
+                <div style="color: #ff7605; font-weight: bold; font-size: 11pt;">Training Operations Portal</div>
+            </td>
+            <td class="header-meta-cell">
+                <div class="invoice-title">INVOICE</div>
+                <div>Invoice Code: ELA-INV-{{ invoice.id|stringformat:"05d" }}</div>
+                <div>Date Generated: {{ date_generated|date:"Y-m-d" }}</div>
+                <div>Due Date: {{ due_date|date:"Y-m-d" }}</div>
+                <div>Status: <span style="font-weight: bold; color: {% if invoice.status == 'Paid' %}#047857{% else %}#b45309{% endif %};">{{ invoice.get_status_display }}</span></div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Billing Info Block -->
+    <table class="billing-table">
+        <tr>
+            <td class="billing-cell">
+                <h2>Invoice From (Trainer)</h2>
+                <div class="card-bg">
+                    <strong>{{ profile.user.first_name }} {{ profile.user.last_name }}</strong><br>
+                    Email: {{ profile.user.email }}<br>
+                    Aadhaar No: <span class="code-font">{{ profile.aadhaar_number }}</span><br>
+                    PAN Card No: <span class="code-font">{{ profile.pan_card }}</span>
+                </div>
+            </td>
+            <td class="billing-cell" style="padding-right: 0; padding-left: 15px;">
+                <h2>Invoice To</h2>
+                <div class="card-bg">
+                    <strong>Easy Learn Academy</strong><br>
+                    Corporate Operations & Projects Office<br>
+                    Email: <span class="code-font">manager.projects@easy-learn-academy.com</span><br>
+                    Website: easy-learn-academy.com
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Bank Details Section -->
+    <table class="billing-table" style="margin-bottom: 20px;">
+        <tr>
+            <td class="billing-cell" style="width: 100%; padding-right: 0;">
+                <h2>Bank Account & UPI Details</h2>
+                <div class="card-bg" style="font-size: 9pt;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td><strong>Bank Name:</strong> {{ profile.bank_name }}</td>
+                            <td><strong>Account Number:</strong> <span class="code-font">{{ profile.bank_account_number }}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>IFSC Code:</strong> <span class="code-font">{{ profile.bank_ifsc }}</span></td>
+                            <td><strong>UPI ID Address:</strong> <span style="color:#0b4385; font-weight:bold;">{{ profile.upi_id }}</span></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Ledger Details Table -->
+    <h2>Billing Details</h2>
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th>College / Project Description</th>
+                <th style="text-align: center;">Billing Month</th>
+                <th style="text-align: center;">Quoted Rate</th>
+                <th style="text-align: center;">Working Days</th>
+                <th style="text-align: right;">Total Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <strong>{{ invoice.project.name }}</strong><br>
+                    <small style="color: #64748b; font-size: 8pt;">Technology Stack: {{ invoice.project.technology }} ({{ invoice.project.semester_year }})</small>
+                </td>
+                <td style="text-align: center;">{{ invoice.month }}</td>
+                <td style="text-align: center;">₹{{ profile.quoted_amount }} <small style="font-size: 8pt;">({{ profile.quoted_type }})</small></td>
+                <td style="text-align: center;">{{ invoice.total_working_days }} Days</td>
+                <td style="text-align: right;">₹{% if profile.quoted_type == 'Daily' %}{{ invoice.total_working_days|add:"0" }}{% else %}1{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Calculations summary -->
+    <table class="summary-table">
+        <tr>
+            <td class="summary-cell-empty"></td>
+            <td class="summary-cell-labels">Logged Days:</td>
+            <td class="summary-cell-vals">{{ invoice.total_working_days }} Working Days</td>
+        </tr>
+        <tr>
+            <td class="summary-cell-empty"></td>
+            <td class="summary-cell-labels">Leaves Taken:</td>
+            <td class="summary-cell-vals">{{ invoice.sick_leaves }} Days</td>
+        </tr>
+        <tr>
+            <td class="summary-cell-empty"></td>
+            <td class="summary-cell-labels" style="color: red;">Deductions:</td>
+            <td class="summary-cell-vals" style="color: red;">-₹{{ invoice.deductions }}</td>
+        </tr>
+        <tr>
+            <td class="summary-cell-empty"></td>
+            <td class="summary-cell-labels" style="padding-top: 10px;">Net Payable:</td>
+            <td class="summary-cell-vals" style="padding-top: 10px;">
+                <div class="net-amount-box">₹{{ invoice.total_amount }}</div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="footer-note">
+        <p>This invoice is electronically compiled and routed directly to the Easy Learn Academy finance board.</p>
+        <p>For communication, contact: <strong>manager.projects@easy-learn-academy.com</strong></p>
+    </div>
+
+</body>
+</html>

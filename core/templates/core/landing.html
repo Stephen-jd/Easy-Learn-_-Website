@@ -1,0 +1,632 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Easy Learn Academy - Training & EdTech Portal{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Advanced Multi-Stage Splash Screen Motion Graphics */
+
+
+    .hero {
+        background: linear-gradient(135deg, rgba(11, 67, 133, 0.95) 0%, rgba(6, 27, 51, 0.9) 100%);
+        border-radius: var(--radius-lg);
+        color: white;
+        padding: 75px 40px;
+        text-align: center;
+        margin-bottom: 40px;
+        box-shadow: var(--shadow-premium);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .hero-badge {
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 6px 18px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 700;
+        display: inline-block;
+        margin-bottom: 24px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+    .hero h1 {
+        font-size: 44px;
+        font-weight: 800;
+        margin-bottom: 18px;
+        letter-spacing: -1px;
+        line-height: 1.2;
+    }
+
+    .hero p {
+        font-size: 17px;
+        max-width: 850px;
+        margin: 0 auto 35px auto;
+        color: #CBD5E1;
+        font-weight: 400;
+        line-height: 1.6;
+    }
+
+    .hero-actions {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    /* Slideshow Carousel Layout */
+    .slideshow-section {
+        margin-bottom: 50px;
+    }
+
+    .slideshow-container {
+        position: relative;
+        max-width: 100%;
+        height: 520px;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-premium);
+        background-color: #0B1E33;
+        border: 1px solid var(--border-color);
+    }
+
+    .mySlides {
+        display: none;
+        height: 100%;
+        position: relative;
+    }
+
+    .mySlides img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.9;
+        transition: transform 6s ease;
+    }
+
+    .mySlides.active-slide img {
+        transform: scale(1.05);
+    }
+
+    /* Elegant Fade Transition */
+    .fade-effect {
+        animation: fadeTransition 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeTransition {
+        from { opacity: 0.4; }
+        to { opacity: 1; }
+    }
+
+    /* Slideshow Caption Overlay */
+    .slide-caption {
+        position: absolute;
+        bottom: 30px;
+        left: 30px;
+        right: 30px;
+        background: rgba(15, 23, 42, 0.88);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 22px 28px;
+        border-radius: var(--radius-md);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+        z-index: 5;
+    }
+
+    .slide-caption h4 {
+        margin: 0 0 6px 0;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--secondary-color);
+        font-family: 'Outfit', sans-serif;
+    }
+
+    .slide-caption p {
+        margin: 0;
+        font-size: 13.5px;
+        color: #E2E8F0;
+        line-height: 1.5;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Carousel navigation controls */
+    .prev-slide, .next-slide {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        font-weight: bold;
+        font-size: 22px;
+        transition: 0.3s ease;
+        border-radius: 50%;
+        user-select: none;
+        background: rgba(15, 23, 42, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        text-decoration: none;
+        z-index: 10;
+    }
+
+    .prev-slide {
+        left: 24px;
+    }
+
+    .next-slide {
+        right: 24px;
+    }
+
+    .prev-slide:hover, .next-slide:hover {
+        background: var(--secondary-color);
+        border-color: transparent;
+        box-shadow: 0 4px 15px rgba(255, 118, 5, 0.4);
+        transform: translateY(-50%) scale(1.08);
+    }
+
+    .dots-container {
+        position: absolute;
+        bottom: 120px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 10;
+    }
+
+    .slide-dot {
+        cursor: pointer;
+        height: 10px;
+        width: 10px;
+        background-color: rgba(255, 255, 255, 0.4);
+        border-radius: 50%;
+        display: inline-block;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .slide-dot.active-dot, .slide-dot:hover {
+        background-color: var(--secondary-color);
+        transform: scale(1.3);
+        box-shadow: 0 0 8px rgba(255, 118, 5, 0.8);
+    }
+
+    /* Stats Section Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 24px;
+        margin-bottom: 50px;
+    }
+
+    .stat-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 24px;
+        text-align: center;
+        box-shadow: var(--shadow-sm);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+        border-color: rgba(11, 67, 133, 0.2);
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--primary-gradient);
+    }
+
+    .stat-card-orange::before {
+        background: var(--secondary-gradient);
+    }
+
+    .stat-card-accent::before {
+        background: var(--accent-gradient);
+    }
+
+    .stat-num {
+        font-size: 36px;
+        font-weight: 800;
+        color: var(--primary-color);
+        line-height: 1;
+        margin-bottom: 8px;
+    }
+
+    .stat-card-orange .stat-num {
+        color: var(--secondary-color);
+    }
+
+    .stat-label {
+        font-size: 12.5px;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .stat-icon {
+        font-size: 26px;
+        margin-bottom: 12px;
+        color: var(--text-muted);
+        opacity: 0.6;
+    }
+
+    .stat-card-orange .stat-icon {
+        color: var(--secondary-color);
+        opacity: 0.8;
+    }
+
+    /* Double Panel Grid */
+    .info-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+
+    @media (max-width: 992px) {
+        .info-grid {
+            grid-template-columns: 1fr;
+        }
+        .slideshow-container {
+            height: 380px;
+        }
+        .slide-caption {
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            padding: 15px;
+        }
+        .dots-container {
+            bottom: 95px;
+        }
+    }
+
+    .dashboard-panel {
+        background: white;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        padding: 30px;
+    }
+
+    .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 15px;
+    }
+
+    .panel-title {
+        font-size: 19px;
+        color: var(--primary-color);
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .data-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .data-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 18px;
+        border-radius: var(--radius-md);
+        background-color: var(--bg-base);
+        border: 1px solid #F1F5F9;
+        transition: all 0.2s ease;
+    }
+
+    .data-item:hover {
+        transform: translateX(4px);
+        background-color: #F1F5F9;
+        border-color: rgba(11, 67, 133, 0.1);
+    }
+
+    .data-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .data-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text-main);
+    }
+
+    .data-sub {
+        font-size: 12.5px;
+        color: var(--text-muted);
+    }
+
+    .vendor-card {
+        padding: 16px;
+        border-radius: var(--radius-md);
+        background-color: #FAF5FF;
+        border-left: 4px solid #A855F7;
+        margin-bottom: 14px;
+        border-top: 1px solid rgba(168, 85, 247, 0.08);
+        border-right: 1px solid rgba(168, 85, 247, 0.08);
+        border-bottom: 1px solid rgba(168, 85, 247, 0.08);
+    }
+
+    .vendor-name {
+        font-weight: 700;
+        color: #6B21A8;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .vendor-service {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 4px;
+    }
+
+    .vendor-email {
+        font-size: 11px;
+        font-family: monospace;
+        color: #701A75;
+        margin-top: 6px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+    <!-- Marketing Hero -->
+    <div class="hero">
+        <span class="hero-badge"><i class="fa-solid fa-star"></i> Verified College Skill Partner</span>
+        <h1>Easy Learn Academy Operations Portal</h1>
+        <p>Connecting colleges with standard technical bootcamps, tracking daily syllabus coverage, organizing expenditures, and automating trainer logs and invoicing in a professional unified environment.</p>
+        
+        <div class="hero-actions">
+            {% if not request.user.is_authenticated %}
+                <a href="{% url 'login' %}" class="btn btn-primary" style="padding: 13px 26px;"><i class="fa-solid fa-door-open"></i> Login to Workspace</a>
+                <a href="{% url 'trainer_signup' %}" class="btn btn-secondary" style="padding: 13px 26px;"><i class="fa-solid fa-user-plus"></i> Register as Partner Trainer</a>
+            {% else %}
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'admin_dashboard' %}" class="btn btn-primary" style="padding: 13px 26px;"><i class="fa-solid fa-gear"></i> Admin Operations Panel</a>
+                {% else %}
+                    <a href="{% url 'trainer_dashboard' %}" class="btn btn-primary" style="padding: 13px 26px;"><i class="fa-solid fa-graduation-cap"></i> Trainer Dashboard</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Live Auto-Sliding Widescreen Campus Training Gallery -->
+    <div class="slideshow-section">
+        <div class="slideshow-container">
+            <!-- Slide 1 -->
+            <div class="mySlides fade-effect">
+                <img src="{% static 'core/images/slide1.jpg' %}" alt="Laboratory Bootcamp Session">
+                <div class="slide-caption">
+                    <h4>Interactive Laboratory Bootcamps</h4>
+                    <p>Live coding training under direct corporate supervision, ensuring students grasp standard programming frameworks on the spot.</p>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="mySlides fade-effect">
+                <img src="{% static 'core/images/slide2.jpg' %}" alt="Active Classroom Cohort">
+                <div class="slide-caption">
+                    <h4>Syllabus-Aligned Skill Semesters</h4>
+                    <p>Large classroom cohorts working systematically through advanced technical stacks including Django, Java Full Stack, and Web React.</p>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="mySlides fade-effect">
+                <img src="{% static 'core/images/slide3.jpg' %}" alt="Doubt Solving Engagement">
+                <div class="slide-caption">
+                    <h4>Dedicated Mentor Engagement</h4>
+                    <p>Trainers engaging individually in classrooms to clear architectural roadblocks and mentor logical problem-solving practices.</p>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="mySlides fade-effect">
+                <img src="{% static 'core/images/slide4.jpg' %}" alt="Student Placement Prep">
+                <div class="slide-caption">
+                    <h4>Empowering Placement Readiness</h4>
+                    <p>Hands-on coding challenges and bootcamp sprints in state-of-the-art offline labs to prepare students directly for placements.</p>
+                </div>
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="mySlides fade-effect">
+                <img src="{% static 'core/images/slide5.jpg' %}" alt="Structured Course Execution">
+                <div class="slide-caption">
+                    <h4>Standardized Syllabus Coverage</h4>
+                    <p>Curriculums are segmented and reported daily via multi-session logs to coordinate ongoing progress cleanly with college directors.</p>
+                </div>
+            </div>
+
+            <!-- Dot paginators -->
+            <div class="dots-container">
+                <span class="slide-dot" onclick="currentSlide(1)"></span>
+                <span class="slide-dot" onclick="currentSlide(2)"></span>
+                <span class="slide-dot" onclick="currentSlide(3)"></span>
+                <span class="slide-dot" onclick="currentSlide(4)"></span>
+                <span class="slide-dot" onclick="currentSlide(5)"></span>
+            </div>
+
+            <!-- Navigation Controls -->
+            <a class="prev-slide" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next-slide" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+    </div>
+
+    <!-- Academy Performance At A Glance -->
+    <h2 class="section-title" style="margin-bottom: 28px;">Academy Performance At A Glance</h2>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <i class="fa-solid fa-school stat-icon"></i>
+            <div class="stat-num">{{ stats.total_active_projects }}</div>
+            <div class="stat-label">Active Project Colleges</div>
+        </div>
+        <div class="stat-card stat-card-orange">
+            <i class="fa-solid fa-user-check stat-icon"></i>
+            <div class="stat-num">{{ stats.active_trainers_count }}</div>
+            <div class="stat-label">Active Trainers</div>
+        </div>
+        <div class="stat-card stat-card-accent">
+            <i class="fa-solid fa-box-archive stat-icon"></i>
+            <div class="stat-num">{{ stats.old_trainers_count }}</div>
+            <div class="stat-label">Completed Projects</div>
+        </div>
+        <div class="stat-card">
+            <i class="fa-solid fa-receipt stat-icon"></i>
+            <div class="stat-num">₹{{ stats.total_expenses|floatformat:0 }}</div>
+            <div class="stat-label">Total Expensed Tracker</div>
+        </div>
+    </div>
+
+    <!-- Live Active Lists -->
+    <div class="info-grid">
+        <!-- Projects Panel -->
+        <div class="dashboard-panel">
+            <div class="panel-header">
+                <h3 class="panel-title"><i class="fa-solid fa-university" style="color: var(--primary-color);"></i> Active Ongoing Colleges</h3>
+                <small class="badge badge-active">{{ current_projects.count }} Programs</small>
+            </div>
+            
+            <div class="data-list">
+                {% if current_projects %}
+                    {% for proj in current_projects %}
+                        <div class="data-item">
+                            <div class="data-info">
+                                <span class="data-title">{{ proj.name }}</span>
+                                <span class="data-sub"><strong>Technology:</strong> {{ proj.technology }} | <strong>Semester:</strong> {{ proj.semester_year }}</span>
+                            </div>
+                            <div>
+                                <small class="badge badge-active" style="padding: 4px 10px; font-size: 11.5px;">
+                                    Ends: {{ proj.end_date|date:"d M, Y" }}
+                                </small>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div style="text-align: center; color: var(--text-muted); padding: 30px;">
+                        <i class="fa-solid fa-folder-open" style="font-size: 32px; opacity: 0.5; margin-bottom: 10px;"></i>
+                        <p>No active projects currently listed.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Vendor & Partners Column -->
+        <div class="dashboard-panel">
+            <div class="panel-header">
+                <h3 class="panel-title"><i class="fa-solid fa-circle-nodes" style="color: var(--secondary-color);"></i> Partner Infrastructure</h3>
+            </div>
+            
+            <div>
+                {% for vendor in vendors %}
+                    <div class="vendor-card">
+                        <div class="vendor-name"><i class="fa-solid fa-building-circle-check"></i> {{ vendor.name }}</div>
+                        <div class="vendor-service">{{ vendor.service }}</div>
+                        <span class="vendor-email"><i class="fa-solid fa-envelope"></i> {{ vendor.contact }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+    let slideIndex = 1;
+    let slideTimer;
+    showSlides(slideIndex);
+    resetTimer();
+
+    // Next/previous controls
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+        resetTimer();
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+        resetTimer();
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("slide-dot");
+        
+        if (slides.length === 0) return;
+        
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+            slides[i].classList.remove("active-slide");
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].classList.remove("active-dot");
+        }
+        
+        slides[slideIndex - 1].style.display = "block";
+        // Delay slightly to trigger visual scale transition on active image
+        setTimeout(() => {
+            slides[slideIndex - 1].classList.add("active-slide");
+        }, 50);
+        
+        if (dots[slideIndex - 1]) {
+            dots[slideIndex - 1].classList.add("active-dot");
+        }
+    }
+
+    function resetTimer() {
+        clearInterval(slideTimer);
+        slideTimer = setInterval(function() {
+            plusSlides(1);
+        }, 4000); // Transitions slide every 4 seconds
+    }
+</script>
+{% endblock %}

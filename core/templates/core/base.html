@@ -1,0 +1,772 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Easy Learn Academy Operations Portal{% endblock %}</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Universal Splash Screen Styles -->
+    <style>
+        /* =============================================
+           GLOBAL SPLASH SCREEN — shows for every user
+           ============================================= */
+        #ela-splash {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            background: radial-gradient(ellipse at 60% 40%, #0e3f80 0%, #05162B 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            pointer-events: all;
+        }
+
+        /* Animated ring glow behind logo */
+        #ela-splash::before {
+            content: '';
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,118,5,0.12) 0%, transparent 70%);
+            animation: glowPulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            from { transform: scale(0.9); opacity: 0.6; }
+            to   { transform: scale(1.15); opacity: 1; }
+        }
+
+        /* Stage 1: zoom in from tiny → full size */
+        @keyframes logoZoomIn {
+            0%   { transform: scale(0.15) rotate(-8deg); opacity: 0; filter: blur(12px); }
+            60%  { transform: scale(1.12) rotate(2deg); opacity: 1; filter: blur(0); }
+            100% { transform: scale(1) rotate(0deg);   opacity: 1; filter: blur(0); }
+        }
+
+        /* Stage 2: zoom out + fade triggered by JS class */
+        @keyframes logoZoomOut {
+            0%   { transform: scale(1);    opacity: 1; filter: blur(0); }
+            100% { transform: scale(2.4);  opacity: 0; filter: blur(8px); }
+        }
+
+        @keyframes titleRise {
+            0%   { transform: translateY(28px); opacity: 0; letter-spacing: -4px; }
+            100% { transform: translateY(0);    opacity: 1; letter-spacing: -1px; }
+        }
+
+        @keyframes taglineRise {
+            0%   { transform: translateY(18px); opacity: 0; letter-spacing: 2px; }
+            100% { transform: translateY(0);    opacity: 1; letter-spacing: 6px; }
+        }
+
+        @keyframes overlayFadeOut {
+            0%   { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        #ela-splash .splash-logo-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 0 0 6px rgba(255,118,5,0.35), 0 20px 60px rgba(0,0,0,0.5);
+            opacity: 0;
+            animation: logoZoomIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards;
+            position: relative;
+            z-index: 2;
+        }
+
+        #ela-splash .splash-logo-img.zoom-out {
+            animation: logoZoomOut 0.6s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+        }
+
+        #ela-splash .splash-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 42px;
+            font-weight: 800;
+            color: #FFFFFF;
+            margin-top: 28px;
+            opacity: 0;
+            animation: titleRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        #ela-splash .splash-tagline {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            color: #FF7605;
+            text-transform: uppercase;
+            margin-top: 12px;
+            opacity: 0;
+            animation: taglineRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.0s forwards;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Final full-overlay fade when exiting */
+        #ela-splash.exiting {
+            animation: overlayFadeOut 0.65s ease forwards;
+            pointer-events: none;
+        }
+    </style>
+    
+    <style>
+        :root {
+            /* Theme Color Tokens - Derived from Easy Learn Logo */
+            --primary-gradient: linear-gradient(135deg, #0B4385 0%, #0066CC 100%);
+            --secondary-gradient: linear-gradient(135deg, #FF7605 0%, #FF9900 100%);
+            --accent-gradient: linear-gradient(135deg, #00A8FF 0%, #FFC800 100%);
+            
+            --primary-color: #0B4385; /* Blue */
+            --primary-hover: #083467;
+            --secondary-color: #FF7605; /* Orange */
+            --secondary-hover: #E06500;
+            --accent-yellow: #FFC800;
+            
+            /* Modern Neutral Colors */
+            --bg-base: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --text-light: #FFFFFF;
+            
+            /* Status Accents */
+            --status-active-bg: #E0F2FE;
+            --status-active-color: #0369A1;
+            --status-completed-bg: #DCFCE7;
+            --status-completed-color: #15803D;
+            --status-pending-bg: #FEF3C7;
+            --status-pending-color: #B45309;
+            --status-paid-bg: #ECFDF5;
+            --status-paid-color: #047857;
+            
+            /* Borders & Shadows */
+            --border-color: #E2E8F0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.02);
+            --shadow-premium: 0 20px 25px -5px rgba(11,67,133,0.06), 0 10px 10px -5px rgba(11,67,133,0.04);
+            
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        /* ------------------ NAVIGATION BAR ------------------ */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            background: var(--primary-gradient);
+            border-radius: var(--radius-md);
+            color: white;
+            font-size: 20px;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(11, 67, 133, 0.2);
+        }
+
+        .brand-logo::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--secondary-gradient);
+            border-radius: 50%;
+            bottom: -2px;
+            right: -2px;
+            border: 2px solid white;
+        }
+
+        .brand-name {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            background-color: #F1F5F9;
+        }
+
+        .nav-btn {
+            background: var(--primary-gradient);
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 12px rgba(11, 67, 133, 0.15);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(11, 67, 133, 0.25);
+        }
+
+        .nav-btn-secondary {
+            background: var(--secondary-gradient);
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 12px rgba(255, 118, 5, 0.15);
+        }
+
+        .nav-btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 118, 5, 0.25);
+        }
+
+        .user-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #EDF2F7;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* ------------------ GLOBAL WRAPPERS ------------------ */
+        .main-content {
+            flex: 1;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* ------------------ FLOATING ALERTS ------------------ */
+        .alert-container {
+            margin-bottom: 24px;
+        }
+
+        .alert {
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 500;
+            box-shadow: var(--shadow-sm);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .alert-success {
+            background-color: #DEF7EC;
+            color: #03543F;
+            border-left: 5px solid #31C48D;
+        }
+
+        .alert-error, .alert-danger {
+            background-color: #FDE8E8;
+            color: #9B1C1C;
+            border-left: 5px solid #F05252;
+        }
+
+        .alert-warning {
+            background-color: #FEF08A;
+            color: #713F12;
+            border-left: 5px solid #EAB308;
+        }
+
+        .alert-info {
+            background-color: #E1EFFE;
+            color: #1E429F;
+            border-left: 5px solid #3F83F8;
+        }
+
+        .alert-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: inherit;
+            font-size: 16px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* ------------------ REUSABLE PREMIUM UI COMPONENTS ------------------ */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            box-shadow: var(--shadow-premium);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .section-header {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background: var(--secondary-gradient);
+            margin-top: 6px;
+            border-radius: 2px;
+        }
+
+        /* Premium Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(11, 67, 133, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(11, 67, 133, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-gradient);
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 118, 5, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 118, 5, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Premium Tables */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background-color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .premium-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .premium-table th {
+            background-color: #F8FAFC;
+            color: var(--primary-color);
+            padding: 16px 20px;
+            font-weight: 700;
+            font-size: 14px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .premium-table td {
+            padding: 16px 20px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+            vertical-align: middle;
+        }
+
+        .premium-table tbody tr {
+            transition: background-color 0.2s ease;
+        }
+
+        .premium-table tbody tr:hover {
+            background-color: #F8FAFC;
+        }
+
+        /* Status Badges */
+        .badge {
+            display: inline-flex;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-active {
+            background-color: var(--status-active-bg);
+            color: var(--status-active-color);
+        }
+
+        .badge-completed {
+            background-color: var(--status-completed-bg);
+            color: var(--status-completed-color);
+        }
+
+        .badge-pending {
+            background-color: var(--status-pending-bg);
+            color: var(--status-pending-color);
+        }
+
+        .badge-paid {
+            background-color: var(--status-paid-bg);
+            color: var(--status-paid-color);
+        }
+
+        /* ------------------ FOOTER ------------------ */
+        .footer {
+            background-color: #1E293B;
+            color: #94A3B8;
+            padding: 40px 24px 20px 24px;
+            margin-top: auto;
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-desc {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #94A3B8;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .footer-bottom a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        /* Custom Responsive Media Queries */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .nav-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            .main-content {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- ===================================================
+         UNIVERSAL SPLASH — shows on every first page load
+         =================================================== -->
+    <div id="ela-splash">
+        <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Academy Logo" class="splash-logo-img" id="ela-splash-logo">
+        <h1 class="splash-title">Easy Learn Academy</h1>
+        <p class="splash-tagline">Technical Skill Partner</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'landing' %}" class="brand">
+                <div class="brand-logo" style="background: transparent; box-shadow: none; overflow: visible;">
+                    <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn" style="width:42px;height:42px;border-radius:50%;object-fit:contain;background:white;padding:3px;box-shadow:0 2px 8px rgba(11,67,133,0.2);">
+                </div>
+                <span class="brand-name">EasyLearn</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="{% url 'landing' %}" class="nav-link">Home</a></li>
+                
+                {% if request.user.is_authenticated %}
+                    {% if request.user.is_superuser %}
+                        <li><a href="{% url 'admin_dashboard' %}" class="nav-link nav-btn">Admin Dashboard</a></li>
+                    {% else %}
+                        <li><a href="{% url 'trainer_dashboard' %}" class="nav-link nav-btn">Trainer Dashboard</a></li>
+                    {% endif %}
+                    
+                    <li class="user-pill">
+                        <i class="fa-solid fa-user-circle"></i>
+                        <span>{{ request.user.first_name|default:request.user.username }}</span>
+                        {% if request.user.is_superuser %}
+                            <small class="badge badge-active" style="padding: 2px 6px; font-size: 9px; margin-left: 4px;">Admin</small>
+                        {% endif %}
+                    </li>
+                    <li><a href="{% url 'logout' %}" class="nav-link"><i class="fa-solid fa-sign-out-alt"></i> Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'trainer_signup' %}" class="nav-link nav-btn-secondary">Trainer Register</a></li>
+                    <li><a href="{% url 'login' %}" class="nav-link nav-btn">Login <i class="fa-solid fa-sign-in-alt"></i></a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="main-content">
+        
+        <!-- Alerts & Notifications -->
+        {% if messages %}
+            <div class="alert-container">
+                {% for message in messages %}
+                    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+                        <span>
+                            <i class="fa-solid {% if message.tags == 'success' %}fa-circle-check{% elif message.tags == 'error' or message.tags == 'danger' %}fa-circle-xmark{% else %}fa-circle-info{% endif %}" style="margin-right: 8px;"></i>
+                            {{ message }}
+                        </span>
+                        <button class="alert-close" onclick="this.parentElement.style.display='none';"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div>
+                <div class="footer-logo">
+                    <i class="fa-solid fa-graduation-cap" style="color: var(--secondary-color);"></i>
+                    <span>Easy Learn Academy</span>
+                </div>
+                <p class="footer-desc">
+                    Leading EdTech company offering high-quality technical skills bootcamps and corporate training across colleges. We empower students on modern industry frameworks and tech stacks.
+                </p>
+            </div>
+            <div>
+                <h4 class="footer-title">Quick Actions</h4>
+                <ul class="footer-links">
+                    <li><a href="{% url 'landing' %}">Platform Home</a></li>
+                    {% if not request.user.is_authenticated %}
+                        <li><a href="{% url 'login' %}">Academy Login</a></li>
+                        <li><a href="{% url 'trainer_signup' %}">Apply as Trainer</a></li>
+                    {% else %}
+                        {% if request.user.is_superuser %}
+                            <li><a href="{% url 'admin_dashboard' %}">Operations Center</a></li>
+                        {% else %}
+                            <li><a href="{% url 'trainer_dashboard' %}">My Workloads & Invoices</a></li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Contact & Communication</h4>
+                <p class="footer-desc" style="margin-bottom: 12px;">
+                    Send all corporate invoices, feedback, and vendor communications directly to our project office email:
+                </p>
+                <a href="mailto:manager.projects@easy-learn-academy.com" class="nav-btn-secondary btn" style="text-decoration: none; padding: 8px 16px; font-size: 13px;">
+                    <i class="fa-solid fa-envelope"></i> manager.projects@easy-learn-academy.com
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Easy Learn Academy. All rights reserved. Crafted beautifully with Django & Vanilla CSS.</p>
+        </div>
+    </footer>
+
+    <!-- Universal Splash Screen Controller -->
+    <script>
+    (function () {
+        var splash = document.getElementById('ela-splash');
+        var logo   = document.getElementById('ela-splash-logo');
+        if (!splash) return;
+
+        // Total splash duration: 2.0s visible, then trigger zoom-out + fade
+        var holdDuration  = 2000; // ms to hold before exit
+        var exitDuration  = 650;  // ms for fade-out overlay
+
+        setTimeout(function () {
+            // 1. Trigger logo zoom-out animation
+            if (logo) logo.classList.add('zoom-out');
+
+            // 2. After a brief delay, fade the whole overlay
+            setTimeout(function () {
+                splash.classList.add('exiting');
+                // 3. Remove from DOM after animation completes
+                setTimeout(function () {
+                    splash.style.display = 'none';
+                }, exitDuration + 50);
+            }, 300);
+        }, holdDuration);
+    })();
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

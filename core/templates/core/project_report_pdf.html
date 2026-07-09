@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Syllabus Report - {{ project.name }}</title>
+    <style>
+        @page {
+            size: a4 portrait;
+            margin: 1.5cm;
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+                font-family: 'Segoe UI', Arial, sans-serif;
+                font-size: 8pt;
+                color: #64748b;
+            }
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #1e293b;
+            margin: 0;
+            padding: 0;
+            font-size: 9.5pt;
+            line-height: 1.4;
+        }
+        
+        /* Typography */
+        h1 { font-size: 22pt; color: #0b4385; margin: 0 0 4px 0; font-weight: bold; }
+        h2 { font-size: 13pt; color: #0b4385; margin: 0 0 15px 0; border-bottom: 2px solid #ff7605; padding-bottom: 4px; }
+        
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+        .header-logo-cell {
+            vertical-align: top;
+        }
+        .header-meta-cell {
+            text-align: right;
+            vertical-align: top;
+            font-size: 9pt;
+            color: #64748b;
+        }
+        .report-title {
+            color: #ff7605;
+            font-size: 16pt;
+            font-weight: bold;
+            margin: 0 0 4px 0;
+        }
+
+        .meta-card {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+        
+        .meta-grid-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .meta-grid-table td {
+            padding: 4px 8px;
+            vertical-align: top;
+        }
+
+        /* Items Ledger Table */
+        .logs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .logs-table th {
+            background-color: #0b4385;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: left;
+            padding: 8px 10px;
+            font-size: 9pt;
+        }
+        .logs-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 8.5pt;
+            vertical-align: top;
+        }
+        
+        .footer-note {
+            margin-top: 40px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 15px;
+            text-align: center;
+            font-size: 8pt;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Block -->
+    <table class="header-table">
+        <tr>
+            <td class="header-logo-cell">
+                <h1>Easy Learn Academy</h1>
+                <div style="color: #ff7605; font-weight: bold; font-size: 10.5pt;">Training Course Operations</div>
+            </td>
+            <td class="header-meta-cell">
+                <div class="report-title">Syllabus Completion Report</div>
+                <div>Date Generated: {{ date_generated|date:"Y-m-d" }}</div>
+                <div>Status: <span style="font-weight: bold; color: {% if project.status == 'Active' %}#0369a1{% else %}#15803d{% endif %};">{{ project.status }}</span></div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Project & Trainer Info Block -->
+    <h2>Course Metadata Overview</h2>
+    <div class="meta-card">
+        <table class="meta-grid-table">
+            <tr>
+                <td style="width: 50%;"><strong>College/Center:</strong> {{ project.name }}</td>
+                <td style="width: 50%;"><strong>Assigned Trainer:</strong> {{ profile.user.first_name }} {{ profile.user.last_name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Technology Stack:</strong> {{ project.technology }}</td>
+                <td><strong>Trainer Email:</strong> {{ profile.user.email }}</td>
+            </tr>
+            <tr>
+                <td><strong>Semester Target:</strong> {{ project.semester_year }}</td>
+                <td><strong>Report Date Range:</strong> {{ start_date }} to {{ end_date }}</td>
+            </tr>
+            <tr>
+                <td><strong>Duration Allocated:</strong> {{ project.duration_days }} Working Days</td>
+                <td><strong>Total Sessions Logged:</strong> {{ workloads.count }} Days</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Daily Logs Section -->
+    <h2>Daily Class Log Details</h2>
+    <table class="logs-table">
+        <thead>
+            <tr>
+                <th style="width: 15%;">Date</th>
+                <th style="width: 10%; text-align: center;">Sessions</th>
+                <th style="width: 35%;">Topics Covered</th>
+                <th style="width: 40%;">Subtopics Detailed Progress</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if workloads %}
+                {% for wl in workloads %}
+                    <tr>
+                        <td><strong>{{ wl.date|date:"Y-m-d" }}</strong></td>
+                        <td style="text-align: center;">{{ wl.sessions_count }} Sessions</td>
+                        <td><strong>{{ wl.topics_covered }}</strong></td>
+                        <td style="color: #475569;"><small>{{ wl.subtopics_covered }}</small></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" style="text-align: center; color: #64748b; padding: 20px;">
+                        No daily workload entries logged within the specified date range.
+                    </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <div class="footer-note">
+        <p>This report has been compiled and downloaded from the Easy Learn Academy operational database.</p>
+        <p>For operations center support, write to: <strong>manager.projects@easy-learn-academy.com</strong></p>
+    </div>
+
+</body>
+</html>

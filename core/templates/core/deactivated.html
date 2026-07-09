@@ -1,0 +1,82 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Account Locked - Easy Learn Academy{% endblock %}
+
+{% block extra_css %}
+<style>
+    .deactivated-card {
+        max-width: 600px;
+        margin: 60px auto;
+        text-align: center;
+        background-color: white;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-premium);
+        padding: 50px 40px;
+    }
+
+    .lock-icon {
+        font-size: 64px;
+        color: var(--secondary-color);
+        margin-bottom: 24px;
+        animation: pulse 2s infinite;
+    }
+
+    .deactivated-title {
+        font-size: 28px;
+        color: var(--primary-color);
+        margin-bottom: 16px;
+    }
+
+    .deactivated-text {
+        font-size: 16px;
+        color: var(--text-muted);
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .contact-info {
+        background-color: #F8FAFC;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 20px;
+        margin-bottom: 30px;
+        font-size: 14px;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="deactivated-card">
+        <i class="fa-solid fa-user-lock lock-icon"></i>
+        <h2 class="deactivated-title">Account Inactive</h2>
+        
+        {% if is_deactivated_by_project %}
+            <p class="deactivated-text">
+                Your portal access has been automatically locked because all college projects assigned to you have been marked as <strong>Completed/Over</strong>.
+            </p>
+        {% else %}
+            <p class="deactivated-text">
+                Your trainer credential profile has been administrative locked or is currently awaiting approval from the operations manager.
+            </p>
+        {% endif %}
+
+        <div class="contact-info">
+            <h4 style="font-weight: 700; margin-bottom: 6px; color: var(--primary-color);">Need Assistance?</h4>
+            <p>For any queries, invoice adjustments, or to reactivate your access, please contact our project manager directly:</p>
+            <p style="margin-top: 10px; font-weight: 700; font-family: monospace; font-size: 15px; color: var(--secondary-color);">
+                <i class="fa-solid fa-envelope"></i> manager.projects@easy-learn-academy.com
+            </p>
+        </div>
+
+        <a href="{% url 'landing' %}" class="btn btn-outline"><i class="fa-solid fa-arrow-left"></i> Return to Homepage</a>
+    </div>
+
+{% endblock %}

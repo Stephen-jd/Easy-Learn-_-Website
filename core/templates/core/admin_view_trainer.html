@@ -1,0 +1,293 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Review Trainer - Easy Learn Academy{% endblock %}
+
+{% block extra_css %}
+<style>
+    .trainer-profile-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 30px;
+    }
+
+    @media (max-width: 992px) {
+        .trainer-profile-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .profile-sidebar {
+        background-color: white;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: 30px 24px;
+        box-shadow: var(--shadow-premium);
+        height: fit-content;
+        text-align: center;
+    }
+
+    .sidebar-photo {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid var(--primary-color);
+        margin: 0 auto 20px auto;
+        box-shadow: var(--shadow-md);
+        background-color: #E2E8F0;
+    }
+
+    .credential-list {
+        text-align: left;
+        margin-top: 24px;
+        border-top: 1px solid var(--border-color);
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .credential-item {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+    }
+
+    .credential-label {
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+
+    .credential-val {
+        color: var(--text-main);
+        font-weight: 600;
+        margin-top: 2px;
+        word-break: break-all;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <div style="margin-bottom: 24px;">
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline" style="padding: 8px 16px; font-size: 13px;">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    <div class="trainer-profile-grid">
+        
+        <!-- Sidebar: Personal & Bank Credentials -->
+        <aside class="profile-sidebar">
+            {% if profile.photo %}
+                <img src="{{ profile.photo.url }}" class="sidebar-photo" alt="Trainer Avatar">
+            {% else %}
+                <div class="sidebar-photo" style="display: flex; align-items: center; justify-content: center; font-size: 50px; color: var(--primary-color);">
+                    <i class="fa-solid fa-user-circle"></i>
+                </div>
+            {% endif %}
+            
+            <h3 style="color: var(--primary-color); font-size: 22px; font-weight: 800;">
+                {{ trainer_user.first_name }} {{ trainer_user.last_name }}
+            </h3>
+            <p style="color: var(--text-muted); font-size: 13px; font-weight: 600; margin-top: 2px;">
+                @{{ trainer_user.username }} | Onboarded: {{ trainer_user.date_joined|date:"M d, Y" }}
+            </p>
+            
+            <!-- Quick administrative action toggle -->
+            <div style="margin-top: 20px;">
+                <form action="{% url 'admin_toggle_trainer_status' profile.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn {% if profile.is_active %}btn-secondary{% else %}btn-primary{% endif %}" style="width: 100%; padding: 10px 16px; font-size: 14px;">
+                        <i class="fa-solid {% if profile.is_active %}fa-user-slash{% else %}fa-user-check{% endif %}"></i>
+                        {% if profile.is_active %}Administrative Lock Account{% else %}Activate Partner Account{% endif %}
+                    </button>
+                </form>
+                
+                {% if profile.is_deactivated_by_projects %}
+                    <div style="background-color: #FEF3C7; border: 1px solid #D97706; color: #92400E; border-radius: var(--radius-md); padding: 10px; font-size: 11px; font-weight:700; margin-top: 10px;">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Dynamic Lock: All Assigned Projects Completed
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Credentials Review -->
+            <div class="credential-list">
+                <div class="credential-item">
+                    <span class="credential-label">Commercial Quotation</span>
+                    <span class="credential-val" style="color: var(--secondary-color); font-size: 16px; font-weight:800;">
+                        ₹{{ profile.quoted_amount }} <small style="font-size: 11px; font-weight:600;">/ {{ profile.quoted_type }}</small>
+                    </span>
+                </div>
+
+                <div class="credential-item">
+                    <span class="credential-label">Email ID</span>
+                    <span class="credential-val">{{ trainer_user.email }}</span>
+                </div>
+
+                <div class="credential-item">
+                    <span class="credential-label">Aadhaar Card Details</span>
+                    <span class="credential-val">
+                        Number: <code>{{ profile.aadhaar_number }}</code><br>
+                        {% if profile.aadhaar_file %}
+                            <a href="{{ profile.aadhaar_file.url }}" target="_blank" style="color: var(--secondary-color); text-decoration: none;"><i class="fa-solid fa-file-pdf"></i> View Submitted Aadhaar PDF</a>
+                        {% else %}
+                            <span style="color: red; font-size:12px;">No document uploaded</span>
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="credential-item">
+                    <span class="credential-label">PAN Card Code</span>
+                    <span class="credential-val"><code>{{ profile.pan_card }}</code></span>
+                </div>
+
+                <h4 style="color: var(--primary-color); border-bottom: 1px solid var(--border-color); padding-bottom: 4px; font-size:12px; margin-top: 10px; text-align: left; text-transform: uppercase;">
+                    Direct Bank Account
+                </h4>
+
+                <div class="credential-item">
+                    <span class="credential-label">Bank Name & Branch</span>
+                    <span class="credential-val">{{ profile.bank_name }}</span>
+                </div>
+
+                <div class="credential-item">
+                    <span class="credential-label">Account Code</span>
+                    <span class="credential-val"><code>{{ profile.bank_account_number }}</code></span>
+                </div>
+
+                <div class="credential-item">
+                    <span class="credential-label">Bank IFSC Code</span>
+                    <span class="credential-val"><code>{{ profile.bank_ifsc }}</code></span>
+                </div>
+
+                <div class="credential-item">
+                    <span class="credential-label">UPI ID Address</span>
+                    <span class="credential-val" style="color: var(--primary-color);">{{ profile.upi_id }}</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Side: Assigned Projects, Date Filters & Logs -->
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+            
+            <!-- Allocated Projects & Date Report Picker -->
+            <div class="glass-card">
+                <h3 class="section-title" style="margin-bottom: 20px;">Download College workload Syllabus Report</h3>
+                
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
+                    Select an assigned college project, enter a date range (start date to specific date), and click download to generate a complete PDF report of topics covered by the trainer.
+                </p>
+
+                {% if projects %}
+                    {% for p in projects %}
+                        <div style="background-color: #F8FAFC; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px; margin-bottom: 15px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                                <div>
+                                    <h4 style="color: var(--primary-color); font-weight:800; font-size: 15px;">{{ p.name }}</h4>
+                                    <small style="color: var(--text-muted);">
+                                        <strong>Technology:</strong> {{ p.technology }} | <strong>Period:</strong> {{ p.start_date|date:"Y-m-d" }} to {{ p.end_date|date:"Y-m-d" }}
+                                    </small>
+                                </div>
+                                <span class="badge {% if p.status == 'Active' %}badge-active{% else %}badge-completed{% endif %}">
+                                    {{ p.status }}
+                                </span>
+                            </div>
+
+                            <form action="{% url 'admin_download_project_report' profile.id p.id %}" method="GET" style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+                                <div style="flex: 1; min-width: 150px;">
+                                    <label class="form-label" style="font-size:11px;">Filter Start Date</label>
+                                    <input type="date" name="start_date" class="form-control" value="{{ p.start_date|date:'Y-m-d' }}" required>
+                                </div>
+                                <div style="flex: 1; min-width: 150px;">
+                                    <label class="form-label" style="font-size:11px;">Filter End Date (Specific Date)</label>
+                                    <input type="date" name="end_date" class="form-control" value="{{ date_today|date:'Y-m-d' }}" required>
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn btn-secondary" style="padding: 11px 20px;">
+                                        <i class="fa-solid fa-file-pdf"></i> Download Report PDF
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p style="color: var(--text-muted); font-size: 13px;">No projects currently assigned to this trainer.</p>
+                {% endif %}
+            </div>
+
+            <!-- Table of covered topics throughout the day -->
+            <div class="glass-card">
+                <h3 class="section-title" style="margin-bottom: 24px;">Daily Syllabus Updates Covered Table</h3>
+                
+                <div class="table-responsive">
+                    <table class="premium-table">
+                        <thead>
+                            <tr>
+                                <th>Project College</th>
+                                <th>Date Logged</th>
+                                <th>Sessions Count</th>
+                                <th>Logged Syllabus & Widescreen Session Details</th>
+                                <th>Class Notes Document</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if workloads %}
+                                {% for wl in workloads %}
+                                    <tr>
+                                        <td><strong>{{ wl.project.name }}</strong></td>
+                                        <td>{{ wl.date|date:"Y-m-d" }}</td>
+                                        <td><span class="badge badge-active" style="font-weight: 800;">{{ wl.sessions_count }} Sessions</span></td>
+                                        <td>
+                                            <div style="display: flex; flex-direction: column; gap: 10px; min-width: 320px; text-align: left;">
+                                                {% for detail in wl.session_details.all %}
+                                                    <div style="background-color: #F8FAFC; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px 16px; border-left: 3px solid var(--secondary-color);">
+                                                        <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 13px; color: var(--primary-color); margin-bottom: 6px;">
+                                                            <span><i class="fa-solid fa-clock"></i> Session {{ detail.session_num }} ({{ detail.time_slot }})</span>
+                                                            <span class="badge badge-active" style="padding: 2px 6px; font-size: 9px; text-transform: uppercase;">{{ detail.batch }}</span>
+                                                        </div>
+                                                        <div style="font-size: 13px; color: var(--text-main); line-height: 1.4;">{{ detail.content_covered }}</div>
+                                                    </div>
+                                                {% empty %}
+                                                    <!-- Fallback for older seeded records -->
+                                                    <div style="font-size: 13px; line-height: 1.4;">
+                                                        <strong>Syllabus Summary:</strong> {{ wl.topics_covered }}<br>
+                                                        <small style="color: var(--text-muted)">{{ wl.subtopics_covered }}</small>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="display:flex; flex-direction:column; gap: 4px;">
+                                                {% for note in wl.notes.all %}
+                                                    <a href="{{ note.file.url }}" target="_blank" class="badge badge-completed" style="text-decoration:none; font-size: 9px; padding: 4px 8px;">
+                                                        <i class="fa-solid fa-file-pdf"></i> File {{ forloop.counter }}
+                                                    </a>
+                                                {% empty %}
+                                                    <small style="color: var(--text-muted);">No files</small>
+                                                {% endfor %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                                        <i class="fa-solid fa-sheet-plastic" style="font-size: 32px; opacity: 0.5; margin-bottom: 10px;"></i>
+                                        <p>No daily workload subtopic logs reported by this trainer.</p>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
