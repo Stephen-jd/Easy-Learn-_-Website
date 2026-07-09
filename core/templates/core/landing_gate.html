@@ -60,8 +60,7 @@
         }
         .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 15px 24px; max-width: 1280px; margin: 0 auto; }
         
-        /* Deliberate Logo Container to fix background issues */
-        .logo-box { background: #fff; padding: 5px 15px; border-radius: 50px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(255,255,255,0.1); }
+        /* Removed deliberate logo container as the logo is now truly transparent */
         .nav-brand { display: flex; align-items: center; gap: 12px; }
         .nav-brand img { height: 40px; object-fit: contain; } 
         .brand-text { font-family: var(--font-head); font-weight: 900; font-size: 1.5rem; color: #fff; letter-spacing: -0.5px; }
@@ -230,8 +229,7 @@
         ========================================= */
         .footer { padding: 100px 24px 30px; background: #050611; border-top: 1px solid rgba(255,255,255,0.05); }
         .footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
-        .ft-logo-box { background: #fff; padding: 5px 15px; border-radius: 50px; display: inline-flex; margin-bottom: 20px; }
-        .ft-logo-box img { height: 40px; }
+        .ft-logo img { height: 40px; margin-bottom: 20px; }
         .ft-desc { color: var(--text-muted); font-size: 15px; max-width: 400px; margin-bottom: 25px; }
         
         .ft-title { color: #fff; font-family: var(--font-head); font-size: 18px; margin-bottom: 25px; }
@@ -280,7 +278,7 @@
     <nav class="navbar" id="navbar">
         <div class="nav-inner">
             <a href="/" class="nav-brand">
-                <div class="logo-box"><img src="{% static 'core/images/logo.png' %}" alt="Easy Learn"></div>
+                <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn">
                 <div class="brand-text">EasyLearn<span>.</span></div>
             </a>
             <div class="nav-links">
@@ -499,7 +497,7 @@
     <footer class="footer">
         <div class="footer-grid">
             <div>
-                <div class="ft-logo-box"><img src="{% static 'core/images/logo.png' %}" alt="Easy Learn"></div>
+                <div class="ft-logo"><img src="{% static 'core/images/logo.png' %}" alt="Easy Learn"></div>
                 <p class="ft-desc">Bridging the gap between college academics and actual tech industry requirements through intensive, live coding bootcamps.</p>
                 <div style="display:flex; gap: 15px;">
                     <a href="#" style="color:#fff; background: rgba(255,255,255,0.1); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;"><i class="fab fa-linkedin-in"></i></a>

@@ -6,81 +6,50 @@
 <style>
     .auth-wrapper {
         max-width: 480px;
-        margin: 40px auto;
+        margin: 60px auto;
         width: 100%;
+        animation: slideUp 0.5s ease;
     }
 
-    .auth-card {
-        background-color: white;
-        border-radius: var(--radius-lg);
-        border: 1px solid var(--border-color);
-        box-shadow: var(--shadow-premium);
-        overflow: hidden;
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     .auth-header {
-        background: var(--primary-gradient);
-        color: white;
-        padding: 40px 30px;
         text-align: center;
-        position: relative;
+        margin-bottom: 30px;
     }
-
-    .auth-header::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 5px;
-        background: var(--secondary-gradient);
+    
+    .auth-icon {
+        font-size: 40px;
+        color: var(--primary);
+        margin-bottom: 15px;
+        text-shadow: 0 0 20px var(--primary-glow);
     }
 
     .auth-title {
-        font-size: 26px;
+        font-size: 28px;
         font-weight: 800;
         margin-bottom: 8px;
         letter-spacing: -0.5px;
     }
 
     .auth-subtitle {
-        color: #E2E8F0;
+        color: var(--text-muted);
         font-size: 14px;
         font-weight: 500;
-    }
-
-    .auth-body {
-        padding: 40px 30px;
     }
 
     .form-group {
         margin-bottom: 24px;
     }
 
-    .form-label {
-        display: block;
-        font-weight: 700;
-        font-size: 14px;
-        color: var(--text-main);
-        margin-bottom: 8px;
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 12px 16px;
-        border-radius: var(--radius-md);
-        border: 1px solid var(--border-color);
-        font-family: inherit;
-        font-size: 15px;
-        transition: all 0.2s ease;
-        background-color: #F8FAFC;
-    }
-
-    .form-control:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 4px rgba(11, 67, 133, 0.1);
-        background-color: white;
+    .btn-submit {
+        width: 100%; 
+        padding: 14px; 
+        font-size: 16px;
+        margin-top: 10px;
     }
 
     .form-footer {
@@ -91,46 +60,61 @@
     }
 
     .form-footer a {
-        color: var(--secondary-color);
+        color: var(--accent);
         text-decoration: none;
         font-weight: 700;
+        transition: color 0.3s;
     }
 
     .form-footer a:hover {
+        color: var(--accent-hover);
         text-decoration: underline;
     }
 
     /* Demo Credentials Banner */
     .demo-banner {
-        background-color: #FEF3C7;
-        border: 1px solid #F59E0B;
+        background: rgba(37, 99, 235, 0.1);
+        border: 1px solid rgba(37, 99, 235, 0.2);
         border-radius: var(--radius-md);
         padding: 16px;
         margin-top: 24px;
-        color: #78350F;
+        color: #93C5FD;
         font-size: 13px;
+        backdrop-filter: blur(5px);
     }
 
     .demo-banner-title {
         font-weight: 800;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
         display: flex;
         align-items: center;
         gap: 6px;
+        color: #60A5FA;
     }
 
     .demo-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
+        gap: 15px;
         margin-top: 8px;
-        border-top: 1px solid rgba(245, 158, 11, 0.3);
-        padding-top: 8px;
+        border-top: 1px solid rgba(37, 99, 235, 0.2);
+        padding-top: 12px;
+    }
+
+    .demo-account {
+        background: rgba(0,0,0,0.3);
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-family: var(--font-code);
+        font-size: 11px;
     }
 
     .demo-account strong {
         display: block;
         font-size: 12px;
+        color: #fff;
+        font-family: var(--font-main);
+        margin-bottom: 4px;
     }
 </style>
 {% endblock %}
@@ -138,37 +122,55 @@
 {% block content %}
 
     <div class="auth-wrapper">
-        <div class="auth-card">
+        <div class="glass-card">
             <div class="auth-header">
+                <i class="fas fa-fingerprint auth-icon"></i>
                 <h2 class="auth-title">Academy Workspace</h2>
-                <p class="auth-subtitle">Sign in to manage projects, log sessions, or review invoice status</p>
+                <p class="auth-subtitle">Sign in to access your dashboard</p>
             </div>
             
-            <div class="auth-body">
-                <form method="POST">
-                    {% csrf_token %}
-                    
-                    <div class="form-group">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required autofocus>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 16px;">
-                        Sign In <i class="fa-solid fa-arrow-right-to-bracket"></i>
-                    </button>
-                </form>
-
-                <div class="form-footer">
-                    <span>Don't have an account? </span>
-                    <a href="{% url 'trainer_signup' %}">Register as Trainer</a>
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="admin or stephenjebadurai" required autofocus>
                 </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-submit">
+                    Authenticate <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                </button>
+            </form>
 
+            <div class="form-footer">
+                <span>Not part of the academy? </span>
+                <a href="{% url 'trainer_signup' %}">Apply as Trainer</a>
             </div>
+            
+            <!-- Demo Credentials exactly as the user wanted -->
+            <div class="demo-banner">
+                <div class="demo-banner-title">
+                    <i class="fa-solid fa-key"></i> System Access Credentials
+                </div>
+                <div class="demo-grid">
+                    <div class="demo-account">
+                        <strong>Operations (Admin)</strong>
+                        U: admin<br>
+                        P: adminpassword123
+                    </div>
+                    <div class="demo-account">
+                        <strong>Faculty (Trainer)</strong>
+                        U: stephenjebadurai<br>
+                        P: trainerpassword123
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 {% endblock %}

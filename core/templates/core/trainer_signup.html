@@ -6,53 +6,35 @@
 <style>
     .signup-wrapper {
         max-width: 900px;
-        margin: 0 auto;
+        margin: 40px auto;
+        animation: slideUp 0.5s ease;
     }
 
-    .signup-card {
-        background-color: white;
-        border-radius: var(--radius-lg);
-        border: 1px solid var(--border-color);
-        box-shadow: var(--shadow-premium);
-        overflow: hidden;
-        margin-top: 20px;
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
     .signup-header {
-        background: var(--primary-gradient);
-        color: white;
-        padding: 40px 30px;
-        position: relative;
-    }
-
-    .signup-header::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 5px;
-        background: var(--secondary-gradient);
+        text-align: center;
+        margin-bottom: 40px;
     }
 
     .signup-title {
-        font-size: 28px;
+        font-size: 32px;
         font-weight: 800;
-        margin-bottom: 8px;
+        margin-bottom: 12px;
         letter-spacing: -0.5px;
+        color: #fff;
     }
 
     .signup-subtitle {
-        color: #E2E8F0;
+        color: var(--text-muted);
         font-size: 15px;
     }
 
-    .signup-body {
-        padding: 40px;
-    }
-
     .form-section {
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border);
         padding-bottom: 30px;
         margin-bottom: 35px;
     }
@@ -65,7 +47,7 @@
 
     .section-num-title {
         font-size: 18px;
-        color: var(--primary-color);
+        color: #fff;
         font-weight: 800;
         margin-bottom: 20px;
         display: flex;
@@ -79,7 +61,8 @@
         justify-content: center;
         width: 28px;
         height: 28px;
-        background-color: var(--secondary-color);
+        background: var(--primary);
+        box-shadow: 0 0 15px var(--primary-glow);
         color: white;
         border-radius: 50%;
         font-size: 13px;
@@ -93,67 +76,34 @@
     }
 
     @media (max-width: 768px) {
-        .form-grid {
-            grid-template-columns: 1fr;
-        }
-        .signup-body {
-            padding: 24px;
-        }
+        .form-grid { grid-template-columns: 1fr; }
     }
 
-    .form-group {
-        margin-bottom: 0;
-    }
-
-    .form-group-full {
-        grid-column: 1 / -1;
-    }
-
-    .form-label {
-        display: block;
-        font-weight: 700;
-        font-size: 13px;
-        color: var(--text-main);
-        margin-bottom: 8px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 12px 16px;
-        border-radius: var(--radius-md);
-        border: 1px solid var(--border-color);
-        font-family: inherit;
-        font-size: 14px;
-        transition: all 0.2s ease;
-        background-color: #F8FAFC;
-    }
-
-    .form-control:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 4px rgba(11, 67, 133, 0.1);
-        background-color: white;
-    }
+    .form-group { margin-bottom: 0; }
+    .form-group-full { grid-column: 1 / -1; }
 
     .hint-text {
         font-size: 12px;
         color: var(--text-muted);
-        margin-top: 4px;
+        margin-top: 6px;
         display: block;
     }
 
     .terms-text {
-        font-size: 13px;
+        font-size: 14px;
         color: var(--text-muted);
         display: flex;
         align-items: flex-start;
-        gap: 10px;
+        gap: 12px;
+        background: rgba(0,0,0,0.2);
+        padding: 16px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border);
     }
 
     .terms-text input {
-        margin-top: 3px;
+        margin-top: 4px;
+        accent-color: var(--accent);
     }
 </style>
 {% endblock %}
@@ -161,150 +111,145 @@
 {% block content %}
 
     <div class="signup-wrapper">
-        <div class="signup-card">
+        <div class="glass-card">
             <div class="signup-header">
                 <h2 class="signup-title">Partner Trainer Application</h2>
-                <p class="signup-subtitle">Complete the fields below to create your account and request project dashboard access</p>
+                <p class="signup-subtitle">Join the elite network of corporate trainers delivering standard tech bootcamps.</p>
             </div>
             
-            <div class="signup-body">
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    
-                    <!-- Section 1: Account Login -->
-                    <div class="form-section">
-                        <h3 class="section-num-title">
-                            <span class="section-num">1</span> Account & Login Credentials
-                        </h3>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" id="username" name="username" class="form-control" placeholder="Choose a unique username" required>
-                                <span class="hint-text">Used for logging in later. Only letters, digits, and underscores.</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="form-label">Email Address</label>
-                                <input type="email" id="email" name="email" class="form-control" placeholder="name@domain.com" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="first_name" class="form-label">First Name</label>
-                                <input type="text" id="first_name" name="first_name" class="form-control" placeholder="Stephen" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="last_name" class="form-label">Last Name</label>
-                                <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Jebadurai" required>
-                            </div>
-                            <div class="form-group form-group-full">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
-                                <span class="hint-text">Choose a secure, strong password (minimum 8 characters).</span>
-                            </div>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <!-- Section 1: Account Login -->
+                <div class="form-section">
+                    <h3 class="section-num-title">
+                        <span class="section-num">1</span> Account Credentials
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" id="username" name="username" class="form-control" placeholder="Choose a unique username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="name@domain.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name" class="form-label">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" required>
+                        </div>
+                        <div class="form-group form-group-full">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+                            <span class="hint-text">Choose a secure, strong password (minimum 8 characters).</span>
                         </div>
                     </div>
-                    
-                    <!-- Section 2: Quoted Rates & Project Selection -->
-                    <div class="form-section">
-                        <h3 class="section-num-title">
-                            <span class="section-num">2</span> Assigned College & Quoted Rates
-                        </h3>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="project" class="form-label">Select Project College</label>
-                                <select id="project" name="project" class="form-control" required>
-                                    <option value="" disabled selected>-- Choose college project --</option>
-                                    {% for proj in projects %}
-                                        <option value="{{ proj.id }}">{{ proj.name }} ({{ proj.technology }})</option>
-                                    {% endfor %}
-                                </select>
-                                <span class="hint-text">Select your initial college allocation. Additional assignments will appear on your panel.</span>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Quoted Rate Payment Structure</label>
-                                <div style="display: flex; gap: 15px; margin-top: 10px;">
-                                    <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600;">
-                                        <input type="radio" name="quoted_type" value="Daily" checked> Daily Rate
-                                    </label>
-                                    <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600;">
-                                        <input type="radio" name="quoted_type" value="Monthly"> Monthly Quoted Rate
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group form-group-full">
-                                <label for="quoted_amount" class="form-label">Quoted Amount (INR)</label>
-                                <input type="number" id="quoted_amount" name="quoted_amount" class="form-control" placeholder="e.g. 1500 for daily or 45000 for monthly rate" step="0.01" required>
-                                <span class="hint-text">This value represents your commercial quotation and is used to calculate invoices.</span>
+                </div>
+                
+                <!-- Section 2: Quoted Rates & Project Selection -->
+                <div class="form-section">
+                    <h3 class="section-num-title">
+                        <span class="section-num">2</span> Assigned College & Quoted Rates
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="project" class="form-label">Select Project College</label>
+                            <select id="project" name="project" class="form-control" required style="background-color: rgba(0,0,0,0.8); color: #fff;">
+                                <option value="" disabled selected>-- Choose college project --</option>
+                                {% for proj in projects %}
+                                    <option value="{{ proj.id }}">{{ proj.name }} ({{ proj.technology }})</option>
+                                {% endfor %}
+                            </select>
+                            <span class="hint-text">Select your initial college allocation.</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Quoted Rate Payment Structure</label>
+                            <div style="display: flex; gap: 15px; margin-top: 10px; padding: 12px; background: rgba(0,0,0,0.2); border-radius: var(--radius-md); border: 1px solid var(--border);">
+                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #fff;">
+                                    <input type="radio" name="quoted_type" value="Daily" checked> Daily Rate
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #fff;">
+                                    <input type="radio" name="quoted_type" value="Monthly"> Monthly Quoted Rate
+                                </label>
                             </div>
                         </div>
+                        <div class="form-group form-group-full">
+                            <label for="quoted_amount" class="form-label">Quoted Amount (INR)</label>
+                            <input type="number" id="quoted_amount" name="quoted_amount" class="form-control" placeholder="e.g. 1500 for daily or 45000 for monthly rate" step="0.01" required>
+                            <span class="hint-text">This value represents your commercial quotation and is used to calculate invoices.</span>
+                        </div>
                     </div>
+                </div>
 
-                    <!-- Section 3: Professional Verification Documents -->
-                    <div class="form-section">
-                        <h3 class="section-num-title">
-                            <span class="section-num">3</span> Verification Details & File Uploads
-                        </h3>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="aadhaar_number" class="form-label">Aadhaar Card Number</label>
-                                <input type="text" id="aadhaar_number" name="aadhaar_number" class="form-control" placeholder="12-digit number" pattern="\d{12}" title="12-digit Aadhaar Number" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="pan_card" class="form-label">PAN Card Number</label>
-                                <input type="text" id="pan_card" name="pan_card" class="form-control" placeholder="e.g. ABCDE1234F" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" title="10-digit PAN details" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="photo" class="form-label">Trainer Profile Photo</label>
-                                <input type="file" id="photo" name="photo" class="form-control" accept="image/*" required>
-                                <span class="hint-text">Upload a clear professional passport size photo (JPG/PNG).</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="aadhaar_file" class="form-label">Aadhaar Card Document (PDF)</label>
-                                <input type="file" id="aadhaar_file" name="aadhaar_file" class="form-control" accept="application/pdf" required>
-                                <span class="hint-text">Upload your digital Aadhaar card in **PDF format only**.</span>
-                            </div>
+                <!-- Section 3: Professional Verification Documents -->
+                <div class="form-section">
+                    <h3 class="section-num-title">
+                        <span class="section-num">3</span> Verification Details
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="aadhaar_number" class="form-label">Aadhaar Card Number</label>
+                            <input type="text" id="aadhaar_number" name="aadhaar_number" class="form-control" placeholder="12-digit number" pattern="\d{12}" title="12-digit Aadhaar Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pan_card" class="form-label">PAN Card Number</label>
+                            <input type="text" id="pan_card" name="pan_card" class="form-control" placeholder="e.g. ABCDE1234F" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" title="10-digit PAN details" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="photo" class="form-label">Trainer Profile Photo</label>
+                            <input type="file" id="photo" name="photo" class="form-control" accept="image/*" required style="background: rgba(0,0,0,0.4);">
+                            <span class="hint-text">Upload a clear professional passport size photo (JPG/PNG).</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="aadhaar_file" class="form-label">Aadhaar Card Document (PDF)</label>
+                            <input type="file" id="aadhaar_file" name="aadhaar_file" class="form-control" accept="application/pdf" required style="background: rgba(0,0,0,0.4);">
                         </div>
                     </div>
+                </div>
 
-                    <!-- Section 4: Bank Account & Payment Details -->
-                    <div class="form-section">
-                        <h3 class="section-num-title">
-                            <span class="section-num">4</span> Bank & UPI Transfer Details
-                        </h3>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="bank_name" class="form-label">Bank Name</label>
-                                <input type="text" id="bank_name" name="bank_name" class="form-control" placeholder="e.g. State Bank of India" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="bank_account_number" class="form-label">Account Number</label>
-                                <input type="text" id="bank_account_number" name="bank_account_number" class="form-control" placeholder="Enter bank account number" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="bank_ifsc" class="form-label">Bank IFSC Code</label>
-                                <input type="text" id="bank_ifsc" name="bank_ifsc" class="form-control" placeholder="e.g. SBIN0001234" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="upi_id" class="form-label">UPI ID</label>
-                                <input type="text" id="upi_id" name="upi_id" class="form-control" placeholder="e.g. stephen@oksbi" required>
-                                <span class="hint-text">Direct mobile UPI ID to receive instant transaction alerts.</span>
-                            </div>
+                <!-- Section 4: Bank Account & Payment Details -->
+                <div class="form-section">
+                    <h3 class="section-num-title">
+                        <span class="section-num">4</span> Banking Details
+                    </h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="bank_name" class="form-label">Bank Name</label>
+                            <input type="text" id="bank_name" name="bank_name" class="form-control" placeholder="e.g. State Bank of India" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bank_account_number" class="form-label">Account Number</label>
+                            <input type="text" id="bank_account_number" name="bank_account_number" class="form-control" placeholder="Enter bank account number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bank_ifsc" class="form-label">Bank IFSC Code</label>
+                            <input type="text" id="bank_ifsc" name="bank_ifsc" class="form-control" placeholder="e.g. SBIN0001234" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="upi_id" class="form-label">UPI ID</label>
+                            <input type="text" id="upi_id" name="upi_id" class="form-control" placeholder="e.g. stephen@oksbi" required>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Submit Block -->
-                    <div class="form-section" style="padding-top: 10px;">
-                        <div class="terms-text" style="margin-bottom: 24px;">
-                            <input type="checkbox" id="terms" required>
-                            <label for="terms">
-                                I hereby declare that all details (Photos, Aadhaar, Bank Details, and Quoted Rates) submitted in this partner application are authentic and correct. I consent to invoices being routed to the project board.
-                            </label>
-                        </div>
-                        <button type="submit" class="btn btn-secondary" style="width: 100%; padding: 16px; font-size: 16px;">
-                            Submit Partner Application & Log In <i class="fa-solid fa-cloud-arrow-up"></i>
-                        </button>
+                <!-- Submit Block -->
+                <div class="form-section" style="padding-top: 10px;">
+                    <div class="terms-text" style="margin-bottom: 24px;">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">
+                            I declare that all details submitted in this partner application are authentic. I consent to invoices being routed to the project board.
+                        </label>
                     </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 16px;">
+                        Submit Partner Application & Log In <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </button>
+                </div>
 
-                </form>
-            </div>
+            </form>
         </div>
     </div>
 
