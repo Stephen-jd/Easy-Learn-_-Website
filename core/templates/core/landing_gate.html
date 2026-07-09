@@ -2,563 +2,704 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Easy Learn Academy | Online Technical Training for College Students</title>
-    <meta name="description" content="Easy Learn Academy offers industry-level online technical bootcamps in Python, Java Full Stack, Data Science & more. Trusted by top engineering colleges.">
-    <link rel="icon" type="image/png" href="{% static 'core/images/logo.png' %}">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Easy Learn Academy | Online Technical Training for College Students</title>
+<meta name="description" content="Easy Learn Academy — India's trusted online technical bootcamp partner for engineering colleges. Python, Java, Data Science, Web Dev and more.">
+<link rel="icon" type="image/png" href="{% static 'core/images/logo.png' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 /* ============================================================
-   RESET & TOKENS
+   TOKENS  — WHITE · BLUE · ORANGE only
+============================================================ */
+:root{
+  --blue:      #0B4385;
+  --blue-mid:  #1a56db;
+  --blue-lt:   #3b82f6;
+  --blue-pale: #e8f0fb;
+  --orange:    #FF7605;
+  --orange-lt: #ff9435;
+  --orange-pale:#fff3e8;
+  --white:     #ffffff;
+  --off-white: #f8faff;
+  --navy:      #071640;
+  --navy2:     #0a2055;
+  --text-main: #0f172a;
+  --text-gray: #64748b;
+  --border:    #dde8f8;
+}
+
+/* ============================================================
+   RESET
 ============================================================ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:16px}
-body{font-family:'Inter',sans-serif;color:#111827;background:#fff;line-height:1.6;overflow-x:hidden}
-h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.15}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text-main);background:var(--white);overflow-x:hidden}
+h1,h2,h3,h4,h5{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.15}
 a{text-decoration:none;color:inherit}
 img{max-width:100%;display:block}
 ul{list-style:none}
-
-:root{
-  --green:#16a34a;
-  --green-light:#22c55e;
-  --green-pale:#dcfce7;
-  --orange:#f97316;
-  --orange-pale:#fff7ed;
-  --navy:#0f172a;
-  --navy2:#1e293b;
-  --gray:#6b7280;
-  --gray-light:#f9fafb;
-  --border:#e5e7eb;
-  --white:#ffffff;
-  --radius:10px;
-  --radius-lg:16px;
-  --shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06);
-  --shadow-md:0 4px 16px rgba(0,0,0,.10);
-  --shadow-lg:0 10px 40px rgba(0,0,0,.12);
-}
 
 /* ============================================================
    SPLASH
 ============================================================ */
 #splash{
   position:fixed;inset:0;z-index:99999;
-  background:linear-gradient(135deg,#0f172a 0%,#16a34a 100%);
+  background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 60%,var(--blue-mid) 100%);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  transition:opacity .6s ease;
+  overflow:hidden;
 }
-#splash.hide{opacity:0;pointer-events:none}
-@keyframes popIn{
-  0%{transform:scale(0) rotate(-15deg);opacity:0}
-  70%{transform:scale(1.1) rotate(3deg);opacity:1}
+#splash::before{
+  content:'';position:absolute;inset:0;
+  background:url("{% static 'core/images/hero_bg.png' %}") center/cover no-repeat;
+  opacity:.18;
+}
+@keyframes splashLogoIn{
+  0%  {transform:scale(0) rotate(-20deg);opacity:0;filter:blur(20px)}
+  65% {transform:scale(1.15) rotate(4deg);opacity:1;filter:blur(0)}
   100%{transform:scale(1) rotate(0);opacity:1}
 }
-@keyframes popOut{
-  0%{transform:scale(1);opacity:1}
-  100%{transform:scale(3);opacity:0;filter:blur(8px)}
+@keyframes splashLogoOut{
+  0%  {transform:scale(1);opacity:1}
+  100%{transform:scale(2.8);opacity:0;filter:blur(12px)}
 }
-#splash img{
-  width:120px;height:120px;border-radius:50%;object-fit:contain;
-  background:#fff;padding:10px;
-  box-shadow:0 0 0 8px rgba(255,255,255,.15),0 20px 60px rgba(0,0,0,.4);
-  animation:popIn 1s cubic-bezier(.34,1.56,.64,1) forwards;
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeOut{to{opacity:0}}
+
+#splash .sp-logo-wrap{
+  position:relative;z-index:2;
+  width:140px;height:140px;border-radius:50%;
+  background:#fff;padding:12px;
+  box-shadow:0 0 0 8px rgba(255,118,5,.3),0 0 0 16px rgba(255,118,5,.1),0 24px 64px rgba(0,0,0,.5);
+  animation:splashLogoIn 1.2s cubic-bezier(.34,1.56,.64,1) .1s both;
 }
-#splash img.out{animation:popOut .5s ease forwards}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#splash .sp-logo-wrap.out{animation:splashLogoOut .55s ease forwards}
+#splash .sp-logo-wrap img{width:100%;height:100%;object-fit:contain;border-radius:50%}
 #splash h1{
-  font-family:'Space Grotesk',sans-serif;font-size:2.4rem;font-weight:700;
-  color:#fff;margin-top:22px;
-  animation:fadeUp .8s ease .7s both;
+  font-family:'Space Grotesk',sans-serif;font-size:2.8rem;font-weight:800;
+  color:#fff;margin-top:28px;z-index:2;position:relative;
+  animation:fadeUp .9s ease .75s both;
 }
 #splash p{
-  font-size:.85rem;font-weight:600;color:rgba(255,255,255,.7);
-  text-transform:uppercase;letter-spacing:4px;margin-top:8px;
-  animation:fadeUp .8s ease 1s both;
+  font-size:.8rem;font-weight:700;color:var(--orange);
+  text-transform:uppercase;letter-spacing:5px;margin-top:10px;
+  z-index:2;position:relative;animation:fadeUp .9s ease 1s both;
 }
+#splash.out{animation:fadeOut .65s ease forwards;pointer-events:none}
 
 /* ============================================================
    ANNOUNCEMENT BAR
 ============================================================ */
-.ann-bar{
-  background:var(--navy);color:#fff;
-  padding:10px 24px;text-align:center;
-  font-size:13.5px;font-weight:500;
+.ann{
+  background:linear-gradient(90deg,var(--navy),var(--blue));
+  padding:11px 20px;text-align:center;
+  font-size:13px;font-weight:500;color:rgba(255,255,255,.9);
   display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
 }
-.ann-bar .pill{
-  background:var(--green);color:#fff;
-  font-size:11px;font-weight:700;padding:3px 12px;border-radius:50px;
-  text-transform:uppercase;letter-spacing:.5px;
-}
-.ann-bar a{color:#86efac;font-weight:700;border-bottom:1px solid rgba(134,239,172,.4)}
+.ann .pill{background:var(--orange);color:#fff;font-size:10.5px;font-weight:800;padding:3px 12px;border-radius:50px;text-transform:uppercase}
+.ann a{color:#ffd199;font-weight:700;border-bottom:1px dotted rgba(255,209,153,.5)}
 
 /* ============================================================
    NAVBAR
 ============================================================ */
 .navbar{
   position:sticky;top:0;z-index:900;
-  background:rgba(255,255,255,.96);
+  background:rgba(255,255,255,.96);backdrop-filter:blur(14px);
   border-bottom:1px solid var(--border);
-  backdrop-filter:blur(12px);
   transition:box-shadow .3s;
 }
-.navbar.scrolled{box-shadow:var(--shadow-md)}
+.navbar.scrolled{box-shadow:0 4px 24px rgba(11,67,133,.1)}
 .nav-inner{
   max-width:1180px;margin:0 auto;padding:0 24px;
-  height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  height:70px;display:flex;align-items:center;justify-content:space-between;gap:16px;
 }
-/* Brand */
-.brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.brand img{width:44px;height:44px;object-fit:contain}
-.brand-text{font-family:'Space Grotesk',sans-serif;font-size:1.35rem;font-weight:700}
-.brand-text .e{color:var(--navy)}
-.brand-text .l{color:var(--green)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{width:46px;height:46px;object-fit:contain}
+.brand-name{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:800}
+.brand-name .b{color:var(--blue)}.brand-name .o{color:var(--orange)}
 
-/* Nav links */
-.nav-links{display:flex;align-items:center;gap:2px}
-.nav-links a{
-  font-size:14.5px;font-weight:500;color:#374151;
+.navlinks{display:flex;align-items:center;gap:2px}
+.navlinks a{
+  font-size:14px;font-weight:500;color:var(--text-gray);
   padding:8px 14px;border-radius:8px;transition:all .2s;white-space:nowrap;
 }
-.nav-links a:hover{color:var(--navy);background:#f3f4f6}
-.nav-links a.active{color:var(--green);font-weight:600}
+.navlinks a:hover{color:var(--blue);background:var(--blue-pale)}
 
-/* Right buttons */
-.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.btn-nav-login{
+.btn-login{
   display:inline-flex;align-items:center;gap:7px;
-  background:var(--green);color:#fff;
-  font-size:14.5px;font-weight:600;
-  padding:9px 22px;border-radius:8px;
-  transition:all .25s;
-  box-shadow:0 2px 10px rgba(22,163,74,.3);
+  background:linear-gradient(135deg,var(--blue),var(--blue-mid));
+  color:#fff;font-size:14px;font-weight:700;
+  padding:10px 24px;border-radius:8px;
+  box-shadow:0 4px 16px rgba(11,67,133,.25);
+  transition:all .25s;white-space:nowrap;
 }
-.btn-nav-login:hover{background:#15803d;transform:translateY(-1px);box-shadow:0 4px 16px rgba(22,163,74,.4)}
+.btn-login:hover{background:linear-gradient(135deg,var(--navy),var(--blue));transform:translateY(-1px);box-shadow:0 6px 20px rgba(11,67,133,.35)}
 
-.hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px}
-.hamburger span{display:block;width:22px;height:2px;background:var(--navy);margin:4px 0;border-radius:2px;transition:.3s}
+.ham{display:none;background:none;border:none;cursor:pointer;padding:6px}
+.ham span{display:block;width:22px;height:2px;background:var(--navy);margin:4px 0;border-radius:2px;transition:.3s}
 
 /* ============================================================
-   HERO  — split layout (text left, visual right)
+   HERO
 ============================================================ */
 .hero{
-  padding:72px 24px 60px;
-  max-width:1180px;margin:0 auto;
-  display:grid;grid-template-columns:1fr 1fr;
-  align-items:center;gap:60px;
-  min-height:calc(100vh - 110px);
+  position:relative;overflow:hidden;
+  background:var(--navy);
+  min-height:92vh;display:flex;align-items:center;
 }
-.hero-badge{
+.hero-bg-img{
+  position:absolute;inset:0;
+  background:url("{% static 'core/images/hero_bg.png' %}") center/cover no-repeat;
+  opacity:.25;
+}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(7,22,64,.92) 0%,rgba(11,67,133,.75) 60%,rgba(255,118,5,.2) 100%);
+}
+/* Animated blobs */
+.blob{
+  position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;opacity:.35;
+}
+.blob-1{width:600px;height:600px;background:var(--blue-mid);top:-150px;right:-100px;animation:blobFloat 8s ease-in-out infinite alternate}
+.blob-2{width:400px;height:400px;background:var(--orange);bottom:-100px;left:-80px;opacity:.2;animation:blobFloat 10s ease-in-out 2s infinite alternate}
+@keyframes blobFloat{from{transform:translate(0,0) scale(1)}to{transform:translate(30px,-40px) scale(1.08)}}
+
+.hero-inner{
+  position:relative;z-index:2;
+  max-width:1180px;margin:0 auto;padding:80px 24px;
+  display:grid;grid-template-columns:1.1fr 0.9fr;gap:64px;align-items:center;
+}
+/* Hero text */
+.h-badge{
   display:inline-flex;align-items:center;gap:8px;
-  background:var(--green-pale);color:var(--green);
-  border:1px solid #bbf7d0;
-  font-size:13px;font-weight:600;
-  padding:6px 16px;border-radius:50px;margin-bottom:24px;
+  background:rgba(255,118,5,.18);border:1px solid rgba(255,118,5,.4);
+  color:#ffd199;font-size:12.5px;font-weight:700;
+  padding:7px 18px;border-radius:50px;margin-bottom:26px;
 }
-.hero h1{
-  font-size:clamp(2.2rem,4.5vw,3.4rem);
-  font-weight:800;color:var(--navy);
-  margin-bottom:20px;letter-spacing:-.5px;
-  line-height:1.12;
+.h-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--orange);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
+
+.hero-title{
+  font-size:clamp(2.4rem,5vw,3.8rem);font-weight:900;
+  color:#fff;letter-spacing:-1px;margin-bottom:22px;
 }
-.hero h1 .highlight{
-  background:linear-gradient(90deg,var(--green),#059669);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
+.hero-title .line-o{color:var(--orange)}
+.hero-title .line-b{
+  background:linear-gradient(90deg,#60a5fa,#93c5fd);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.hero-sub{
-  font-size:1.05rem;color:var(--gray);
-  max-width:480px;margin-bottom:36px;font-weight:400;
-  line-height:1.7;
-}
-.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px}
-.btn-primary{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--green);color:#fff;
-  font-size:15.5px;font-weight:700;
-  padding:14px 32px;border-radius:10px;
-  box-shadow:0 4px 20px rgba(22,163,74,.35);
+
+.hero-sub{font-size:1.05rem;color:rgba(255,255,255,.75);max-width:500px;line-height:1.75;margin-bottom:38px}
+
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:46px}
+.btn-orange{
+  display:inline-flex;align-items:center;gap:9px;
+  background:linear-gradient(135deg,var(--orange),var(--orange-lt));
+  color:#fff;font-size:15.5px;font-weight:700;
+  padding:14px 34px;border-radius:10px;
+  box-shadow:0 6px 24px rgba(255,118,5,.4);
   transition:all .25s;
 }
-.btn-primary:hover{background:#15803d;transform:translateY(-2px);box-shadow:0 8px 28px rgba(22,163,74,.4)}
-.btn-outline-dark{
-  display:inline-flex;align-items:center;gap:8px;
-  border:2px solid var(--border);color:var(--navy);
-  font-size:15.5px;font-weight:600;
-  padding:13px 30px;border-radius:10px;
-  transition:all .25s;background:#fff;
+.btn-orange:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(255,118,5,.5)}
+.btn-white-outline{
+  display:inline-flex;align-items:center;gap:9px;
+  border:2px solid rgba(255,255,255,.4);color:#fff;
+  font-size:15.5px;font-weight:600;padding:13px 32px;border-radius:10px;
+  backdrop-filter:blur(4px);transition:all .25s;
 }
-.btn-outline-dark:hover{border-color:var(--navy);background:#f9fafb}
+.btn-white-outline:hover{background:rgba(255,255,255,.12);border-color:#fff}
 
-/* Hero mini trust bar */
-.hero-trust{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.trust-avatars{display:flex}
-.trust-avatars span{
-  width:34px;height:34px;border-radius:50%;border:2px solid #fff;
-  background:linear-gradient(135deg,var(--green),var(--green-light));
+/* Trust row */
+.trust-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.trust-avs{display:flex}
+.trust-avs span{
+  width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.6);
+  background:linear-gradient(135deg,var(--blue-mid),var(--orange));
   display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:12px;font-weight:700;
+  color:#fff;font-size:11px;font-weight:800;
   margin-left:-10px;
 }
-.trust-avatars span:first-child{margin-left:0}
-.trust-text{font-size:13.5px;color:var(--gray);font-weight:500}
-.trust-text strong{color:var(--navy)}
+.trust-avs span:first-child{margin-left:0}
+.trust-txt{font-size:13.5px;color:rgba(255,255,255,.75)}
+.trust-txt strong{color:#fff}
 
-/* Hero visual panel */
-.hero-visual{
-  position:relative;display:flex;align-items:center;justify-content:center;
-}
-.hero-visual-bg{
-  width:420px;height:420px;border-radius:50%;
-  background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 50%,#fff7ed 100%);
+/* Hero right visual */
+.hero-visual{display:flex;align-items:center;justify-content:center;position:relative}
+.hero-ring{
+  width:380px;height:380px;border-radius:50%;
+  border:2px dashed rgba(255,118,5,.3);
   display:flex;align-items:center;justify-content:center;
-  position:relative;
+  position:relative;animation:spinRing 25s linear infinite;
 }
-.hero-visual-bg::before{
-  content:'';position:absolute;inset:-12px;border-radius:50%;
-  border:2px dashed rgba(22,163,74,.25);
-  animation:spinSlow 20s linear infinite;
+@keyframes spinRing{to{transform:rotate(360deg)}}
+.hero-ring-inner{
+  width:300px;height:300px;border-radius:50%;
+  border:2px dashed rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  animation:spinRing 15s linear reverse infinite;
 }
-@keyframes spinSlow{to{transform:rotate(360deg)}}
-.hero-logo-big{
-  width:220px;height:220px;object-fit:contain;
-  filter:drop-shadow(0 20px 40px rgba(22,163,74,.2));
-  animation:floatLogo 4s ease-in-out infinite alternate;
+.hero-logo-circle{
+  width:180px;height:180px;border-radius:50%;
+  background:#fff;padding:14px;
+  box-shadow:0 0 0 12px rgba(255,118,5,.15),0 0 0 24px rgba(255,118,5,.07),0 24px 64px rgba(0,0,0,.4);
+  animation:floatUp 4s ease-in-out infinite alternate;
 }
-@keyframes floatLogo{
-  from{transform:translateY(0)}
-  to{transform:translateY(-16px)}
-}
-/* Floating stat chips */
-.chip{
-  position:absolute;background:#fff;border:1px solid var(--border);
-  border-radius:12px;padding:10px 16px;
-  box-shadow:var(--shadow-md);
+@keyframes floatUp{from{transform:translateY(0)}to{transform:translateY(-18px)}}
+.hero-logo-circle img{width:100%;height:100%;object-fit:contain;border-radius:50%}
+
+/* Orbit chips */
+.orbit-chip{
+  position:absolute;background:#fff;border-radius:12px;
+  padding:10px 16px;box-shadow:0 8px 28px rgba(0,0,0,.25);
   display:flex;align-items:center;gap:10px;
-  font-size:13px;white-space:nowrap;
-  animation:floatChip 3s ease-in-out infinite alternate;
+  animation:floatChip 3.5s ease-in-out infinite alternate;
+  white-space:nowrap;
 }
-@keyframes floatChip{from{transform:translateY(0)}to{transform:translateY(-6px)}}
-.chip-icon{
-  width:34px;height:34px;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;
-}
-.chip-val{font-weight:800;font-size:15px;color:var(--navy)}
-.chip-lab{font-size:11.5px;color:var(--gray);font-weight:500}
-.chip-1{top:8%;left:-30px;animation-delay:0s}
-.chip-2{bottom:12%;left:-20px;animation-delay:.7s}
-.chip-3{top:20%;right:-30px;animation-delay:.4s}
-.chip-4{bottom:8%;right:-10px;animation-delay:1s}
+@keyframes floatChip{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+.oc-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.oc-val{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:800;color:var(--navy)}
+.oc-lab{font-size:11px;color:var(--text-gray);font-weight:500}
+.oc1{top:0;left:-60px;animation-delay:0s}
+.oc2{bottom:20px;left:-50px;animation-delay:.8s}
+.oc3{top:10px;right:-60px;animation-delay:.4s}
+.oc4{bottom:10px;right:-40px;animation-delay:1.2s}
 
 /* ============================================================
    STATS BAR
 ============================================================ */
 .stats-bar{
-  background:var(--navy);padding:36px 24px;margin:0;
+  background:var(--navy2);
+  position:relative;overflow:hidden;
+}
+.stats-bar::before{
+  content:'';position:absolute;inset:0;
+  background:url("{% static 'core/images/stats_bg.png' %}") center/cover no-repeat;
+  opacity:.2;
 }
 .stats-bar-inner{
-  max-width:1180px;margin:0 auto;
-  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+  position:relative;z-index:1;
+  max-width:1180px;margin:0 auto;padding:42px 24px;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  divide-columns:true;
 }
-.stat-item{text-align:center;padding:10px}
+.stat-box{
+  text-align:center;padding:14px 20px;
+  border-right:1px solid rgba(255,255,255,.1);
+}
+.stat-box:last-child{border-right:none}
 .stat-num{
-  font-family:'Space Grotesk',sans-serif;font-size:2.2rem;font-weight:800;color:#fff;
-  margin-bottom:4px;
+  font-family:'Space Grotesk',sans-serif;font-size:2.8rem;font-weight:800;
+  color:#fff;line-height:1;margin-bottom:6px;
 }
-.stat-num span{color:var(--green-light)}
-.stat-label{font-size:13px;color:rgba(255,255,255,.6);font-weight:500;text-transform:uppercase;letter-spacing:.5px}
-.stat-divider{border-left:1px solid rgba(255,255,255,.12)}
+.stat-num .acc{color:var(--orange)}
+.stat-lab{font-size:12px;color:rgba(255,255,255,.55);font-weight:700;text-transform:uppercase;letter-spacing:1.5px}
 
 /* ============================================================
    SECTION COMMONS
 ============================================================ */
-.section{padding:90px 24px}
+section{padding:92px 24px}
 .container{max-width:1180px;margin:0 auto}
-.sec-tag{
-  display:inline-block;background:var(--green-pale);color:var(--green);
-  font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
-  padding:5px 14px;border-radius:50px;margin-bottom:14px;
+.sec-chip{
+  display:inline-block;
+  background:linear-gradient(90deg,var(--blue-pale),var(--orange-pale));
+  color:var(--blue);border:1px solid var(--border);
+  font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:2px;
+  padding:6px 18px;border-radius:50px;margin-bottom:14px;
 }
-.sec-title{font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;color:var(--navy);margin-bottom:14px}
-.sec-sub{font-size:1rem;color:var(--gray);max-width:540px;line-height:1.7}
-.sec-header{margin-bottom:52px}
-.sec-header.center{text-align:center}
-.sec-header.center .sec-sub{margin:0 auto}
+.sec-title{font-size:clamp(1.9rem,3.5vw,2.6rem);font-weight:800;color:var(--navy);margin-bottom:14px}
+.sec-sub{font-size:1rem;color:var(--text-gray);max-width:560px;line-height:1.7}
+.sec-hd{margin-bottom:52px}
+.sec-hd.center{text-align:center}
+.sec-hd.center .sec-sub{margin:0 auto}
 
 /* ============================================================
-   COURSE CARDS  (Tap Academy style)
+   COURSES — TAP ACADEMY STYLE with animated tabs
 ============================================================ */
-.courses-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+.courses-section{
+  background:var(--white);
+  position:relative;overflow:hidden;
 }
-.course-card{
-  border:1.5px solid var(--border);border-radius:var(--radius-lg);
-  padding:28px 24px;background:#fff;
-  transition:all .3s cubic-bezier(.4,0,.2,1);
-  cursor:pointer;position:relative;overflow:hidden;
+.courses-section::before{
+  content:'';position:absolute;inset:0;
+  background:url("{% static 'core/images/course_bg.png' %}") center/cover no-repeat;
+  opacity:.07;pointer-events:none;
 }
-.course-card::before{
-  content:'';position:absolute;top:0;left:0;width:100%;height:3px;
-  border-radius:var(--radius-lg) var(--radius-lg) 0 0;
-}
-.course-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:transparent}
-.c-green::before{background:linear-gradient(90deg,#16a34a,#4ade80)}
-.c-blue::before{background:linear-gradient(90deg,#2563eb,#60a5fa)}
-.c-orange::before{background:linear-gradient(90deg,#f97316,#fbbf24)}
-.c-purple::before{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
-.c-red::before{background:linear-gradient(90deg,#dc2626,#f97316)}
-.c-teal::before{background:linear-gradient(90deg,#0891b2,#22d3ee)}
 
-.course-icon{
-  width:52px;height:52px;border-radius:12px;
+/* Tab switcher */
+.course-tabs{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:44px;position:relative;z-index:1;
+}
+.c-tab{
+  padding:11px 26px;border-radius:50px;
+  font-size:14.5px;font-weight:600;cursor:pointer;
+  border:2px solid var(--border);color:var(--text-gray);background:#fff;
+  transition:all .3s;white-space:nowrap;
+}
+.c-tab:hover{border-color:var(--blue-lt);color:var(--blue)}
+.c-tab.active{
+  background:linear-gradient(135deg,var(--blue),var(--blue-mid));
+  color:#fff;border-color:transparent;
+  box-shadow:0 6px 20px rgba(11,67,133,.3);
+  transform:translateY(-2px);
+}
+
+/* Course detail panel */
+.course-panels{position:relative;z-index:1}
+.course-panel{
+  display:none;
+  background:#fff;border:1.5px solid var(--border);border-radius:20px;
+  overflow:hidden;box-shadow:0 8px 40px rgba(11,67,133,.1);
+}
+.course-panel.active{
+  display:grid;grid-template-columns:1.1fr 0.9fr;
+  animation:panelSlideIn .45s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes panelSlideIn{
+  from{opacity:0;transform:translateX(40px) scale(.97)}
+  to{opacity:1;transform:none}
+}
+.cp-left{padding:40px 44px;position:relative}
+.cp-left::before{
+  content:'';position:absolute;top:0;left:0;width:4px;height:100%;
+  background:linear-gradient(180deg,var(--blue),var(--orange));
+}
+.cp-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--orange-pale);border:1px solid rgba(255,118,5,.25);
+  color:var(--orange);font-size:12px;font-weight:700;
+  padding:5px 14px;border-radius:50px;margin-bottom:18px;
+}
+.cp-title{font-size:1.7rem;font-weight:800;color:var(--navy);margin-bottom:8px}
+.cp-sub-title{font-size:1rem;color:var(--blue-mid);font-weight:600;margin-bottom:16px}
+.cp-desc{font-size:14.5px;color:var(--text-gray);line-height:1.7;margin-bottom:28px}
+
+/* Feature checklist grid */
+.cp-features{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;margin-bottom:28px}
+.cp-feat{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--text-main);font-weight:500}
+.cp-feat i{color:var(--blue);font-size:13px;flex-shrink:0}
+
+/* Meta row */
+.cp-meta{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:28px;padding:18px 20px;background:var(--blue-pale);border-radius:12px}
+.cp-meta-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-gray);font-weight:500}
+.cp-meta-item i{color:var(--blue);font-size:13px}
+.cp-meta-item strong{color:var(--navy);font-weight:700}
+
+/* CTA buttons */
+.cp-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-cp-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--blue),var(--blue-mid));
+  color:#fff;font-size:14.5px;font-weight:700;
+  padding:13px 30px;border-radius:10px;
+  box-shadow:0 4px 16px rgba(11,67,133,.3);transition:all .25s;
+}
+.btn-cp-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(11,67,133,.4)}
+.btn-cp-outline{
+  display:inline-flex;align-items:center;gap:8px;
+  border:2px solid var(--blue);color:var(--blue);
+  font-size:14.5px;font-weight:700;padding:12px 28px;border-radius:10px;
+  transition:all .25s;background:#fff;
+}
+.btn-cp-outline:hover{background:var(--blue);color:#fff}
+
+/* Right panel */
+.cp-right{
+  background:linear-gradient(160deg,var(--navy) 0%,var(--blue) 100%);
+  padding:40px 36px;display:flex;flex-direction:column;gap:20px;position:relative;overflow:hidden;
+}
+.cp-right::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:250px;height:250px;border-radius:50%;
+  background:rgba(255,118,5,.15);filter:blur(40px);
+}
+.cp-right-title{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:4px;position:relative;z-index:1}
+.cp-right-sub{font-size:13px;color:rgba(255,255,255,.6);position:relative;z-index:1}
+
+/* Batch info */
+.batch-card{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;padding:20px 22px;position:relative;z-index:1;
+}
+.batch-label{font-size:12px;color:rgba(255,255,255,.55);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.batch-date{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:800;color:var(--orange);margin-bottom:4px}
+.batch-seats{font-size:13px;color:rgba(255,255,255,.7)}
+.batch-info-row{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.bi-item{display:flex;align-items:center;gap:10px;font-size:13.5px;color:rgba(255,255,255,.8)}
+.bi-item i{color:var(--orange);width:16px;text-align:center}
+
+/* Tech stack */
+.tech-stack{position:relative;z-index:1}
+.tech-icons{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.tech-icon{
+  width:42px;height:42px;border-radius:10px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
   display:flex;align-items:center;justify-content:center;
-  font-size:22px;margin-bottom:18px;
+  font-size:18px;color:#fff;font-weight:800;font-family:'Space Grotesk',sans-serif;
+  transition:all .2s;
 }
-.ci-green{background:#dcfce7;color:#16a34a}
-.ci-blue{background:#dbeafe;color:#2563eb}
-.ci-orange{background:#ffedd5;color:#f97316}
-.ci-purple{background:#ede9fe;color:#7c3aed}
-.ci-red{background:#fee2e2;color:#dc2626}
-.ci-teal{background:#cffafe;color:#0891b2}
+.tech-icon:hover{background:rgba(255,118,5,.3);border-color:var(--orange)}
 
-.course-title{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:8px}
-.course-desc{font-size:13.5px;color:var(--gray);line-height:1.65;margin-bottom:18px}
-.course-meta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-.course-meta span{font-size:12.5px;color:var(--gray);display:flex;align-items:center;gap:5px;font-weight:500}
-.course-tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{background:var(--gray-light);color:var(--gray);font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:50px}
-.course-footer{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-top:20px;padding-top:18px;border-top:1px solid var(--border);
+/* All courses list below */
+.all-courses-list{margin-top:48px}
+.acl-title{font-size:1rem;font-weight:700;color:var(--text-gray);text-align:center;margin-bottom:24px;text-transform:uppercase;letter-spacing:1.5px}
+.acl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.acl-card{
+  border:1.5px solid var(--border);border-radius:14px;padding:20px 22px;
+  background:#fff;cursor:pointer;transition:all .3s;
+  display:flex;align-items:center;gap:14px;
 }
-.course-enroll{
-  font-size:13.5px;font-weight:700;color:var(--green);
-  display:flex;align-items:center;gap:5px;transition:gap .2s;
+.acl-card:hover,.acl-card.acl-active{
+  border-color:var(--blue);
+  background:var(--blue-pale);
+  transform:translateY(-3px);
+  box-shadow:0 8px 24px rgba(11,67,133,.12);
 }
-.course-card:hover .course-enroll{gap:10px}
-.course-duration{font-size:12.5px;color:var(--gray);font-weight:500}
+.acl-icon{
+  width:46px;height:46px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.acl-name{font-size:14px;font-weight:700;color:var(--navy)}
+.acl-dur{font-size:12px;color:var(--text-gray);margin-top:3px}
+.acl-arrow{margin-left:auto;color:var(--blue);font-size:13px;opacity:0;transition:opacity .2s}
+.acl-card:hover .acl-arrow,.acl-card.acl-active .acl-arrow{opacity:1}
 
 /* ============================================================
-   COLLEGE PARTNER CARDS
+   COLLEGES MARQUEE
 ============================================================ */
-.colleges-section{background:var(--gray-light)}
-.colleges-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.college-card{
-  background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);
-  padding:28px 20px;text-align:center;
-  transition:all .3s;
+.colleges-section{background:var(--off-white);padding:80px 0}
+.colleges-section .container{max-width:1180px;margin:0 auto;padding:0 24px}
+.marquee-wrap{overflow:hidden;position:relative;margin-top:40px}
+.marquee-wrap::before,.marquee-wrap::after{
+  content:'';position:absolute;top:0;width:120px;height:100%;z-index:2;pointer-events:none;
 }
-.college-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--green)}
-.coll-badge-wrap{
-  width:64px;height:64px;border-radius:50%;margin:0 auto 16px;
-  display:flex;align-items:center;justify-content:center;font-size:26px;
-  border:2px solid var(--border);
+.marquee-wrap::before{left:0;background:linear-gradient(90deg,var(--off-white),transparent)}
+.marquee-wrap::after{right:0;background:linear-gradient(-90deg,var(--off-white),transparent)}
+.marquee-track{
+  display:flex;gap:20px;width:max-content;
+  animation:marqueeScroll 28s linear infinite;
 }
-.coll-name{font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:6px}
-.coll-loc{font-size:13px;color:var(--gray);display:flex;align-items:center;justify-content:center;gap:5px;margin-bottom:14px}
-.coll-status{
-  display:inline-block;background:var(--green-pale);color:var(--green);
-  font-size:11.5px;font-weight:700;padding:4px 14px;border-radius:50px;
-  border:1px solid #bbf7d0;
+.marquee-track:hover{animation-play-state:paused}
+@keyframes marqueeScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.coll-pill{
+  flex-shrink:0;
+  background:#fff;border:1.5px solid var(--border);border-radius:14px;
+  padding:16px 24px;display:flex;align-items:center;gap:14px;
+  box-shadow:0 2px 12px rgba(11,67,133,.06);
+  transition:all .3s;cursor:default;min-width:200px;
 }
+.coll-pill:hover{border-color:var(--blue-lt);box-shadow:0 6px 20px rgba(11,67,133,.12);transform:translateY(-3px)}
+.coll-emo{font-size:26px}
+.coll-name{font-size:14px;font-weight:700;color:var(--navy)}
+.coll-city{font-size:12px;color:var(--text-gray)}
 
 /* ============================================================
    HOW IT WORKS
 ============================================================ */
-.steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative}
-.steps-row::before{
-  content:'';position:absolute;top:36px;left:10%;right:10%;height:2px;
-  background:linear-gradient(90deg,var(--green-pale),var(--green),var(--green-pale));
+.how-section{background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);position:relative;overflow:hidden}
+.how-section::before{
+  content:'';position:absolute;inset:0;
+  background:url("{% static 'core/images/stats_bg.png' %}") center/cover;opacity:.12;
+}
+.how-section .sec-chip{background:rgba(255,118,5,.2);color:var(--orange);border-color:rgba(255,118,5,.3)}
+.how-section .sec-title{color:#fff}
+.how-section .sec-sub{color:rgba(255,255,255,.65)}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative;z-index:1}
+.steps-connector{
+  position:absolute;top:52px;left:calc(12.5% + 24px);right:calc(12.5% + 24px);height:2px;
+  background:linear-gradient(90deg,rgba(255,118,5,.3),rgba(255,118,5,.8),rgba(255,118,5,.3));
   z-index:0;
 }
 .step{text-align:center;position:relative;z-index:1}
-.step-dot{
-  width:72px;height:72px;border-radius:50%;
-  background:linear-gradient(135deg,var(--green),#059669);
+.step-num{
+  width:72px;height:72px;border-radius:50%;margin:0 auto 22px;
+  background:linear-gradient(135deg,var(--orange),var(--orange-lt));
   color:#fff;font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:800;
   display:flex;align-items:center;justify-content:center;
-  margin:0 auto 20px;
-  box-shadow:0 8px 24px rgba(22,163,74,.3);
-  border:4px solid #fff;
+  box-shadow:0 8px 28px rgba(255,118,5,.4);
+  border:4px solid rgba(255,255,255,.15);
 }
-.step-title{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:8px}
-.step-desc{font-size:13.5px;color:var(--gray);line-height:1.65}
+.step-title{font-size:1rem;font-weight:700;color:#fff;margin-bottom:10px}
+.step-desc{font-size:13.5px;color:rgba(255,255,255,.65);line-height:1.65}
 
 /* ============================================================
-   WHY US  — feature list style (like Tap)
+   WHY US
 ============================================================ */
-.why-section{background:var(--navy)}
-.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.why-left .sec-tag{background:rgba(22,163,74,.2);color:#4ade80}
-.why-left .sec-title{color:#fff}
-.why-left .sec-sub{color:rgba(255,255,255,.65)}
-.why-features{display:flex;flex-direction:column;gap:20px;margin-top:32px}
-.why-feat{
-  display:flex;gap:16px;align-items:flex-start;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
-  border-radius:12px;padding:18px 20px;
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.why-features{display:flex;flex-direction:column;gap:18px;margin-top:32px}
+.wf{
+  display:flex;gap:16px;padding:20px 22px;
+  border:1.5px solid var(--border);border-radius:14px;background:#fff;
+  transition:all .3s;cursor:default;
+}
+.wf:hover{border-color:var(--blue-lt);box-shadow:0 6px 20px rgba(11,67,133,.1);transform:translateX(4px)}
+.wf-i{
+  width:44px;height:44px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+  background:linear-gradient(135deg,var(--blue-pale),var(--orange-pale));
+}
+.wf-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:5px}
+.wf-desc{font-size:13.5px;color:var(--text-gray);line-height:1.6}
+
+/* Stat panel right */
+.why-stats{display:flex;flex-direction:column;gap:16px}
+.ws-card{
+  background:var(--white);border:1.5px solid var(--border);border-radius:14px;
+  padding:22px 26px;display:flex;align-items:center;justify-content:space-between;
   transition:all .3s;
 }
-.why-feat:hover{background:rgba(255,255,255,.09)}
-.wf-icon{
-  width:42px;height:42px;border-radius:10px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;font-size:18px;
-  background:rgba(22,163,74,.2);
+.ws-card:hover{border-color:var(--orange);box-shadow:0 6px 20px rgba(255,118,5,.12)}
+.ws-label{font-size:14px;color:var(--text-gray);font-weight:500}
+.ws-val{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:800;color:var(--blue)}
+.ws-val.orange{color:var(--orange)}
+.why-img-wrap{
+  border-radius:20px;overflow:hidden;
+  border:1.5px solid var(--border);
+  box-shadow:0 20px 60px rgba(11,67,133,.15);
+  background:linear-gradient(135deg,var(--blue-pale),var(--orange-pale));
+  padding:40px;text-align:center;margin-top:24px;
 }
-.wf-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px}
-.wf-desc{font-size:13.5px;color:rgba(255,255,255,.6);line-height:1.6}
-.why-right-visual{
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
-  border-radius:20px;padding:32px;
-  display:flex;flex-direction:column;gap:16px;
-}
-.wr-stat{
-  display:flex;justify-content:space-between;align-items:center;
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
-  border-radius:10px;padding:16px 20px;
-}
-.wr-stat-label{font-size:14px;color:rgba(255,255,255,.7);font-weight:500}
-.wr-stat-val{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:800;color:#4ade80}
+.why-logo-big{width:160px;height:160px;margin:0 auto;object-fit:contain;
+  filter:drop-shadow(0 12px 32px rgba(11,67,133,.2));
+  animation:floatUp 4s ease-in-out infinite alternate}
 
 /* ============================================================
    TESTIMONIALS
 ============================================================ */
-.testi-section{background:var(--gray-light)}
+.testi-section{background:var(--off-white)}
 .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .testi-card{
-  background:#fff;border:1.5px solid var(--border);border-radius:var(--radius-lg);
-  padding:28px 24px;transition:all .3s;
+  background:#fff;border:1.5px solid var(--border);border-radius:16px;
+  padding:28px 24px;transition:all .3s;position:relative;
 }
-.testi-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-.testi-stars{color:#f59e0b;font-size:14px;margin-bottom:14px;letter-spacing:1px}
+.testi-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;
+  background:linear-gradient(90deg,var(--blue),var(--orange));
+}
+.testi-card:hover{transform:translateY(-5px);box-shadow:0 12px 40px rgba(11,67,133,.12)}
+.testi-stars{color:var(--orange);font-size:15px;margin-bottom:14px;letter-spacing:1px}
 .testi-quote{
   font-size:14.5px;color:#374151;line-height:1.75;margin-bottom:22px;
-  border-left:3px solid var(--green);padding-left:14px;
+  padding-left:14px;border-left:3px solid var(--blue);font-style:italic;
 }
 .testi-author{display:flex;align-items:center;gap:12px}
 .testi-av{
   width:42px;height:42px;border-radius:50%;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
-  font-size:15px;font-weight:800;color:#fff;
+  font-size:14px;font-weight:800;color:#fff;
 }
 .testi-name{font-size:14.5px;font-weight:700;color:var(--navy)}
-.testi-role{font-size:12.5px;color:var(--gray);margin-top:2px}
+.testi-role{font-size:12px;color:var(--text-gray);margin-top:2px}
 
 /* ============================================================
-   CTA BANNER
+   CTA
 ============================================================ */
 .cta-section{
-  padding:80px 24px;
-  background:linear-gradient(135deg,#16a34a 0%,#059669 60%,#047857 100%);
-  text-align:center;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 60%,var(--blue-mid) 100%);
+  padding:90px 24px;text-align:center;position:relative;overflow:hidden;
 }
 .cta-section::before{
-  content:'';position:absolute;top:-60px;right:-60px;
-  width:280px;height:280px;border-radius:50%;
-  background:rgba(255,255,255,.06);
+  content:'';position:absolute;inset:0;
+  background:url("{% static 'core/images/hero_bg.png' %}") center/cover;opacity:.15;
 }
 .cta-section::after{
-  content:'';position:absolute;bottom:-80px;left:-40px;
-  width:220px;height:220px;border-radius:50%;
-  background:rgba(255,255,255,.05);
+  content:'';position:absolute;bottom:-80px;right:-80px;
+  width:300px;height:300px;border-radius:50%;
+  background:rgba(255,118,5,.2);filter:blur(60px);
 }
-.cta-section h2{font-size:clamp(1.8rem,3.5vw,2.6rem);color:#fff;margin-bottom:14px;position:relative;z-index:1}
-.cta-section p{font-size:1.05rem;color:rgba(255,255,255,.85);margin-bottom:36px;position:relative;z-index:1}
+.cta-section .container{position:relative;z-index:1}
+.cta-section h2{font-size:clamp(1.8rem,4vw,2.8rem);color:#fff;margin-bottom:14px}
+.cta-section p{font-size:1.05rem;color:rgba(255,255,255,.8);margin-bottom:36px;max-width:560px;margin-left:auto;margin-right:auto}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
 .btn-cta-white{
-  display:inline-flex;align-items:center;gap:10px;
-  background:#fff;color:var(--green);
-  font-size:16px;font-weight:800;
+  display:inline-flex;align-items:center;gap:9px;
+  background:#fff;color:var(--blue);font-size:15.5px;font-weight:800;
   padding:15px 38px;border-radius:10px;
-  box-shadow:0 8px 32px rgba(0,0,0,.18);
-  transition:all .25s;position:relative;z-index:1;
+  box-shadow:0 8px 32px rgba(0,0,0,.2);transition:all .25s;
 }
-.btn-cta-white:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,0,0,.22)}
-.btn-cta-outline{
-  display:inline-flex;align-items:center;gap:10px;
-  border:2px solid rgba(255,255,255,.6);color:#fff;
-  font-size:16px;font-weight:700;
-  padding:13px 36px;border-radius:10px;
-  transition:all .25s;position:relative;z-index:1;
-  margin-left:14px;
+.btn-cta-white:hover{transform:translateY(-3px);box-shadow:0 14px 44px rgba(0,0,0,.25)}
+.btn-cta-orange{
+  display:inline-flex;align-items:center;gap:9px;
+  background:var(--orange);color:#fff;font-size:15.5px;font-weight:800;
+  padding:15px 38px;border-radius:10px;
+  box-shadow:0 8px 28px rgba(255,118,5,.4);transition:all .25s;
 }
-.btn-cta-outline:hover{background:rgba(255,255,255,.12);border-color:#fff}
+.btn-cta-orange:hover{background:var(--orange-lt);transform:translateY(-3px)}
 
 /* ============================================================
    FOOTER
 ============================================================ */
 .footer{background:var(--navy);padding:64px 24px 28px}
-.footer-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
-.f-brand img{width:52px;height:52px;object-fit:contain;margin-bottom:14px}
-.f-brand-name{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:12px}
-.f-brand-name .e{color:#e2e8f0}
-.f-brand-name .l{color:#4ade80}
-.f-desc{font-size:13.5px;color:#94a3b8;line-height:1.7;margin-bottom:20px}
-.f-contact a{display:flex;align-items:center;gap:8px;font-size:13px;color:#94a3b8;margin-bottom:8px;transition:color .2s}
-.f-contact a:hover{color:#4ade80}
-.f-col-title{font-size:14px;font-weight:700;color:#e2e8f0;margin-bottom:18px;letter-spacing:.3px}
-.f-links{display:flex;flex-direction:column;gap:10px}
-.f-links a{font-size:13.5px;color:#94a3b8;transition:color .2s}
-.f-links a:hover{color:#4ade80}
-.footer-bottom{
-  max-width:1180px;margin:0 auto;
-  padding-top:24px;border-top:1px solid rgba(255,255,255,.07);
+.footer-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.fb img{width:54px;height:54px;object-fit:contain;margin-bottom:14px}
+.fb-name{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:12px}
+.fb-name .b{color:#93c5fd}.fb-name .o{color:var(--orange)}
+.fb-desc{font-size:13.5px;color:#94a3b8;line-height:1.7;margin-bottom:20px}
+.fb-contact a{display:flex;align-items:center;gap:8px;font-size:13px;color:#94a3b8;margin-bottom:8px;transition:color .2s}
+.fb-contact a:hover{color:var(--orange)}
+.fc-title{font-size:13px;font-weight:700;color:#e2e8f0;margin-bottom:18px;text-transform:uppercase;letter-spacing:.5px}
+.fc-links{display:flex;flex-direction:column;gap:10px}
+.fc-links a{font-size:13.5px;color:#94a3b8;transition:color .2s}
+.fc-links a:hover{color:var(--orange)}
+.footer-btm{
+  max-width:1180px;margin:0 auto;padding-top:24px;
+  border-top:1px solid rgba(255,255,255,.07);
   display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
   font-size:12.5px;color:#64748b;
 }
-.footer-bottom a{color:#64748b;transition:color .2s}
-.footer-bottom a:hover{color:#4ade80}
+.footer-btm a{color:#64748b;transition:color .2s}
+.footer-btm a:hover{color:var(--orange)}
+.cred-box{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;padding:14px 18px;margin-top:20px;
+  font-size:12.5px;color:#64748b;line-height:2;
+}
+.cred-box code{color:#93c5fd;font-size:12px}
 
 /* ============================================================
-   SCROLL ANIMATION
+   REVEAL ANIMATION
 ============================================================ */
-.reveal{opacity:0;transform:translateY(32px);transition:opacity .6s ease,transform .6s ease}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
 .reveal.visible{opacity:1;transform:none}
 
 /* ============================================================
    RESPONSIVE
 ============================================================ */
 @media(max-width:1024px){
-  .courses-grid{grid-template-columns:repeat(2,1fr)}
-  .colleges-grid{grid-template-columns:repeat(2,1fr)}
-  .stats-bar-inner{grid-template-columns:repeat(2,1fr)}
+  .hero-inner{grid-template-columns:1fr;gap:48px;text-align:center}
+  .hero-visual{display:none}
   .why-grid{grid-template-columns:1fr}
-  .why-right-visual{display:none}
-  .footer-inner{grid-template-columns:1fr 1fr;gap:36px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .acl-grid{grid-template-columns:repeat(2,1fr)}
+  .course-panel.active{grid-template-columns:1fr}
+  .cp-right{display:none}
+  .steps-connector{display:none}
+  .steps-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:768px){
-  .hero{grid-template-columns:1fr;gap:40px;text-align:center;padding:56px 20px 40px;min-height:auto}
-  .hero-sub,.hero-cta,.hero-trust{justify-content:center}
-  .hero-visual{order:-1}
-  .hero-visual-bg{width:300px;height:300px}
-  .hero-logo-big{width:160px;height:160px}
-  .chip{display:none}
-  .courses-grid{grid-template-columns:1fr}
-  .testi-grid{grid-template-columns:1fr}
-  .steps-row{grid-template-columns:1fr 1fr;gap:20px}
-  .steps-row::before{display:none}
-  .colleges-grid{grid-template-columns:1fr 1fr}
-  .nav-links{display:none}
-  .hamburger{display:block}
-  .mobile-menu{
-    display:none;position:fixed;inset:68px 0 0;
-    background:#fff;border-top:1px solid var(--border);
-    flex-direction:column;padding:20px;gap:4px;
-    overflow-y:auto;
+  .navlinks{display:none}
+  .ham{display:block}
+  .mob-menu{
+    display:none;position:fixed;inset:70px 0 0;background:#fff;
+    flex-direction:column;padding:20px;gap:6px;
+    border-top:1px solid var(--border);overflow-y:auto;
   }
-  .mobile-menu.open{display:flex}
-  .mobile-menu a{font-size:16px;font-weight:500;color:#374151;padding:12px 16px;border-radius:8px}
-  .mobile-menu a:hover{background:#f3f4f6}
-  .mobile-menu .btn-nav-login{margin-top:8px;justify-content:center;padding:13px}
-  .footer-inner{grid-template-columns:1fr}
-  .footer-bottom{flex-direction:column;text-align:center}
-  .btn-cta-outline{margin-left:0;margin-top:12px}
+  .mob-menu.open{display:flex}
+  .mob-menu a{font-size:16px;padding:13px 16px;border-radius:8px;font-weight:500;color:var(--text-gray)}
+  .mob-menu a:hover{background:var(--blue-pale);color:var(--blue)}
+  .mob-menu .btn-login{margin-top:8px;justify-content:center}
+  .stats-bar-inner{grid-template-columns:repeat(2,1fr)}
+  .stat-box{border-right:none;border-bottom:1px solid rgba(255,255,255,.1);padding:18px 12px}
+  .stat-box:nth-child(odd){border-right:1px solid rgba(255,255,255,.1)}
+  .stat-box:last-child,.stat-box:nth-last-child(2){border-bottom:none}
+  .testi-grid{grid-template-columns:1fr}
+  .acl-grid{grid-template-columns:1fr}
+  .trust-row,.hero-btns{justify-content:center}
+  .footer-grid{grid-template-columns:1fr}
+  .cta-btns{flex-direction:column;align-items:center}
+  .cp-left{padding:28px 24px}
 }
 </style>
 </head>
@@ -566,111 +707,96 @@ ul{list-style:none}
 
 <!-- SPLASH -->
 <div id="splash">
-  <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn" id="sp-img">
+  <div class="sp-logo-wrap" id="spLogoWrap">
+    <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn">
+  </div>
   <h1>Easy Learn Academy</h1>
   <p>Online Technical Training</p>
 </div>
 
 <!-- ANN BAR -->
-<div class="ann-bar">
-  <span class="pill">NEW</span>
-  Python & Java Full Stack batches starting soon &nbsp;•&nbsp;
-  <a href="{% url 'trainer_signup' %}">Apply as Trainer <i class="fa-solid fa-arrow-right fa-xs"></i></a>
+<div class="ann">
+  <span class="pill">🎓 New Batches</span>
+  Python · Java Full Stack · Data Science starting soon &nbsp;·&nbsp;
+  <a href="{% url 'trainer_signup' %}">Join as Trainer →</a>
 </div>
 
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <div class="nav-inner">
-    <a href="#" class="brand">
-      <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Logo">
-      <span class="brand-text"><span class="e">Easy</span><span class="l">Learn</span></span>
+    <a href="#top" class="brand">
+      <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn">
+      <span class="brand-name"><span class="b">Easy</span><span class="o">Learn</span></span>
     </a>
-
-    <div class="nav-links">
-      <a href="#courses" class="active">Courses</a>
-      <a href="#colleges">Our Colleges</a>
-      <a href="#how-it-works">How It Works</a>
-      <a href="#why-us">Why Us</a>
+    <div class="navlinks">
+      <a href="#courses">Courses</a>
+      <a href="#colleges">Colleges</a>
+      <a href="#how">How It Works</a>
+      <a href="#why">Why Us</a>
       <a href="#contact">Contact</a>
     </div>
-
-    <div class="nav-right">
-      <a href="{% url 'login' %}" class="btn-nav-login">
-        <i class="fa-solid fa-right-to-bracket"></i> Login
-      </a>
-    </div>
-
-    <button class="hamburger" id="ham" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <a href="{% url 'login' %}" class="btn-login"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+    <button class="ham" id="ham"><span></span><span></span><span></span></button>
   </div>
-
-  <!-- Mobile menu -->
-  <div class="mobile-menu" id="mobileMenu">
+  <div class="mob-menu" id="mobMenu">
     <a href="#courses">Courses</a>
-    <a href="#colleges">Our Colleges</a>
-    <a href="#how-it-works">How It Works</a>
-    <a href="#why-us">Why Us</a>
+    <a href="#colleges">Colleges</a>
+    <a href="#how">How It Works</a>
+    <a href="#why">Why Us</a>
     <a href="#contact">Contact</a>
-    <a href="{% url 'login' %}" class="btn-nav-login">
-      <i class="fa-solid fa-right-to-bracket"></i> Login
-    </a>
+    <a href="{% url 'login' %}" class="btn-login"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
   </div>
 </nav>
 
-<!-- ====================================================
-     HERO
-==================================================== -->
-<section style="max-width:1180px;margin:0 auto;padding:72px 24px 60px">
-  <div class="hero" style="all:unset;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px">
-    <div class="hero-left">
-      <div class="hero-badge">
-        <i class="fa-solid fa-wifi"></i> 100% Online &bull; Live Interactive Sessions
-      </div>
-      <h1>
-        Skill Up with<br>
-        <span class="highlight">Industry-Level</span><br>
-        Tech Training
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="top">
+  <div class="hero-bg-img"></div>
+  <div class="hero-overlay"></div>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="h-badge"><span class="dot"></span> 100% Live Online · No Travel Required</div>
+      <h1 class="hero-title">
+        Skill Up With<br>
+        <span class="line-o">Industry-Level</span><br>
+        <span class="line-b">Tech Training</span>
       </h1>
-      <p class="hero-sub">
-        Easy Learn Academy brings expert-led online technical bootcamps directly to engineering college students — structured, live, and placement-ready.
-      </p>
-      <div class="hero-cta">
-        <a href="#courses" class="btn-primary">
-          <i class="fa-solid fa-rocket"></i> Explore Courses
-        </a>
-        <a href="{% url 'login' %}" class="btn-outline-dark">
-          <i class="fa-solid fa-right-to-bracket"></i> Login
-        </a>
+      <p class="hero-sub">Easy Learn Academy delivers expert-led live online technical bootcamps directly to engineering college students — structured, practical, and placement-ready.</p>
+      <div class="hero-btns">
+        <a href="#courses" class="btn-orange"><i class="fa-solid fa-rocket"></i> Explore Courses</a>
+        <a href="{% url 'login' %}" class="btn-white-outline"><i class="fa-solid fa-right-to-bracket"></i> Portal Login</a>
       </div>
-      <div class="hero-trust">
-        <div class="trust-avatars">
+      <div class="trust-row">
+        <div class="trust-avs">
           <span>AK</span><span>PR</span><span>MS</span><span>RV</span><span>+</span>
         </div>
-        <span class="trust-text"><strong>500+ students</strong> trained across 4 colleges</span>
+        <span class="trust-txt"><strong>15,000+ students</strong> trained across 20+ colleges</span>
       </div>
     </div>
-
     <div class="hero-visual">
-      <div class="hero-visual-bg">
-        <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn" class="hero-logo-big">
+      <div class="hero-ring">
+        <div class="hero-ring-inner">
+          <div class="hero-logo-circle">
+            <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn">
+          </div>
+        </div>
       </div>
-      <!-- Floating chips -->
-      <div class="chip chip-1">
-        <div class="chip-icon" style="background:#dcfce7;color:#16a34a"><i class="fa-solid fa-check"></i></div>
-        <div><div class="chip-val">4+</div><div class="chip-lab">Partner Colleges</div></div>
+      <div class="orbit-chip oc1">
+        <div class="oc-icon" style="background:#fff3e8;color:var(--orange)"><i class="fa-solid fa-school"></i></div>
+        <div><div class="oc-val">20+</div><div class="oc-lab">Colleges</div></div>
       </div>
-      <div class="chip chip-2">
-        <div class="chip-icon" style="background:#dbeafe;color:#2563eb"><i class="fa-solid fa-graduation-cap"></i></div>
-        <div><div class="chip-val">500+</div><div class="chip-lab">Students Trained</div></div>
+      <div class="orbit-chip oc2">
+        <div class="oc-icon" style="background:#e8f0fb;color:var(--blue)"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div><div class="oc-val">15K+</div><div class="oc-lab">Students</div></div>
       </div>
-      <div class="chip chip-3">
-        <div class="chip-icon" style="background:#ffedd5;color:#f97316"><i class="fa-solid fa-laptop-code"></i></div>
-        <div><div class="chip-val">6+</div><div class="chip-lab">Tech Programs</div></div>
+      <div class="orbit-chip oc3">
+        <div class="oc-icon" style="background:#fff3e8;color:var(--orange)"><i class="fa-solid fa-laptop-code"></i></div>
+        <div><div class="oc-val">6+</div><div class="oc-lab">Programs</div></div>
       </div>
-      <div class="chip chip-4">
-        <div class="chip-icon" style="background:#ede9fe;color:#7c3aed"><i class="fa-solid fa-wifi"></i></div>
-        <div><div class="chip-val">100%</div><div class="chip-lab">Online</div></div>
+      <div class="orbit-chip oc4">
+        <div class="oc-icon" style="background:#e8f0fb;color:var(--blue)"><i class="fa-solid fa-wifi"></i></div>
+        <div><div class="oc-val">100%</div><div class="oc-lab">Online</div></div>
       </div>
     </div>
   </div>
@@ -679,350 +805,582 @@ ul{list-style:none}
 <!-- STATS BAR -->
 <div class="stats-bar">
   <div class="stats-bar-inner">
-    <div class="stat-item">
-      <div class="stat-num"><span>4</span>+</div>
-      <div class="stat-label">Partner Colleges</div>
-    </div>
-    <div class="stat-item stat-divider">
-      <div class="stat-num"><span>500</span>+</div>
-      <div class="stat-label">Students Trained</div>
-    </div>
-    <div class="stat-item stat-divider">
-      <div class="stat-num"><span>6</span>+</div>
-      <div class="stat-label">Online Programs</div>
-    </div>
-    <div class="stat-item stat-divider">
-      <div class="stat-num"><span>100</span>%</div>
-      <div class="stat-label">Online Delivery</div>
-    </div>
+    <div class="stat-box"><div class="stat-num"><span data-target="20">0</span><span class="acc">+</span></div><div class="stat-lab">Partner Colleges</div></div>
+    <div class="stat-box"><div class="stat-num"><span data-target="15000">0</span><span class="acc">+</span></div><div class="stat-lab">Students Trained</div></div>
+    <div class="stat-box"><div class="stat-num"><span data-target="6">0</span><span class="acc">+</span></div><div class="stat-lab">Online Programs</div></div>
+    <div class="stat-box"><div class="stat-num"><span data-target="100">0</span><span class="acc">%</span></div><div class="stat-lab">Online Delivery</div></div>
   </div>
 </div>
 
-<!-- ====================================================
-     COURSES
-==================================================== -->
-<section class="section" id="courses">
+<!-- ===================== COURSES ===================== -->
+<section class="courses-section" id="courses">
   <div class="container">
-    <div class="sec-header center">
-      <span class="sec-tag">Our Programs</span>
+    <div class="sec-hd center">
+      <span class="sec-chip">Our Programs</span>
       <h2 class="sec-title">Online Technical Training Courses</h2>
-      <p class="sec-sub">Industry-curated curricula delivered live online by expert corporate trainers across India</p>
+      <p class="sec-sub">Industry-curated live online curricula delivered by verified corporate trainers across India</p>
     </div>
-    <div class="courses-grid">
 
-      <div class="course-card c-green reveal">
-        <div class="course-icon ci-green"><i class="fa-brands fa-python"></i></div>
-        <div class="course-title">Python Full Stack</div>
-        <div class="course-desc">Master Python, Django, REST APIs, PostgreSQL and deploy production-ready web applications from scratch.</div>
-        <div class="course-meta">
-          <span><i class="fa-regular fa-clock"></i> 30–45 Days</span>
-          <span><i class="fa-solid fa-wifi"></i> Live Online</span>
+    <!-- Tab Switcher -->
+    <div class="course-tabs">
+      <div class="c-tab active" data-course="python">🐍 Python Full Stack</div>
+      <div class="c-tab" data-course="java">☕ Java Full Stack</div>
+      <div class="c-tab" data-course="ds">📊 Data Science & ML</div>
+      <div class="c-tab" data-course="web">🌐 Web Development</div>
+      <div class="c-tab" data-course="c">⚙️ C / C++</div>
+      <div class="c-tab" data-course="cyber">🛡️ Cyber Security</div>
+    </div>
+
+    <!-- Course Panels -->
+    <div class="course-panels">
+
+      <!-- Python -->
+      <div class="course-panel active" id="cp-python">
+        <div class="cp-left">
+          <div class="cp-badge"><i class="fa-solid fa-star"></i> Most Popular</div>
+          <div class="cp-title">Python Full Stack Web Development</div>
+          <div class="cp-sub-title">With Django & REST API</div>
+          <div class="cp-desc">Master Python programming, Django framework, REST APIs, PostgreSQL and deploy production-ready web applications. Go from zero to a full-stack developer in 45 days — live online.</div>
+          <div class="cp-features">
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Python Fundamentals & OOPs</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Django Framework (MVT)</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> REST API Development</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> HTML / CSS / JavaScript</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> PostgreSQL & SQLite</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Deployment & Git</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Live Projects & Assignments</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Resume & Interview Prep</div>
+          </div>
+          <div class="cp-meta">
+            <div class="cp-meta-item"><i class="fa-regular fa-clock"></i> <strong>30–45 Days</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-wifi"></i> <strong>Live Online</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-video"></i> <strong>2–3 Sessions/Day</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-file-pdf"></i> <strong>Daily Notes</strong></div>
+          </div>
+          <div class="cp-btns">
+            <a href="{% url 'login' %}" class="btn-cp-primary"><i class="fa-solid fa-right-to-bracket"></i> Enroll via Portal</a>
+            <a href="#contact" class="btn-cp-outline"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+          </div>
         </div>
-        <div class="course-tags">
-          <span class="tag">Python</span><span class="tag">Django</span><span class="tag">REST API</span>
-        </div>
-        <div class="course-footer">
-          <span class="course-enroll">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></span>
-          <span class="course-duration"><i class="fa-regular fa-calendar"></i> Starts Soon</span>
+        <div class="cp-right">
+          <div class="cp-right-title">Next Batch Details</div>
+          <div class="cp-right-sub">Limited seats available</div>
+          <div class="batch-card">
+            <div class="batch-label">Next Batch Starts</div>
+            <div class="batch-date">Aug 1, 2026</div>
+            <div class="batch-seats">(20 seats left)</div>
+            <div class="batch-info-row">
+              <div class="bi-item"><i class="fa-solid fa-wifi"></i> 100% Live Online</div>
+              <div class="bi-item"><i class="fa-regular fa-clock"></i> 2:00 PM – 5:00 PM IST</div>
+              <div class="bi-item"><i class="fa-solid fa-certificate"></i> Certificate on Completion</div>
+            </div>
+          </div>
+          <div class="tech-stack">
+            <div class="cp-right-title" style="margin-bottom:10px">Tech Stack</div>
+            <div class="tech-icons">
+              <div class="tech-icon" title="Python">Py</div>
+              <div class="tech-icon" title="Django">Dj</div>
+              <div class="tech-icon" title="JavaScript">JS</div>
+              <div class="tech-icon" title="HTML5">H5</div>
+              <div class="tech-icon" title="CSS3">C3</div>
+              <div class="tech-icon" title="SQL">SQL</div>
+              <div class="tech-icon" title="Git">Git</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="course-card c-blue reveal">
-        <div class="course-icon ci-blue"><i class="fa-brands fa-java"></i></div>
-        <div class="course-title">Java Full Stack</div>
-        <div class="course-desc">Core Java, Spring Boot, Hibernate, React.js and enterprise application design patterns — industry-ready.</div>
-        <div class="course-meta">
-          <span><i class="fa-regular fa-clock"></i> 30–45 Days</span>
-          <span><i class="fa-solid fa-wifi"></i> Live Online</span>
+      <!-- Java -->
+      <div class="course-panel" id="cp-java">
+        <div class="cp-left">
+          <div class="cp-badge" style="background:var(--blue-pale);color:var(--blue);border-color:var(--border)"><i class="fa-solid fa-fire"></i> High Demand</div>
+          <div class="cp-title">Java Full Stack Web Development</div>
+          <div class="cp-sub-title">With Spring Boot & React.js</div>
+          <div class="cp-desc">Master Core Java, Spring Boot, Hibernate, React.js and enterprise application design. Build 3+ end-to-end applications and crack product company interviews confidently.</div>
+          <div class="cp-features">
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Core Java & OOPs</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Advanced Java & JDBC</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Spring Boot & Hibernate</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> React.js Frontend</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> MySQL & REST APIs</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Maven & Git</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Microservices Intro</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Interview Preparation</div>
+          </div>
+          <div class="cp-meta">
+            <div class="cp-meta-item"><i class="fa-regular fa-clock"></i> <strong>30–45 Days</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-wifi"></i> <strong>Live Online</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-video"></i> <strong>2–3 Sessions/Day</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-file-pdf"></i> <strong>Daily Notes</strong></div>
+          </div>
+          <div class="cp-btns">
+            <a href="{% url 'login' %}" class="btn-cp-primary"><i class="fa-solid fa-right-to-bracket"></i> Enroll via Portal</a>
+            <a href="#contact" class="btn-cp-outline"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+          </div>
         </div>
-        <div class="course-tags">
-          <span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">React</span>
-        </div>
-        <div class="course-footer">
-          <span class="course-enroll" style="color:#2563eb">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></span>
-          <span class="course-duration"><i class="fa-regular fa-calendar"></i> Starts Soon</span>
-        </div>
-      </div>
-
-      <div class="course-card c-orange reveal">
-        <div class="course-icon ci-orange"><i class="fa-solid fa-database"></i></div>
-        <div class="course-title">Data Science & ML</div>
-        <div class="course-desc">NumPy, Pandas, Matplotlib, Scikit-Learn and hands-on machine learning model building with real datasets.</div>
-        <div class="course-meta">
-          <span><i class="fa-regular fa-clock"></i> 30 Days</span>
-          <span><i class="fa-solid fa-wifi"></i> Live Online</span>
-        </div>
-        <div class="course-tags">
-          <span class="tag">Python</span><span class="tag">ML</span><span class="tag">Pandas</span>
-        </div>
-        <div class="course-footer">
-          <span class="course-enroll" style="color:#f97316">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></span>
-          <span class="course-duration"><i class="fa-regular fa-calendar"></i> Starts Soon</span>
-        </div>
-      </div>
-
-      <div class="course-card c-purple reveal">
-        <div class="course-icon ci-purple"><i class="fa-brands fa-react"></i></div>
-        <div class="course-title">Web Development</div>
-        <div class="course-desc">HTML5, CSS3, JavaScript ES6+, React.js — build modern, responsive and dynamic web applications.</div>
-        <div class="course-meta">
-          <span><i class="fa-regular fa-clock"></i> 21–30 Days</span>
-          <span><i class="fa-solid fa-wifi"></i> Live Online</span>
-        </div>
-        <div class="course-tags">
-          <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">React</span>
-        </div>
-        <div class="course-footer">
-          <span class="course-enroll" style="color:#7c3aed">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></span>
-          <span class="course-duration"><i class="fa-regular fa-calendar"></i> Starts Soon</span>
-        </div>
-      </div>
-
-      <div class="course-card c-red reveal">
-        <div class="course-icon ci-red"><i class="fa-solid fa-code"></i></div>
-        <div class="course-title">C / C++ Programming</div>
-        <div class="course-desc">Data structures, algorithms, memory management and systems programming — the core foundation every engineer needs.</div>
-        <div class="course-meta">
-          <span><i class="fa-regular fa-clock"></i> 21 Days</span>
-          <span><i class="fa-solid fa-wifi"></i> Live Online</span>
-        </div>
-        <div class="course-tags">
-          <span class="tag">C</span><span class="tag">C++</span><span class="tag">DSA</span>
-        </div>
-        <div class="course-footer">
-          <span class="course-enroll" style="color:#dc2626">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></span>
-          <span class="course-duration"><i class="fa-regular fa-calendar"></i> Starts Soon</span>
+        <div class="cp-right">
+          <div class="cp-right-title">Next Batch Details</div>
+          <div class="cp-right-sub">Limited seats available</div>
+          <div class="batch-card">
+            <div class="batch-label">Next Batch Starts</div>
+            <div class="batch-date">Aug 5, 2026</div>
+            <div class="batch-seats">(18 seats left)</div>
+            <div class="batch-info-row">
+              <div class="bi-item"><i class="fa-solid fa-wifi"></i> 100% Live Online</div>
+              <div class="bi-item"><i class="fa-regular fa-clock"></i> 3:00 PM – 6:00 PM IST</div>
+              <div class="bi-item"><i class="fa-solid fa-certificate"></i> Certificate on Completion</div>
+            </div>
+          </div>
+          <div class="tech-stack">
+            <div class="cp-right-title" style="margin-bottom:10px">Tech Stack</div>
+            <div class="tech-icons">
+              <div class="tech-icon">Jv</div>
+              <div class="tech-icon">SB</div>
+              <div class="tech-icon">Rx</div>
+              <div class="tech-icon">JS</div>
+              <div class="tech-icon">H5</div>
+              <div class="tech-icon">SQL</div>
+              <div class="tech-icon">Git</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="course-card c-teal reveal">
-        <div class="course-icon ci-teal"><i class="fa-solid fa-shield-halved"></i></div>
-        <div class="course-title">Cyber Security Basics</div>
-        <div class="course-desc">Ethical hacking, network security, vulnerability assessment, Linux fundamentals and cybersecurity practices.</div>
-        <div class="course-meta">
-          <span><i class="fa-regular fa-clock"></i> 21 Days</span>
-          <span><i class="fa-solid fa-wifi"></i> Live Online</span>
+      <!-- Data Science -->
+      <div class="course-panel" id="cp-ds">
+        <div class="cp-left">
+          <div class="cp-badge" style="background:var(--orange-pale);color:var(--orange);border-color:rgba(255,118,5,.25)"><i class="fa-solid fa-chart-line"></i> Trending</div>
+          <div class="cp-title">Data Science & Machine Learning</div>
+          <div class="cp-sub-title">With Python, NumPy & Scikit-Learn</div>
+          <div class="cp-desc">Master data analysis, visualization, and machine learning with real-world datasets. From raw data to trained models — fully live and online in 30 days.</div>
+          <div class="cp-features">
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Python for Data Science</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> NumPy & Pandas</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Matplotlib & Seaborn</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Scikit-Learn & ML Models</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> EDA & Feature Engineering</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Regression & Classification</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Real Dataset Projects</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Jupyter Notebooks</div>
+          </div>
+          <div class="cp-meta">
+            <div class="cp-meta-item"><i class="fa-regular fa-clock"></i> <strong>30 Days</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-wifi"></i> <strong>Live Online</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-video"></i> <strong>2 Sessions/Day</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-file-pdf"></i> <strong>Daily Notes</strong></div>
+          </div>
+          <div class="cp-btns">
+            <a href="{% url 'login' %}" class="btn-cp-primary"><i class="fa-solid fa-right-to-bracket"></i> Enroll via Portal</a>
+            <a href="#contact" class="btn-cp-outline"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+          </div>
         </div>
-        <div class="course-tags">
-          <span class="tag">Security</span><span class="tag">Linux</span><span class="tag">Networking</span>
-        </div>
-        <div class="course-footer">
-          <span class="course-enroll" style="color:#0891b2">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></span>
-          <span class="course-duration"><i class="fa-regular fa-calendar"></i> Starts Soon</span>
+        <div class="cp-right">
+          <div class="cp-right-title">Next Batch Details</div>
+          <div class="cp-right-sub">Limited seats available</div>
+          <div class="batch-card">
+            <div class="batch-label">Next Batch Starts</div>
+            <div class="batch-date">Aug 10, 2026</div>
+            <div class="batch-seats">(22 seats left)</div>
+            <div class="batch-info-row">
+              <div class="bi-item"><i class="fa-solid fa-wifi"></i> 100% Live Online</div>
+              <div class="bi-item"><i class="fa-regular fa-clock"></i> 2:30 PM – 5:30 PM IST</div>
+              <div class="bi-item"><i class="fa-solid fa-certificate"></i> Certificate on Completion</div>
+            </div>
+          </div>
+          <div class="tech-stack">
+            <div class="cp-right-title" style="margin-bottom:10px">Tech Stack</div>
+            <div class="tech-icons">
+              <div class="tech-icon">Py</div>
+              <div class="tech-icon">NP</div>
+              <div class="tech-icon">Pd</div>
+              <div class="tech-icon">SK</div>
+              <div class="tech-icon">MP</div>
+              <div class="tech-icon">Jup</div>
+            </div>
+          </div>
         </div>
       </div>
 
+      <!-- Web Dev -->
+      <div class="course-panel" id="cp-web">
+        <div class="cp-left">
+          <div class="cp-badge"><i class="fa-solid fa-globe"></i> Beginner Friendly</div>
+          <div class="cp-title">Full Web Development</div>
+          <div class="cp-sub-title">HTML · CSS · JavaScript · React.js</div>
+          <div class="cp-desc">Build modern responsive websites and single-page applications from scratch. Master HTML5, CSS3, JavaScript ES6+ and React — 100% live online in 30 days.</div>
+          <div class="cp-features">
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> HTML5 Semantic Markup</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> CSS3 & Flexbox/Grid</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> JavaScript ES6+</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> React.js & Hooks</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> REST API Integration</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Responsive Design</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Git & GitHub</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Project Portfolio</div>
+          </div>
+          <div class="cp-meta">
+            <div class="cp-meta-item"><i class="fa-regular fa-clock"></i> <strong>21–30 Days</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-wifi"></i> <strong>Live Online</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-video"></i> <strong>2 Sessions/Day</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-file-pdf"></i> <strong>Daily Notes</strong></div>
+          </div>
+          <div class="cp-btns">
+            <a href="{% url 'login' %}" class="btn-cp-primary"><i class="fa-solid fa-right-to-bracket"></i> Enroll via Portal</a>
+            <a href="#contact" class="btn-cp-outline"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+          </div>
+        </div>
+        <div class="cp-right">
+          <div class="cp-right-title">Next Batch Details</div>
+          <div class="batch-card">
+            <div class="batch-label">Next Batch Starts</div>
+            <div class="batch-date">Aug 3, 2026</div>
+            <div class="batch-seats">(25 seats left)</div>
+            <div class="batch-info-row">
+              <div class="bi-item"><i class="fa-solid fa-wifi"></i> 100% Live Online</div>
+              <div class="bi-item"><i class="fa-regular fa-clock"></i> 10:00 AM – 1:00 PM IST</div>
+              <div class="bi-item"><i class="fa-solid fa-certificate"></i> Certificate on Completion</div>
+            </div>
+          </div>
+          <div class="tech-stack">
+            <div class="cp-right-title" style="margin-bottom:10px">Tech Stack</div>
+            <div class="tech-icons">
+              <div class="tech-icon">H5</div><div class="tech-icon">C3</div>
+              <div class="tech-icon">JS</div><div class="tech-icon">Rx</div><div class="tech-icon">Git</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- C/C++ -->
+      <div class="course-panel" id="cp-c">
+        <div class="cp-left">
+          <div class="cp-badge"><i class="fa-solid fa-code"></i> Foundation Course</div>
+          <div class="cp-title">C & C++ Programming</div>
+          <div class="cp-sub-title">Data Structures & Algorithms</div>
+          <div class="cp-desc">Build the strongest programming foundation with C and C++. Master DSA, memory management, and problem-solving essential for placements and competitive coding.</div>
+          <div class="cp-features">
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> C Programming Basics</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> C++ OOP Concepts</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Arrays & Linked Lists</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Stacks, Queues & Trees</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Sorting & Searching</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Pointers & Memory</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> File Handling</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Problem Solving Practice</div>
+          </div>
+          <div class="cp-meta">
+            <div class="cp-meta-item"><i class="fa-regular fa-clock"></i> <strong>21 Days</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-wifi"></i> <strong>Live Online</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-video"></i> <strong>2 Sessions/Day</strong></div>
+          </div>
+          <div class="cp-btns">
+            <a href="{% url 'login' %}" class="btn-cp-primary"><i class="fa-solid fa-right-to-bracket"></i> Enroll via Portal</a>
+            <a href="#contact" class="btn-cp-outline"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+          </div>
+        </div>
+        <div class="cp-right">
+          <div class="cp-right-title">Next Batch Details</div>
+          <div class="batch-card">
+            <div class="batch-label">Next Batch Starts</div>
+            <div class="batch-date">Aug 8, 2026</div>
+            <div class="batch-seats">(30 seats left)</div>
+            <div class="batch-info-row">
+              <div class="bi-item"><i class="fa-solid fa-wifi"></i> 100% Live Online</div>
+              <div class="bi-item"><i class="fa-regular fa-clock"></i> 11:00 AM – 2:00 PM IST</div>
+              <div class="bi-item"><i class="fa-solid fa-certificate"></i> Certificate on Completion</div>
+            </div>
+          </div>
+          <div class="tech-stack">
+            <div class="cp-right-title" style="margin-bottom:10px">Languages</div>
+            <div class="tech-icons">
+              <div class="tech-icon">C</div><div class="tech-icon">C++</div><div class="tech-icon">DSA</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cyber Security -->
+      <div class="course-panel" id="cp-cyber">
+        <div class="cp-left">
+          <div class="cp-badge"><i class="fa-solid fa-shield-halved"></i> Growing Field</div>
+          <div class="cp-title">Cyber Security Fundamentals</div>
+          <div class="cp-sub-title">Ethical Hacking & Network Security</div>
+          <div class="cp-desc">Learn ethical hacking, network security, vulnerability assessment, Linux and cybersecurity practices that companies need most. Fully live, fully online.</div>
+          <div class="cp-features">
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Networking Fundamentals</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Linux & Terminal</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Ethical Hacking Basics</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Vulnerability Assessment</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Web App Security</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Cryptography Basics</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Security Tools (Kali)</div>
+            <div class="cp-feat"><i class="fa-solid fa-circle-check"></i> Hands-On Labs</div>
+          </div>
+          <div class="cp-meta">
+            <div class="cp-meta-item"><i class="fa-regular fa-clock"></i> <strong>21 Days</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-wifi"></i> <strong>Live Online</strong></div>
+            <div class="cp-meta-item"><i class="fa-solid fa-video"></i> <strong>2 Sessions/Day</strong></div>
+          </div>
+          <div class="cp-btns">
+            <a href="{% url 'login' %}" class="btn-cp-primary"><i class="fa-solid fa-right-to-bracket"></i> Enroll via Portal</a>
+            <a href="#contact" class="btn-cp-outline"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+          </div>
+        </div>
+        <div class="cp-right">
+          <div class="cp-right-title">Next Batch Details</div>
+          <div class="batch-card">
+            <div class="batch-label">Next Batch Starts</div>
+            <div class="batch-date">Aug 12, 2026</div>
+            <div class="batch-seats">(28 seats left)</div>
+            <div class="batch-info-row">
+              <div class="bi-item"><i class="fa-solid fa-wifi"></i> 100% Live Online</div>
+              <div class="bi-item"><i class="fa-regular fa-clock"></i> 4:00 PM – 7:00 PM IST</div>
+              <div class="bi-item"><i class="fa-solid fa-certificate"></i> Certificate on Completion</div>
+            </div>
+          </div>
+          <div class="tech-stack">
+            <div class="cp-right-title" style="margin-bottom:10px">Tools</div>
+            <div class="tech-icons">
+              <div class="tech-icon">Kali</div><div class="tech-icon">Lnx</div><div class="tech-icon">Net</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /course-panels -->
+
+    <!-- All Courses Quick List -->
+    <div class="all-courses-list">
+      <div class="acl-title">Browse All Programs</div>
+      <div class="acl-grid">
+        <div class="acl-card acl-active" data-switch="python">
+          <div class="acl-icon" style="background:#fff3e8;color:var(--orange)"><i class="fa-brands fa-python"></i></div>
+          <div><div class="acl-name">Python Full Stack</div><div class="acl-dur">30–45 Days · Online</div></div>
+          <i class="fa-solid fa-arrow-right acl-arrow"></i>
+        </div>
+        <div class="acl-card" data-switch="java">
+          <div class="acl-icon" style="background:#e8f0fb;color:var(--blue)"><i class="fa-brands fa-java"></i></div>
+          <div><div class="acl-name">Java Full Stack</div><div class="acl-dur">30–45 Days · Online</div></div>
+          <i class="fa-solid fa-arrow-right acl-arrow"></i>
+        </div>
+        <div class="acl-card" data-switch="ds">
+          <div class="acl-icon" style="background:#fff3e8;color:var(--orange)"><i class="fa-solid fa-database"></i></div>
+          <div><div class="acl-name">Data Science & ML</div><div class="acl-dur">30 Days · Online</div></div>
+          <i class="fa-solid fa-arrow-right acl-arrow"></i>
+        </div>
+        <div class="acl-card" data-switch="web">
+          <div class="acl-icon" style="background:#e8f0fb;color:var(--blue)"><i class="fa-brands fa-react"></i></div>
+          <div><div class="acl-name">Web Development</div><div class="acl-dur">21–30 Days · Online</div></div>
+          <i class="fa-solid fa-arrow-right acl-arrow"></i>
+        </div>
+        <div class="acl-card" data-switch="c">
+          <div class="acl-icon" style="background:#fff3e8;color:var(--orange)"><i class="fa-solid fa-code"></i></div>
+          <div><div class="acl-name">C / C++ Programming</div><div class="acl-dur">21 Days · Online</div></div>
+          <i class="fa-solid fa-arrow-right acl-arrow"></i>
+        </div>
+        <div class="acl-card" data-switch="cyber">
+          <div class="acl-icon" style="background:#e8f0fb;color:var(--blue)"><i class="fa-solid fa-shield-halved"></i></div>
+          <div><div class="acl-name">Cyber Security</div><div class="acl-dur">21 Days · Online</div></div>
+          <i class="fa-solid fa-arrow-right acl-arrow"></i>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ====================================================
-     PARTNER COLLEGES
-==================================================== -->
-<section class="section colleges-section" id="colleges">
+<!-- ===================== COLLEGES MARQUEE ===================== -->
+<section class="colleges-section" id="colleges">
   <div class="container">
-    <div class="sec-header center">
-      <span class="sec-tag">Our Colleges</span>
-      <h2 class="sec-title">Trusted Partner Colleges</h2>
-      <p class="sec-sub">Leading engineering institutions across Karnataka partner with Easy Learn for technical training</p>
+    <div class="sec-hd center">
+      <span class="sec-chip">Our Colleges</span>
+      <h2 class="sec-title">20+ Partner Colleges Across India</h2>
+      <p class="sec-sub">Trusted by leading engineering institutions across Karnataka and beyond</p>
     </div>
-    <div class="colleges-grid">
-      <div class="college-card reveal">
-        <div class="coll-badge-wrap" style="background:#dcfce7;border-color:#bbf7d0">🎓</div>
-        <div class="coll-name">RYMEC</div>
-        <div class="coll-loc"><i class="fa-solid fa-location-dot" style="color:#16a34a"></i> Bellary, Karnataka</div>
-        <span class="coll-status">✓ Active Partner</span>
-      </div>
-      <div class="college-card reveal">
-        <div class="coll-badge-wrap" style="background:#dbeafe;border-color:#bfdbfe">🏛️</div>
-        <div class="coll-name">SMVITM</div>
-        <div class="coll-loc"><i class="fa-solid fa-location-dot" style="color:#2563eb"></i> Udupi, Karnataka</div>
-        <span class="coll-status">✓ Active Partner</span>
-      </div>
-      <div class="college-card reveal">
-        <div class="coll-badge-wrap" style="background:#ffedd5;border-color:#fed7aa">🏫</div>
-        <div class="coll-name">BLDEA</div>
-        <div class="coll-loc"><i class="fa-solid fa-location-dot" style="color:#f97316"></i> Vijayapur, Karnataka</div>
-        <span class="coll-status">✓ Active Partner</span>
-      </div>
-      <div class="college-card reveal">
-        <div class="coll-badge-wrap" style="background:#ede9fe;border-color:#ddd6fe">🎯</div>
-        <div class="coll-name">ASBLDEA</div>
-        <div class="coll-loc"><i class="fa-solid fa-location-dot" style="color:#7c3aed"></i> Bijapur, Karnataka</div>
-        <span class="coll-status">✓ Active Partner</span>
-      </div>
+  </div>
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marquee">
+      <!-- First set -->
+      <div class="coll-pill"><span class="coll-emo">🎓</span><div><div class="coll-name">RYMEC</div><div class="coll-city">Bellary, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🏛️</span><div><div class="coll-name">SMVITM</div><div class="coll-city">Udupi, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🏫</span><div><div class="coll-name">BLDEA</div><div class="coll-city">Vijayapur, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🎯</span><div><div class="coll-name">ASBLDEA</div><div class="coll-city">Bijapur, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🏛️</span><div><div class="coll-name">KLE Institute</div><div class="coll-city">Belagavi, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🎓</span><div><div class="coll-name">BVB CET</div><div class="coll-city">Hubballi, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🏫</span><div><div class="coll-name">SDMCET</div><div class="coll-city">Dharwad, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🎯</span><div><div class="coll-name">PESITM</div><div class="coll-city">Shivamogga, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🏛️</span><div><div class="coll-name">Alva's IT</div><div class="coll-city">Mangaluru, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🎓</span><div><div class="coll-name">HKBK CET</div><div class="coll-city">Bengaluru, Karnataka</div></div></div>
+      <!-- Duplicate for seamless loop -->
+      <div class="coll-pill"><span class="coll-emo">🎓</span><div><div class="coll-name">RYMEC</div><div class="coll-city">Bellary, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🏛️</span><div><div class="coll-name">SMVITM</div><div class="coll-city">Udupi, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🏫</span><div><div class="coll-name">BLDEA</div><div class="coll-city">Vijayapur, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🎯</span><div><div class="coll-name">ASBLDEA</div><div class="coll-city">Bijapur, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🏛️</span><div><div class="coll-name">KLE Institute</div><div class="coll-city">Belagavi, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🎓</span><div><div class="coll-name">BVB CET</div><div class="coll-city">Hubballi, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🏫</span><div><div class="coll-name">SDMCET</div><div class="coll-city">Dharwad, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🎯</span><div><div class="coll-name">PESITM</div><div class="coll-city">Shivamogga, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🏛️</span><div><div class="coll-name">Alva's IT</div><div class="coll-city">Mangaluru, Karnataka</div></div></div>
+      <div class="coll-pill"><span class="coll-emo">🎓</span><div><div class="coll-name">HKBK CET</div><div class="coll-city">Bengaluru, Karnataka</div></div></div>
     </div>
   </div>
 </section>
 
-<!-- ====================================================
-     HOW IT WORKS
-==================================================== -->
-<section class="section" id="how-it-works">
+<!-- ===================== HOW IT WORKS ===================== -->
+<section class="how-section" id="how">
   <div class="container">
-    <div class="sec-header center">
-      <span class="sec-tag">Process</span>
+    <div class="sec-hd center" style="margin-bottom:56px">
+      <span class="sec-chip">Process</span>
       <h2 class="sec-title">How It Works</h2>
-      <p class="sec-sub">Simple, structured and 100% online — from enrollment to certification</p>
+      <p class="sec-sub" style="color:rgba(255,255,255,.65)">Simple, structured and 100% online — from enrollment to certificate</p>
     </div>
-    <div class="steps-row">
-      <div class="step reveal">
-        <div class="step-dot">1</div>
-        <div class="step-title">College Partners With Us</div>
-        <div class="step-desc">The college signs up with Easy Learn to run an online technical bootcamp for their students.</div>
-      </div>
-      <div class="step reveal">
-        <div class="step-dot">2</div>
-        <div class="step-title">Trainer Gets Assigned</div>
-        <div class="step-desc">An expert trainer is approved by our admin and assigned to deliver structured live online sessions.</div>
-      </div>
-      <div class="step reveal">
-        <div class="step-dot">3</div>
-        <div class="step-title">Live Online Classes</div>
-        <div class="step-desc">Students attend 2–3 live sessions daily. Trainers log progress, topics and upload class notes each day.</div>
-      </div>
-      <div class="step reveal">
-        <div class="step-dot">4</div>
-        <div class="step-title">Certificate & Completion</div>
-        <div class="step-desc">Students complete assignments and receive a verified Easy Learn Academy completion certificate.</div>
+    <div style="position:relative">
+      <div class="steps-connector"></div>
+      <div class="steps-grid">
+        <div class="step reveal">
+          <div class="step-num">1</div>
+          <div class="step-title">College Partners With Us</div>
+          <div class="step-desc">The college signs up with Easy Learn to run a structured online technical bootcamp for their students.</div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">2</div>
+          <div class="step-title">Trainer Gets Approved</div>
+          <div class="step-desc">An expert trainer is vetted and approved by our admin before being assigned to deliver live sessions.</div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">3</div>
+          <div class="step-title">Live Online Classes</div>
+          <div class="step-desc">Students attend 2–3 live sessions daily. Trainers log topics, upload notes, and track progress every day.</div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">4</div>
+          <div class="step-title">Certificate & Completion</div>
+          <div class="step-desc">Students complete assignments and receive a verified Easy Learn Academy certificate.</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ====================================================
-     WHY US
-==================================================== -->
-<section class="section why-section" id="why-us">
+<!-- ===================== WHY US ===================== -->
+<section id="why">
   <div class="container">
     <div class="why-grid">
-      <div class="why-left">
-        <span class="sec-tag">Why Easy Learn</span>
-        <h2 class="sec-title">The Smarter Way to<br>Skill Up Students</h2>
-        <p class="sec-sub">We deliver quality technical education with zero compromise and full transparency</p>
+      <div>
+        <span class="sec-chip">Why Easy Learn</span>
+        <h2 class="sec-title">The Smarter Way to<br>Train College Students</h2>
+        <p class="sec-sub">Quality technical education with zero infrastructure required from the college side</p>
         <div class="why-features">
-          <div class="why-feat">
-            <div class="wf-icon">🌐</div>
+          <div class="wf reveal">
+            <div class="wf-i">🌐</div>
             <div>
-              <div class="wf-title">100% Online Delivery</div>
-              <div class="wf-desc">All sessions are conducted live online — students learn from anywhere in India without any travel.</div>
+              <div class="wf-title">100% Online — No Travel</div>
+              <div class="wf-desc">All sessions are conducted live online. Students and trainers connect from anywhere in India — zero infrastructure needed.</div>
             </div>
           </div>
-          <div class="why-feat">
-            <div class="wf-icon">👨‍💼</div>
+          <div class="wf reveal">
+            <div class="wf-i">👨‍💼</div>
             <div>
-              <div class="wf-title">Industry Expert Trainers</div>
-              <div class="wf-desc">Every trainer is a verified corporate professional — approved by our admin before any session begins.</div>
+              <div class="wf-title">Verified Industry Trainers</div>
+              <div class="wf-desc">Every trainer is a verified corporate professional approved by our admin team before any session begins.</div>
             </div>
           </div>
-          <div class="why-feat">
-            <div class="wf-icon">📊</div>
+          <div class="wf reveal">
+            <div class="wf-i">📊</div>
             <div>
-              <div class="wf-title">Daily Progress Tracking</div>
-              <div class="wf-desc">Trainers log daily topics, upload class notes and submit session reports — full transparency every day.</div>
+              <div class="wf-title">Daily Progress Reports</div>
+              <div class="wf-desc">Trainers log topics, upload class notes and submit session reports every single day — full transparency.</div>
             </div>
           </div>
-          <div class="why-feat">
-            <div class="wf-icon">🏆</div>
+          <div class="wf reveal">
+            <div class="wf-i">🏆</div>
             <div>
               <div class="wf-title">Placement-Ready Curriculum</div>
-              <div class="wf-desc">Programs mapped to university syllabi and industry needs — designed for real-world placement readiness.</div>
+              <div class="wf-desc">All programs are mapped to university syllabi and designed to make students industry and placement ready.</div>
             </div>
           </div>
         </div>
       </div>
-      <div class="why-right-visual reveal">
-        <div style="font-size:13px;color:rgba(255,255,255,.5);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Academy At A Glance</div>
-        <div class="wr-stat"><span class="wr-stat-label">Partner Colleges</span><span class="wr-stat-val">4+</span></div>
-        <div class="wr-stat"><span class="wr-stat-label">Students Trained</span><span class="wr-stat-val">500+</span></div>
-        <div class="wr-stat"><span class="wr-stat-label">Active Programs</span><span class="wr-stat-val">6+</span></div>
-        <div class="wr-stat"><span class="wr-stat-label">Delivery Mode</span><span class="wr-stat-val">Online</span></div>
-        <div class="wr-stat"><span class="wr-stat-label">Session Logs / Day</span><span class="wr-stat-val">2–3</span></div>
-        <div class="wr-stat"><span class="wr-stat-label">Satisfaction Rate</span><span class="wr-stat-val">98%</span></div>
+      <div>
+        <div class="why-img-wrap reveal">
+          <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn" class="why-logo-big">
+          <div style="margin-top:24px;font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:var(--navy)">Easy Learn Academy</div>
+          <div style="font-size:13px;color:var(--text-gray);margin-top:6px">India's Trusted Online EdTech Partner</div>
+        </div>
+        <div class="why-stats" style="margin-top:20px">
+          <div class="ws-card reveal"><span class="ws-label">Partner Colleges</span><span class="ws-val">20+</span></div>
+          <div class="ws-card reveal"><span class="ws-label">Students Trained</span><span class="ws-val orange">15,000+</span></div>
+          <div class="ws-card reveal"><span class="ws-label">Online Programs</span><span class="ws-val">6+</span></div>
+          <div class="ws-card reveal"><span class="ws-label">Session Satisfaction</span><span class="ws-val orange">98%</span></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ====================================================
-     TESTIMONIALS
-==================================================== -->
-<section class="section testi-section">
+<!-- TESTIMONIALS -->
+<section class="testi-section">
   <div class="container">
-    <div class="sec-header center">
-      <span class="sec-tag">Testimonials</span>
+    <div class="sec-hd center">
+      <span class="sec-chip">Student Reviews</span>
       <h2 class="sec-title">What Students Say</h2>
-      <p class="sec-sub">Real feedback from students who completed our online training programs</p>
+      <p class="sec-sub">Real feedback from 15,000+ students who completed our online programs</p>
     </div>
     <div class="testi-grid">
       <div class="testi-card reveal">
         <div class="testi-stars">★★★★★</div>
-        <div class="testi-quote">The Python Full Stack program was incredibly well-structured. The live online sessions were interactive and the trainer explained everything clearly. Got placed within 2 months!</div>
+        <div class="testi-quote">The Python Full Stack program was brilliantly structured. Live sessions, daily notes, hands-on projects — I got placed within 2 months of completion!</div>
         <div class="testi-author">
-          <div class="testi-av" style="background:linear-gradient(135deg,#16a34a,#4ade80)">AK</div>
-          <div>
-            <div class="testi-name">Akash Kumar</div>
-            <div class="testi-role">B.Tech CSE · RYMEC, Bellary</div>
-          </div>
+          <div class="testi-av" style="background:linear-gradient(135deg,var(--blue),var(--blue-lt))">AK</div>
+          <div><div class="testi-name">Akash Kumar</div><div class="testi-role">B.Tech CSE · RYMEC, Bellary</div></div>
         </div>
       </div>
       <div class="testi-card reveal">
         <div class="testi-stars">★★★★★</div>
-        <div class="testi-quote">The Java Full Stack bootcamp online was the best decision I made. Daily sessions, notes uploads and weekly tests kept me on track throughout the entire program.</div>
+        <div class="testi-quote">Best decision I made — Java Full Stack online. Daily sessions kept me on track. The trainer logged everything and I never missed a topic. Highly recommend!</div>
         <div class="testi-author">
-          <div class="testi-av" style="background:linear-gradient(135deg,#2563eb,#60a5fa)">PR</div>
-          <div>
-            <div class="testi-name">Priya Rao</div>
-            <div class="testi-role">B.E. IT · SMVITM, Udupi</div>
-          </div>
+          <div class="testi-av" style="background:linear-gradient(135deg,var(--orange),var(--orange-lt))">PR</div>
+          <div><div class="testi-name">Priya Rao</div><div class="testi-role">B.E. IT · SMVITM, Udupi</div></div>
         </div>
       </div>
       <div class="testi-card reveal">
         <div class="testi-stars">★★★★★</div>
-        <div class="testi-quote">Easy Learn's Data Science program gave me the foundation I needed for my internship. Industry-relevant content and fully online — no commute, no hassle!</div>
+        <div class="testi-quote">Easy Learn's Data Science program gave me the exact foundation I needed. 100% online, no travel, industry-relevant content — it was perfect for our college batch.</div>
         <div class="testi-author">
-          <div class="testi-av" style="background:linear-gradient(135deg,#f97316,#fbbf24)">MS</div>
-          <div>
-            <div class="testi-name">Mohammed Saad</div>
-            <div class="testi-role">B.E. CSE · BLDEA, Vijayapur</div>
-          </div>
+          <div class="testi-av" style="background:linear-gradient(135deg,var(--navy),var(--blue))">MS</div>
+          <div><div class="testi-name">Mohammed Saad</div><div class="testi-role">B.E. CSE · BLDEA, Vijayapur</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ====================================================
-     CTA SECTION
-==================================================== -->
+<!-- CTA -->
 <section class="cta-section" id="contact">
-  <h2>Ready to Skill Up Your Students?</h2>
-  <p>Partner with Easy Learn Academy and bring world-class online technical training to your college — fully managed, zero infrastructure needed.</p>
-  <a href="mailto:manager.projects@easy-learn-academy.com" class="btn-cta-white">
-    <i class="fa-solid fa-envelope"></i> Contact Us Today
-  </a>
-  <a href="{% url 'trainer_signup' %}" class="btn-cta-outline">
-    <i class="fa-solid fa-chalkboard-user"></i> Apply as Trainer
-  </a>
+  <div class="container">
+    <h2>Ready to Skill Up Your College Students?</h2>
+    <p>Partner with Easy Learn Academy and bring world-class live online technical training to your campus — zero infrastructure, zero hassle.</p>
+    <div class="cta-btns">
+      <a href="mailto:manager.projects@easy-learn-academy.com" class="btn-cta-white"><i class="fa-solid fa-envelope"></i> Contact Us Today</a>
+      <a href="{% url 'trainer_signup' %}" class="btn-cta-orange"><i class="fa-solid fa-chalkboard-user"></i> Apply as Trainer</a>
+    </div>
+  </div>
 </section>
 
-<!-- ====================================================
-     FOOTER
-==================================================== -->
+<!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-inner">
-    <div class="f-brand">
+  <div class="footer-grid">
+    <div class="fb">
       <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn">
-      <div class="f-brand-name"><span class="e">Easy</span><span class="l">Learn</span> Academy</div>
-      <p class="f-desc">Empowering engineering college students with expert online technical training across India. Fully live, fully structured, fully online.</p>
-      <div class="f-contact">
+      <div class="fb-name"><span class="b">Easy</span><span class="o">Learn</span> Academy</div>
+      <p class="fb-desc">Empowering 15,000+ engineering college students with expert live online technical training across 20+ institutions in India.</p>
+      <div class="fb-contact">
         <a href="mailto:manager.projects@easy-learn-academy.com"><i class="fa-solid fa-envelope"></i> manager.projects@easy-learn-academy.com</a>
         <a href="#"><i class="fa-solid fa-globe"></i> www.easy-learn-academy.com</a>
       </div>
     </div>
     <div>
-      <div class="f-col-title">Programs</div>
-      <div class="f-links">
+      <div class="fc-title">Programs</div>
+      <div class="fc-links">
         <a href="#courses">Python Full Stack</a>
         <a href="#courses">Java Full Stack</a>
         <a href="#courses">Data Science & ML</a>
@@ -1032,101 +1390,126 @@ ul{list-style:none}
       </div>
     </div>
     <div>
-      <div class="f-col-title">Company</div>
-      <div class="f-links">
+      <div class="fc-title">Company</div>
+      <div class="fc-links">
         <a href="#colleges">Our Colleges</a>
-        <a href="#how-it-works">How It Works</a>
-        <a href="#why-us">Why Easy Learn</a>
+        <a href="#how">How It Works</a>
+        <a href="#why">Why Easy Learn</a>
         <a href="#contact">Contact Us</a>
+        <a href="{% url 'trainer_signup' %}">Become a Trainer</a>
       </div>
     </div>
     <div>
-      <div class="f-col-title">Portal Access</div>
-      <div class="f-links">
+      <div class="fc-title">Portal Access</div>
+      <div class="fc-links">
         <a href="{% url 'login' %}">Trainer Login</a>
         <a href="{% url 'trainer_signup' %}">Register as Trainer</a>
         <a href="{% url 'login' %}">Admin Login</a>
       </div>
-      <div style="margin-top:24px">
-        <div class="f-col-title">Credentials</div>
-        <div style="font-size:12.5px;color:#64748b;line-height:2">
-          Admin: <code style="color:#4ade80">admin</code><br>
-          Pass: <code style="color:#4ade80">adminpassword123</code><br>
-          Trainer: <code style="color:#4ade80">stephenjebadurai</code><br>
-          Pass: <code style="color:#4ade80">trainerpassword123</code>
-        </div>
+      <div class="cred-box">
+        <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;color:#475569">Demo Credentials</div>
+        Admin: <code>admin</code> / <code>adminpassword123</code><br>
+        Trainer: <code>stephenjebadurai</code> / <code>trainerpassword123</code>
       </div>
     </div>
   </div>
-  <div class="footer-bottom">
+  <div class="footer-btm">
     <span>© 2026 Easy Learn Academy · Built by Stephen Jebadurai</span>
     <a href="{% url 'login' %}"><i class="fa-solid fa-user-shield"></i> Operations Login</a>
   </div>
 </footer>
 
-<!-- ====================================================
-     SCRIPTS
-==================================================== -->
 <script>
-// Splash
+// ---- SPLASH ----
 (function(){
   var sp=document.getElementById('splash');
-  var img=document.getElementById('sp-img');
+  var lw=document.getElementById('spLogoWrap');
   if(!sp)return;
   setTimeout(function(){
-    if(img)img.classList.add('out');
+    if(lw)lw.classList.add('out');
     setTimeout(function(){
-      sp.classList.add('hide');
+      sp.classList.add('out');
       setTimeout(function(){sp.style.display='none'},700);
-    },300);
-  },2300);
+    },320);
+  },2400);
 })();
 
-// Navbar scroll
+// ---- NAVBAR SCROLL ----
 window.addEventListener('scroll',function(){
-  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>10);
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20);
 });
 
-// Hamburger
+// ---- HAMBURGER ----
 document.getElementById('ham').addEventListener('click',function(){
-  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('mobMenu').classList.toggle('open');
 });
 
-// Smooth anchors + close mobile menu
+// ---- SMOOTH ANCHORS ----
 document.querySelectorAll('a[href^="#"]').forEach(function(a){
   a.addEventListener('click',function(e){
     var t=document.querySelector(this.getAttribute('href'));
     if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
-    document.getElementById('mobileMenu').classList.remove('open');
+    var m=document.getElementById('mobMenu');
+    if(m)m.classList.remove('open');
   });
 });
 
-// Scroll reveal
+// ---- COURSE TABS ----
+function switchCourse(key){
+  // Tabs
+  document.querySelectorAll('.c-tab').forEach(function(t){
+    t.classList.toggle('active', t.dataset.course===key);
+  });
+  // Panels
+  document.querySelectorAll('.course-panel').forEach(function(p){
+    p.classList.remove('active');
+  });
+  var target=document.getElementById('cp-'+key);
+  if(target){target.classList.add('active');}
+  // Quick list cards
+  document.querySelectorAll('.acl-card').forEach(function(c){
+    c.classList.toggle('acl-active', c.dataset.switch===key);
+  });
+  // Scroll to courses
+  document.getElementById('courses').scrollIntoView({behavior:'smooth',block:'start'});
+}
+document.querySelectorAll('.c-tab').forEach(function(t){
+  t.addEventListener('click',function(){ switchCourse(this.dataset.course); });
+});
+document.querySelectorAll('.acl-card').forEach(function(c){
+  c.addEventListener('click',function(){ switchCourse(this.dataset.switch); });
+});
+
+// ---- COUNTER ANIMATION ----
+function animCount(el,target){
+  var start=0;
+  var duration=1800;
+  var step=target/duration*16;
+  var timer=setInterval(function(){
+    start=Math.min(start+step,target);
+    el.textContent=Math.floor(start).toLocaleString();
+    if(Math.floor(start)>=target){el.textContent=target.toLocaleString();clearInterval(timer);}
+  },16);
+}
+var counted=false;
+var statsObs=new IntersectionObserver(function(entries){
+  if(entries[0].isIntersecting && !counted){
+    counted=true;
+    document.querySelectorAll('[data-target]').forEach(function(el){
+      animCount(el,parseInt(el.dataset.target));
+    });
+  }
+},{threshold:.3});
+var sb=document.querySelector('.stats-bar');
+if(sb)statsObs.observe(sb);
+
+// ---- SCROLL REVEAL ----
 var ro=new IntersectionObserver(function(entries){
   entries.forEach(function(e){
     if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}
   });
-},{threshold:0.1});
+},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(function(el){ro.observe(el);});
-
-// Counter animation for stats
-function animateCounters(){
-  document.querySelectorAll('.stat-num span').forEach(function(el){
-    var target=parseInt(el.textContent);
-    var start=0;
-    var step=Math.ceil(target/40);
-    var timer=setInterval(function(){
-      start=Math.min(start+step,target);
-      el.textContent=start;
-      if(start>=target)clearInterval(timer);
-    },30);
-  });
-}
-var statsObs=new IntersectionObserver(function(entries){
-  if(entries[0].isIntersecting){animateCounters();statsObs.disconnect();}
-},{threshold:.3});
-var statsEl=document.querySelector('.stats-bar');
-if(statsEl)statsObs.observe(statsEl);
 </script>
 </body>
 </html>
