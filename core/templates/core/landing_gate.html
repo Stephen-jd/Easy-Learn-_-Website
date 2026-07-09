@@ -332,19 +332,19 @@ ul { list-style: none; }
 <section class="stats-section">
   <div class="stats-container">
     <div class="stat-box">
-      <div class="stat-num">20<span>+</span></div>
+      <div class="stat-num"><span class="counter" data-target="20">0</span><span>+</span></div>
       <div class="stat-label">Partner Colleges</div>
     </div>
     <div class="stat-box">
-      <div class="stat-num">15<span>k+</span></div>
+      <div class="stat-num"><span class="counter" data-target="15000">0</span><span>+</span></div>
       <div class="stat-label">Students Trained</div>
     </div>
     <div class="stat-box">
-      <div class="stat-num">6<span>+</span></div>
+      <div class="stat-num"><span class="counter" data-target="6">0</span><span>+</span></div>
       <div class="stat-label">Tech Programs</div>
     </div>
     <div class="stat-box">
-      <div class="stat-num">98<span>%</span></div>
+      <div class="stat-num"><span class="counter" data-target="98">0</span><span>%</span></div>
       <div class="stat-label">Satisfaction Rate</div>
     </div>
   </div>
@@ -621,6 +621,56 @@ tabs.forEach(tab => {
     document.getElementById('c-' + target).classList.add('active');
   });
 });
+
+// Counter Animation
+const counters = document.querySelectorAll('.counter');
+const speed = 200; 
+
+const animateCounters = () => {
+  counters.forEach(counter => {
+    const updateCount = () => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText.replace(/,/g, '');
+      const inc = target / speed;
+
+      if (count < target) {
+        let newCount = Math.ceil(count + inc);
+        if (target > 1000) {
+            counter.innerText = newCount.toLocaleString();
+        } else {
+            counter.innerText = newCount;
+        }
+        setTimeout(updateCount, 15);
+      } else {
+        if (target > 1000) {
+            counter.innerText = target >= 1000 ? (target/1000).toFixed(0) + 'k' : target;
+        } else {
+            counter.innerText = target;
+        }
+      }
+    };
+    updateCount();
+  });
+};
+
+const observerOptions = {
+  root: null,
+  rootMargin: '0px',
+  threshold: 0.5
+};
+
+let hasAnimated = false;
+const observer = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !hasAnimated) {
+      animateCounters();
+      hasAnimated = true;
+    }
+  });
+}, observerOptions);
+
+document.querySelector('.stats-section') && observer.observe(document.querySelector('.stats-section'));
+
 </script>
 </body>
 </html>
