@@ -633,13 +633,16 @@
 {% block extra_js %}
 <script>
     // PRELOADER LOGIC
-    window.addEventListener('load', function() {
+    const hidePreloader = () => {
         const preloader = document.getElementById('preloader');
-        setTimeout(() => {
+        if (preloader && preloader.style.opacity !== '0') {
             preloader.style.opacity = '0';
-            preloader.style.visibility = 'hidden';
-        }, 1200); // Hold for 1.2s to show animation
-    });
+            setTimeout(() => preloader.style.visibility = 'hidden', 800);
+        }
+    };
+    window.addEventListener('load', () => setTimeout(hidePreloader, 1200));
+    // Forcefully hide after 3.5s just in case images take too long to load
+    setTimeout(hidePreloader, 3500);
 
     // SMOOTH TYPEWRITER LOGIC
     const words = ["Job Placements.", "Full Stack Apps.", "Mock Interviews.", "Live Courses."];
