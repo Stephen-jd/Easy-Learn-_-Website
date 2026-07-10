@@ -184,29 +184,31 @@
     
     .acc-wrapper h2 { font-size: 28px; margin-bottom: 30px; color: var(--text-dark); }
     details {
-        background: white; border: 1px solid var(--border); margin-bottom: 15px;
+        background: white; border: 1px solid #E2E8F0; margin-bottom: 15px;
         border-radius: 8px; overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     }
     summary {
-        padding: 18px 20px; font-weight: 700; cursor: pointer;
+        padding: 20px; font-weight: 700; cursor: pointer;
         display: flex; justify-content: space-between; align-items: center;
-        background: white; list-style: none; color: var(--text-dark);
+        background: white; list-style: none; color: #0F172A;
+        font-size: 16px;
     }
     summary::-webkit-details-marker { display: none; }
     summary::after { content: '\f078'; font-family: "Font Awesome 6 Free"; font-weight: 900; color: #0066FF; }
     details[open] summary::after { content: '\f077'; }
-    .details-content { padding: 0 20px 20px; color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+    .details-content { padding: 0 20px 20px; color: #64748B; font-size: 14px; line-height: 1.6; }
 
     .quote-card {
-        background: #E2E8F0; padding: 40px; border-radius: 12px;
+        background: #F1F5F9; padding: 40px; border-radius: 12px; border: 1px solid #E2E8F0;
     }
     .quote-card h3 { text-align: center; font-size: 20px; margin-bottom: 30px; color: var(--text-dark); }
     .quote-form-grid { display: grid; gap: 15px; }
     .quote-input {
-        width: 100%; padding: 14px 16px; border: none; border-radius: 6px;
+        width: 100%; padding: 14px 16px; border: 1px solid #CBD5E1; border-radius: 6px;
         font-size: 14px; background: white;
     }
-    .quote-input:focus { outline: 2px solid #0066FF; }
+    .quote-input:focus { outline: 2px solid #0066FF; border-color: transparent;}
     .quote-btn {
         background: #0066FF; color: white; width: 100%; padding: 16px;
         border: none; border-radius: 6px; font-weight: 800; font-size: 16px;
@@ -214,12 +216,55 @@
     }
     .quote-btn:hover { background: #0052CC; }
 
+    /* =========================================
+       POPULAR COURSES GRID
+    ========================================= */
+    .courses-sec { padding: 80px 24px; background: #FFF4F4; } 
+    .courses-sec h2 { text-align: center; font-size: 32px; margin-bottom: 50px; color: #0F172A; }
+    .courses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto; }
+    .course-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+    .course-img { width: 100%; height: 200px; object-fit: cover; }
+    .course-card-content { padding: 25px; text-align: center; position: relative;}
+    .course-logo { position: absolute; top: -40px; right: 20px; width: 60px; height: 60px; background: white; border-radius: 10px; padding: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); object-fit: contain; }
+    .course-org { color: #E11D48; font-size: 12px; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; }
+    .course-title { font-size: 18px; font-weight: 800; color: #0F172A; margin-bottom: 20px; min-height: 50px; }
+    .course-meta { display: flex; justify-content: center; gap: 20px; color: #64748B; font-size: 13px; margin-bottom: 20px; font-weight: 600; }
+    .course-meta i { margin-right: 5px; color: #0066FF; }
+    .course-batch { font-size: 12px; color: #64748B; }
+    .course-batch strong { color: #0F172A; }
+
+    /* =========================================
+       COMMUNITY SLIDER
+    ========================================= */
+    .community-sec { padding: 80px 0; background: #FFF0F0; text-align: center; overflow: hidden; border-top: 1px solid #FFE4E4;}
+    .community-sec h2 { font-size: 32px; margin-bottom: 40px; color: #1E293B; }
+    .photo-marquee { display: flex; gap: 20px; animation: scrollPhotos 40s linear infinite; }
+    .photo-item { min-width: 400px; height: 250px; border-radius: 10px; object-fit: cover; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    @keyframes scrollPhotos { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* =========================================
+       GOOGLE REVIEWS SLIDER
+    ========================================= */
+    .reviews-sec { padding: 80px 0; background: white; text-align: center; overflow: hidden; }
+    .reviews-sec h2 { font-size: 32px; margin-bottom: 40px; color: #0F172A; }
+    .review-marquee { display: flex; gap: 30px; animation: scrollReviews 30s linear infinite; padding: 20px 0; }
+    .review-card { min-width: 350px; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: left; border: 1px solid #E2E8F0; }
+    .review-stars { color: #F59E0B; margin-bottom: 15px; font-size: 14px; }
+    .review-text { font-size: 14px; color: #475569; line-height: 1.6; margin-bottom: 20px; font-style: italic; }
+    .review-author { display: flex; align-items: center; gap: 15px; }
+    .review-author-img { width: 40px; height: 40px; border-radius: 50%; background: #E2E8F0; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #0066FF; }
+    .review-author-info h4 { font-size: 15px; margin: 0; color: #0F172A; }
+    .review-author-info p { font-size: 12px; color: #94A3B8; margin: 0; }
+    @keyframes scrollReviews { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
     @media (max-width: 1024px) {
         .hero-container, .code-about-grid, .acc-form-container { grid-template-columns: 1fr; }
         .blue-stats-container { grid-template-columns: repeat(2, 1fr); }
+        .courses-grid { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 640px) {
         .blue-stats-container { grid-template-columns: 1fr; }
+        .courses-grid { grid-template-columns: 1fr; }
     }
 </style>
 {% endblock %}
@@ -257,8 +302,8 @@
                 </div>
 
                 <div class="hero-actions">
-                    <a href="{% url 'login' %}" class="btn btn-primary">
-                        <i class="fa-solid fa-rocket"></i> Get Started
+                    <a href="#courses" class="btn btn-primary">
+                        <i class="fa-solid fa-rocket"></i> Explore Courses
                     </a>
                 </div>
             </div>
@@ -414,6 +459,172 @@
                 </form>
             </div>
 
+        </div>
+    </section>
+
+    <!-- POPULAR & TRENDING COURSES -->
+    <section class="courses-sec" id="courses">
+        <h2 data-aos="fade-up">Popular & Trending Courses</h2>
+        <div class="courses-grid">
+            <div class="course-card" data-aos="fade-up" data-aos-delay="0">
+                <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="University Campus" class="course-img">
+                <div class="course-card-content">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/52/Indian_Institute_of_Technology_Patna_Logo.svg/1200px-Indian_Institute_of_Technology_Patna_Logo.svg.png" alt="IIT Logo" class="course-logo" onerror="this.src='https://via.placeholder.com/60'">
+                    <div class="course-org">Vishlesan i-Hub, IIT Patna</div>
+                    <h3 class="course-title">Artificial Intelligence and Machine Learning</h3>
+                    <div class="course-meta">
+                        <span><i class="fa-regular fa-clock"></i> 09 months</span>
+                        <span><i class="fa-solid fa-laptop"></i> Online</span>
+                    </div>
+                    <div class="course-batch">Batch Starts on <strong>15 Jul 2026</strong></div>
+                </div>
+            </div>
+            
+            <div class="course-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="University Campus" class="course-img">
+                <div class="course-card-content">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/6/6f/Indian_Institute_of_Technology_Roorkee_logo.png" alt="IIT Roorkee Logo" class="course-logo" onerror="this.src='https://via.placeholder.com/60'">
+                    <div class="course-org">E&ICT Academy, IIT Roorkee</div>
+                    <h3 class="course-title">AI & ML Certification Program</h3>
+                    <div class="course-meta">
+                        <span><i class="fa-regular fa-clock"></i> 6 Months</span>
+                        <span><i class="fa-solid fa-laptop"></i> Online</span>
+                    </div>
+                    <div class="course-batch">Batch Starts on <strong>29 Aug 2026</strong></div>
+                </div>
+            </div>
+
+            <div class="course-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="https://images.unsplash.com/photo-1592284323204-63d120a10336?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="University Campus" class="course-img">
+                <div class="course-card-content">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Indian_Institute_of_Management_Tiruchirappalli_logo.svg/1200px-Indian_Institute_of_Management_Tiruchirappalli_logo.svg.png" alt="IIM Trichy Logo" class="course-logo" onerror="this.src='https://via.placeholder.com/60'">
+                    <div class="course-org">IIM Trichy</div>
+                    <h3 class="course-title">Product Management in the Agentic AI Era</h3>
+                    <div class="course-meta">
+                        <span><i class="fa-regular fa-clock"></i> 06 months</span>
+                        <span><i class="fa-solid fa-laptop"></i> Online</span>
+                    </div>
+                    <div class="course-batch">Batch Starts on <strong>17 Oct 2026</strong></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THRIVING COMMUNITY SLIDER -->
+    <section class="community-sec">
+        <h2 data-aos="fade-up">Be A Part Of Our Thriving Community</h2>
+        <div class="marquee-wrapper">
+            <!-- You will need to replace these placeholders with your group photos -->
+            <div class="photo-marquee">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="photo-item" alt="Student Group">
+                <img src="https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="photo-item" alt="Student Group">
+                <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="photo-item" alt="Student Group">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="photo-item" alt="Student Group">
+                
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="photo-item" alt="Student Group">
+                <img src="https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="photo-item" alt="Student Group">
+                <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="photo-item" alt="Student Group">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="photo-item" alt="Student Group">
+            </div>
+        </div>
+    </section>
+
+    <!-- GOOGLE REVIEWS MARQUEE -->
+    <section class="reviews-sec">
+        <h2 data-aos="fade-up">Trusted by Thousands of Students</h2>
+        <div class="marquee-wrapper">
+            <div class="review-marquee">
+                <!-- Review 1 -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text">"Easy Learn completely changed my career trajectory. The 1:1 mentorship and mock interviews were exactly what I needed to clear my Google interview. Highly recommended!"</p>
+                    <div class="review-author">
+                        <div class="review-author-img">S</div>
+                        <div class="review-author-info">
+                            <h4>Sneha Sharma</h4>
+                            <p>Placed at Google</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text">"The best full-stack course I've ever taken. It’s entirely hands-on. I didn't have to watch endless videos, I was coding from day one. I now work as an SDE-II."</p>
+                    <div class="review-author">
+                        <div class="review-author-img">R</div>
+                        <div class="review-author-info">
+                            <h4>Rahul Verma</h4>
+                            <p>SDE-II at Amazon</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text">"Unbelievable support team. Whenever I was stuck on an algorithm, my mentor was there within minutes. The curriculum is perfectly tailored for modern AI dev."</p>
+                    <div class="review-author">
+                        <div class="review-author-img">A</div>
+                        <div class="review-author-info">
+                            <h4>Arjun Patel</h4>
+                            <p>AI Engineer</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text">"I transitioned from a non-tech background to a Full Stack Developer in just 6 months. The structure, the projects, and the placement assistance are top-notch."</p>
+                    <div class="review-author">
+                        <div class="review-author-img">P</div>
+                        <div class="review-author-info">
+                            <h4>Priya Desai</h4>
+                            <p>Full Stack Dev</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Repeat for infinite scroll effect -->
+                <!-- Review 1 -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text">"Easy Learn completely changed my career trajectory. The 1:1 mentorship and mock interviews were exactly what I needed to clear my Google interview. Highly recommended!"</p>
+                    <div class="review-author">
+                        <div class="review-author-img">S</div>
+                        <div class="review-author-info">
+                            <h4>Sneha Sharma</h4>
+                            <p>Placed at Google</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-card">
+                    <div class="review-stars">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="review-text">"The best full-stack course I've ever taken. It’s entirely hands-on. I didn't have to watch endless videos, I was coding from day one. I now work as an SDE-II."</p>
+                    <div class="review-author">
+                        <div class="review-author-img">R</div>
+                        <div class="review-author-info">
+                            <h4>Rahul Verma</h4>
+                            <p>SDE-II at Amazon</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
