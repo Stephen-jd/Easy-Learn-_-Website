@@ -172,10 +172,49 @@
         .footer-input:focus { outline: none; box-shadow: 0 0 0 3px rgba(255,255,255,0.2); }
 
         .footer-bottom {
-            text-align: center;
             padding-top: 30px;
-            font-size: 13px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 30px;
+        }
+        .footer-bottom-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
             color: #64748B;
+            flex-wrap: wrap;
+        }
+        .footer-bottom-links a { color: #94A3B8; transition: color 0.3s; }
+        .footer-bottom-links a:hover { color: var(--primary); }
+        .footer-bottom-links .divider { color: #334155; }
+
+        .footer-brand-anim {
+            font-size: clamp(3rem, 12vw, 12rem);
+            font-weight: 900;
+            text-align: center;
+            line-height: 1;
+            margin-top: 40px;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            /* Base dark color with moving white shine */
+            background-image: linear-gradient(
+                to right,
+                #111827 0%,
+                #111827 40%,
+                #E2E8F0 50%,
+                #111827 60%,
+                #111827 100%
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shineText 3.5s linear infinite;
+        }
+        @keyframes shineText {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
         }
 
         /* ------------------ WHATSAPP WIDGET (Footer Based) ------------------ */
@@ -278,7 +317,16 @@
         </div>
 
         <div class="footer-bottom">
-            © 2026 Easy Learn Academy. Built for Students.
+            <div class="footer-bottom-links">
+                <span>Designed and developed by SJD</span>
+                <span class="divider">|</span>
+                <a href="#">Terms and Conditions</a>
+                <span class="divider">|</span>
+                <a href="mailto:ceo@easy-learn-academy.com">Email: ceo@easy-learn-academy.com</a>
+            </div>
+            <div class="footer-brand-anim">
+                EASY LEARN
+            </div>
         </div>
 
         <!-- WhatsApp Floating Widget -->
