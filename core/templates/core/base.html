@@ -248,21 +248,16 @@
 
     <!-- NAVBAR -->
     <header class="navbar">
-        <div class="nav-container">
-            <a href="{% url 'landing' %}" class="nav-logo">
-                <!-- User's exact logo should be placed here -->
-                <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Academy Logo" onerror="this.src='https://via.placeholder.com/150x50?text=Logo.png+Missing'">
-            </a>
-            
-            <nav class="nav-links">
-                <a href="#courses" class="nav-link">Syllabus</a>
-                <a href="#about" class="nav-link">About Us</a>
-                <a href="#process" class="nav-link">Our Process</a>
-            </nav>
-
-            <div class="nav-actions">
-                <a href="#contact" class="btn btn-primary">Contact Us</a>
-            </div>
+        <a href="/" class="nav-brand">
+            <img src="{% static 'core/images/logo.png' %}" alt="EasyLearn">
+        </a>
+        <nav class="nav-links">
+            <a href="#courses" class="nav-link">Syllabus</a>
+            <a href="#about" class="nav-link">About Us</a>
+            <a href="#process" class="nav-link">Our Process</a>
+        </nav>
+        <div class="nav-actions">
+            <a href="#contact" class="btn-contact">Contact Us</a>
         </div>
     </header>
 

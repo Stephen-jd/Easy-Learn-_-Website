@@ -467,13 +467,13 @@
         <h2 data-aos="fade-up">Popular & Trending Courses</h2>
         <div class="courses-grid">
             <div class="course-card" data-aos="fade-up" data-aos-delay="0">
-                <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="University Campus" class="course-img">
+                <img src="{% static 'core/images/course_bg.png' %}" alt="Web Development" class="course-img" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
                 <div class="course-card-content">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/52/Indian_Institute_of_Technology_Patna_Logo.svg/1200px-Indian_Institute_of_Technology_Patna_Logo.svg.png" alt="IIT Logo" class="course-logo" onerror="this.src='https://via.placeholder.com/60'">
-                    <div class="course-org">Vishlesan i-Hub, IIT Patna</div>
-                    <h3 class="course-title">Artificial Intelligence and Machine Learning</h3>
+                    <img src="{% static 'core/images/logo.png' %}" alt="EasyLearn Logo" class="course-logo">
+                    <div class="course-org">EASY LEARN ACADEMY</div>
+                    <h3 class="course-title">Java Full Stack Development</h3>
                     <div class="course-meta">
-                        <span><i class="fa-regular fa-clock"></i> 09 months</span>
+                        <span><i class="fa-regular fa-clock"></i> 06 months</span>
                         <span><i class="fa-solid fa-laptop"></i> Online</span>
                     </div>
                     <div class="course-batch">Batch Starts on <strong>15 Jul 2026</strong></div>
@@ -481,11 +481,11 @@
             </div>
             
             <div class="course-card" data-aos="fade-up" data-aos-delay="100">
-                <img src="https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="University Campus" class="course-img">
+                <img src="{% static 'core/images/course_bg.png' %}" alt="Data Science" class="course-img" onerror="this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
                 <div class="course-card-content">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/6/6f/Indian_Institute_of_Technology_Roorkee_logo.png" alt="IIT Roorkee Logo" class="course-logo" onerror="this.src='https://via.placeholder.com/60'">
-                    <div class="course-org">E&ICT Academy, IIT Roorkee</div>
-                    <h3 class="course-title">AI & ML Certification Program</h3>
+                    <img src="{% static 'core/images/logo.png' %}" alt="EasyLearn Logo" class="course-logo">
+                    <div class="course-org">EASY LEARN ACADEMY</div>
+                    <h3 class="course-title">Python & AI Certification</h3>
                     <div class="course-meta">
                         <span><i class="fa-regular fa-clock"></i> 6 Months</span>
                         <span><i class="fa-solid fa-laptop"></i> Online</span>
@@ -495,11 +495,11 @@
             </div>
 
             <div class="course-card" data-aos="fade-up" data-aos-delay="200">
-                <img src="https://images.unsplash.com/photo-1592284323204-63d120a10336?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="University Campus" class="course-img">
+                <img src="{% static 'core/images/course_bg.png' %}" alt="Cloud Computing" class="course-img" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
                 <div class="course-card-content">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Indian_Institute_of_Management_Tiruchirappalli_logo.svg/1200px-Indian_Institute_of_Management_Tiruchirappalli_logo.svg.png" alt="IIM Trichy Logo" class="course-logo" onerror="this.src='https://via.placeholder.com/60'">
-                    <div class="course-org">IIM Trichy</div>
-                    <h3 class="course-title">Product Management in the Agentic AI Era</h3>
+                    <img src="{% static 'core/images/logo.png' %}" alt="EasyLearn Logo" class="course-logo">
+                    <div class="course-org">EASY LEARN ACADEMY</div>
+                    <h3 class="course-title">MERN Stack & Cloud DevOps</h3>
                     <div class="course-meta">
                         <span><i class="fa-regular fa-clock"></i> 06 months</span>
                         <span><i class="fa-solid fa-laptop"></i> Online</span>
@@ -514,17 +514,20 @@
     <section class="community-sec">
         <h2 data-aos="fade-up">Be A Part Of Our Thriving Community</h2>
         <div class="marquee-wrapper">
-            <!-- Replace the images in the static/core/images folder with your actual photos -->
-            <div class="photo-marquee">
-                <img src="{% static 'core/images/community1.jpg' %}" class="photo-item" alt="Student Group" onerror="this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
-                <img src="{% static 'core/images/community2.jpg' %}" class="photo-item" alt="Student Group" onerror="this.src='https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
-                <img src="{% static 'core/images/community3.jpg' %}" class="photo-item" alt="Student Group" onerror="this.src='https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
-                <img src="{% static 'core/images/community1.jpg' %}" class="photo-item" alt="Student Group" onerror="this.src='https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+            <div class="photo-marquee" style="gap: 50px;">
+                <img src="{% static 'core/images/logo.png' %}" class="photo-item" style="min-width: unset; width: 200px; height: 200px; border-radius: 50%; box-shadow: none;" alt="EasyLearn">
+                <img src="{% static 'core/images/logo.png' %}" class="photo-item" style="min-width: unset; width: 200px; height: 200px; border-radius: 50%; box-shadow: none;" alt="EasyLearn">
+                <img src="{% static 'core/images/logo.png' %}" class="photo-item" style="min-width: unset; width: 200px; height: 200px; border-radius: 50%; box-shadow: none;" alt="EasyLearn">
+                <img src="{% static 'core/images/logo.png' %}" class="photo-item" style="min-width: unset; width: 200px; height: 200px; border-radius: 50%; box-shadow: none;" alt="EasyLearn">
+                <img src="{% static 'core/images/logo.png' %}" class="photo-item" style="min-width: unset; width: 200px; height: 200px; border-radius: 50%; box-shadow: none;" alt="EasyLearn">
+                <img src="{% static 'core/images/logo.png' %}" class="photo-item" style="min-width: unset; width: 200px; height: 200px; border-radius: 50%; box-shadow: none;" alt="EasyLearn">
                 
-                <img src="{% static 'core/images/community1.jpg' %}" class="photo-item" alt="Student Group" onerror="this.src='https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
-                <img src="{% static 'core/images/community2.jpg' %}" class="photo-item" alt="Student Group" onerror="this.src='https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
-                <img src="{% static 'core/images/community3.jpg' %}" class="photo-item" alt="Student Group" onerror="this.src='https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
-                <img src="{% static 'core/images/community1.jpg' %}" class="photo-item" alt="Student Group" onerror="this.src='https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'">
+                <img src="{% static 'core/images/logo.png' %}" class="photo-item" style="min-width: unset; width: 200px; height: 200px; border-radius: 50%; box-shadow: none;" alt="EasyLearn">
+                <img src="{% static 'core/images/logo.png' %}" class="photo-item" style="min-width: unset; width: 200px; height: 200px; border-radius: 50%; box-shadow: none;" alt="EasyLearn">
+                <img src="{% static 'core/images/logo.png' %}" class="photo-item" style="min-width: unset; width: 200px; height: 200px; border-radius: 50%; box-shadow: none;" alt="EasyLearn">
+                <img src="{% static 'core/images/logo.png' %}" class="photo-item" style="min-width: unset; width: 200px; height: 200px; border-radius: 50%; box-shadow: none;" alt="EasyLearn">
+                <img src="{% static 'core/images/logo.png' %}" class="photo-item" style="min-width: unset; width: 200px; height: 200px; border-radius: 50%; box-shadow: none;" alt="EasyLearn">
+                <img src="{% static 'core/images/logo.png' %}" class="photo-item" style="min-width: unset; width: 200px; height: 200px; border-radius: 50%; box-shadow: none;" alt="EasyLearn">
             </div>
         </div>
     </section>
