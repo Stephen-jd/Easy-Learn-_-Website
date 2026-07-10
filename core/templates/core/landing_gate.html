@@ -6,365 +6,241 @@
 {% block extra_css %}
 <style>
     /* =========================================
-       HERO SECTION (Clean Vector Style)
+       PRELOADER (Splash Screen)
+    ========================================= */
+    #preloader {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background-color: #0F172A; /* Dark navy */
+        z-index: 99999;
+        display: flex; align-items: center; justify-content: center;
+        transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    .preloader-logo {
+        font-size: 4rem;
+        font-weight: 900;
+        background: linear-gradient(90deg, #0066FF, #FF7605, #0066FF);
+        background-size: 200% auto;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: shine 2s linear infinite;
+        letter-spacing: -1px;
+    }
+    @keyframes shine {
+        to { background-position: 200% center; }
+    }
+
+    /* =========================================
+       HERO SECTION
     ========================================= */
     .hero {
-        position: relative;
-        background: #FFFFFF;
-        padding: 80px 24px 60px;
-        overflow: hidden;
+        position: relative; background: #FFFFFF;
+        padding: 80px 24px 60px; overflow: hidden;
     }
     .hero-container {
-        max-width: 1400px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        align-items: center;
-        gap: 60px;
+        max-width: 1400px; margin: 0 auto;
+        display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 60px;
     }
-
-    /* Top Badge */
     .hero-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: var(--secondary-light); /* Light blue */
-        color: var(--secondary); /* Brand blue */
-        padding: 6px 16px;
-        border-radius: 50px;
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        margin-bottom: 25px;
+        display: inline-flex; align-items: center; gap: 8px;
+        background: var(--secondary-light); color: var(--secondary);
+        padding: 6px 16px; border-radius: 50px; font-size: 11px; font-weight: 800;
+        letter-spacing: 1px; text-transform: uppercase; margin-bottom: 25px;
     }
-
-    /* Headline & CSS Rotator */
     .hero-content h1 {
-        font-size: clamp(2.5rem, 4vw, 3.8rem);
-        font-weight: 900;
-        color: var(--text-dark);
-        line-height: 1.2;
-        margin-bottom: 20px;
+        font-size: clamp(2.5rem, 4vw, 3.8rem); font-weight: 900;
+        color: var(--text-dark); line-height: 1.2; margin-bottom: 20px;
     }
+    .typing-text { color: #0066FF; border-right: 3px solid #0066FF; padding-right: 5px; animation: blinkCursor .75s step-end infinite; }
+    @keyframes blinkCursor { from, to { border-color: transparent } 50% { border-color: #0066FF; } }
     
-    .rotator-wrapper {
-        display: inline-flex;
-        overflow: hidden;
-        vertical-align: bottom;
-        height: 1.2em;
-        color: #0066FF;
-    }
-    .rotator-inner {
-        display: flex;
-        flex-direction: column;
-        animation: rotateWords 8s cubic-bezier(0.25, 1, 0.5, 1) infinite;
-    }
-    .rotator-inner span {
-        height: 1.2em;
-        line-height: 1.2;
-    }
-    @keyframes rotateWords {
-        0%, 20% { transform: translateY(0); }
-        25%, 45% { transform: translateY(-1.2em); }
-        50%, 70% { transform: translateY(-2.4em); }
-        75%, 95% { transform: translateY(-3.6em); }
-        100% { transform: translateY(-4.8em); }
-    }
-
-    /* Subtitle */
     .hero-sub {
-        font-size: 1.1rem;
-        color: var(--text-muted);
-        margin-bottom: 30px;
-        line-height: 1.6;
-        max-width: 600px;
+        font-size: 1.1rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; max-width: 600px;
     }
-    .hero-sub strong { color: #0066FF; }
-
-    /* Feature Pills */
-    .hero-features {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-bottom: 40px;
-    }
+    .hero-features { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
     .h-feature-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: #FFFFFF;
-        border: 1px solid var(--border);
-        padding: 8px 16px;
-        border-radius: 50px;
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--text-main);
-        box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        display: inline-flex; align-items: center; gap: 8px;
+        background: #FFFFFF; border: 1px solid var(--border);
+        padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 700; color: var(--text-main);
     }
     .h-feature-pill i { color: var(--text-muted); }
-
-    /* Action Buttons */
-    .hero-actions {
-        display: flex;
-        gap: 16px;
-    }
+    .hero-actions { display: flex; gap: 16px; }
     .hero-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 14px 32px;
-        border-radius: 8px;
-        font-weight: 800;
-        font-size: 15px;
-        transition: all 0.3s;
+        display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+        padding: 14px 32px; border-radius: 8px; font-weight: 800; font-size: 15px; transition: all 0.3s;
     }
-    .btn-primary {
-        background: #0066FF;
-        color: white;
-        border: none;
-        box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
-    }
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(0, 102, 255, 0.4);
-    }
-    .btn-outline {
-        background: #FFFFFF;
-        color: var(--text-dark);
-        border: 1px solid var(--border);
-    }
-    .btn-outline:hover {
-        background: var(--bg-base);
-        border-color: #CBD5E1;
-    }
-
-    /* Right Side Illustration */
-    .hero-visual {
-        display: flex;
-        justify-content: flex-end;
-    }
-    .hero-visual img {
-        width: 100%;
-        max-width: 550px;
-        height: auto;
-    }
+    .hero-visual { display: flex; justify-content: flex-end; }
+    .hero-visual img { width: 100%; max-width: 550px; height: auto; }
 
     /* =========================================
-       SIMPLE STATS BAR (Exact Match to Screenshot)
+       AI TOOLS MARQUEE (Scrolling)
     ========================================= */
-    .stats-bar {
-        background: #F8FAFC; 
-        border-top: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
-        padding: 50px 24px;
-    }
-    .stats-bar-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        gap: 30px;
-    }
-    .sb-item {
-        text-align: center;
-    }
-    .sb-item h3 {
-        font-size: 38px;
-        font-weight: 900;
-        color: #0066FF;
-        margin-bottom: 8px;
-    }
-    .sb-item p {
-        font-size: 12px;
-        font-weight: 800;
-        color: #64748B;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    /* =========================================
-       ABOUT US SECTION
-    ========================================= */
-    .about-sec {
-        padding: 100px 24px;
-        background: #FFFFFF;
-    }
-    .about-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 60px;
-        align-items: center;
-    }
-    .about-img {
-        background: var(--bg-base);
-        border-radius: 24px;
-        padding: 40px;
-        text-align: center;
-    }
-    .about-img i { font-size: 120px; color: var(--primary); }
-    .about-content h2 { font-size: 36px; margin-bottom: 20px; color: var(--text-dark); }
-    .about-content p { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; }
-    
-    .feature-list { list-style: none; margin-top: 30px; }
-    .feature-list li {
-        display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px;
-    }
-    .feature-icon {
-        background: var(--secondary-light); color: var(--secondary);
-        width: 40px; height: 40px; border-radius: 50%;
-        display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
-    }
-    .feature-text h4 { font-size: 16px; margin-bottom: 5px; color: var(--text-dark); }
-    .feature-text p { font-size: 14px; color: var(--text-muted); margin: 0; line-height: 1.5; }
-
-    /* =========================================
-       SOFTWARE CATEGORIES (Grid with Pills)
-    ========================================= */
-    .categories-sec {
-        padding: 100px 24px;
-        background: #F8FAFC;
-        text-align: center;
-    }
-    .cat-title { font-size: 36px; font-weight: 900; color: var(--text-dark); margin-bottom: 10px; }
-    .cat-sub { font-size: 16px; color: var(--text-muted); margin-bottom: 60px; }
-
-    .cat-grid {
-        display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-        max-width: 1250px; margin: 0 auto;
-    }
-
-    .cat-card {
-        background: #FFFFFF; border-radius: 16px; padding: 30px;
-        border: 1px solid var(--border); text-align: left;
-        position: relative; overflow: hidden;
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .cat-card:hover {
-        transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.05);
-        border-color: var(--primary-light);
-    }
-    
-    .cat-card h4 { font-size: 24px; font-weight: 800; color: var(--text-dark); margin-bottom: 15px; }
-    
-    .cat-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; position: relative; z-index: 2; }
-    .cat-pill {
-        background: #F8FAFC; border: 1px solid var(--border); color: var(--text-muted);
-        padding: 6px 14px; border-radius: 50px; font-size: 12px; font-weight: 600;
-    }
-
-    .cat-explore {
-        display: inline-flex; align-items: center; gap: 8px;
-        font-size: 14px; font-weight: 700; color: #0066FF;
-        position: relative; z-index: 2;
-    }
-
-    .cat-illustration {
-        position: absolute; right: -20px; bottom: 0;
-        width: 150px; height: 100%;
-        display: flex; align-items: center; justify-content: center;
-        z-index: 1;
-    }
-    .cat-circle-bg {
-        position: absolute; right: 0; top: 50%; transform: translateY(-50%);
-        width: 140px; height: 140px; border-radius: 50%;
-    }
-    .cat-circle-bg.yellow { background: #FEF3C7; } 
-    .cat-circle-bg.pink { background: #FCE7F3; } 
-    .cat-circle-bg.blue { background: #E0F2FE; } 
-    .cat-circle-bg.orange { background: #FFEDD5; } 
-    .cat-illustration i { font-size: 40px; position: relative; z-index: 2; }
-
-    /* =========================================
-       LEARNING PROCESS
-    ========================================= */
-    .process-sec {
-        padding: 100px 24px;
-        background: #FFFFFF;
-        text-align: center;
-    }
-    .process-grid {
-        display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px;
-        max-width: 1200px; margin: 60px auto 0;
-    }
-    .process-step { position: relative; }
-    .step-num {
-        width: 60px; height: 60px; background: var(--primary-light); color: var(--primary);
-        border-radius: 50%; display: flex; align-items: center; justify-content: center;
-        font-size: 24px; font-weight: 900; margin: 0 auto 20px;
-    }
-    .process-step h4 { font-size: 18px; margin-bottom: 10px; }
-    .process-step p { font-size: 14px; color: var(--text-muted); }
-
-    /* =========================================
-       TESTIMONIALS
-    ========================================= */
-    .testi-sec {
-        padding: 100px 24px;
-        background: var(--bg-dark);
+    .tools-sec {
+        background: #020617; /* Very dark slate */
+        padding: 40px 0;
+        overflow: hidden;
         color: white;
         text-align: center;
+        border-top: 1px solid rgba(255,255,255,0.1);
     }
-    .testi-title { color: white; margin-bottom: 60px; font-size: 36px;}
-    .testi-grid {
-        display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+    .tools-sec p {
+        font-size: 14px; font-weight: 600; color: #94A3B8; margin-bottom: 30px; letter-spacing: 1px;
+    }
+    .marquee-wrapper {
+        width: 100%; overflow: hidden; display: flex;
+    }
+    .marquee-track {
+        display: flex; gap: 60px;
+        animation: scrollMarquee 20s linear infinite;
+        align-items: center;
+    }
+    .marquee-item {
+        display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; color: #E2E8F0;
+        white-space: nowrap;
+    }
+    .marquee-item i { font-size: 28px; }
+    @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* =========================================
+       BLUE GRADIENT STATS CARDS
+    ========================================= */
+    .blue-stats-sec {
+        background: linear-gradient(135deg, #0B4385 0%, #062852 100%);
+        padding: 60px 24px;
+    }
+    .blue-stats-container {
         max-width: 1200px; margin: 0 auto;
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
     }
-    .testi-card {
-        background: rgba(255,255,255,0.05);
-        padding: 40px 30px;
-        border-radius: 16px;
+    .stat-card {
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 12px;
+        padding: 30px 20px;
+        text-align: center;
+        color: white;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .stat-card h3 {
+        font-size: 38px; font-weight: 900; margin-bottom: 5px; color: white;
+    }
+    .stat-card p {
+        font-size: 14px; font-weight: 600; color: #CBD5E1;
+    }
+
+    /* =========================================
+       ABOUT US (Code Editor Design)
+    ========================================= */
+    .code-about-sec {
+        background: #1E1B4B; /* Deep purple/blue */
+        padding: 100px 24px;
+        color: white;
+    }
+    .code-about-header { text-align: center; margin-bottom: 60px; }
+    .code-about-header h4 { color: var(--primary); font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+    .code-about-header h2 { font-size: 36px; color: white; margin-bottom: 20px; }
+    .code-about-header p { color: #A5B4FC; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+
+    .code-about-grid {
+        max-width: 1200px; margin: 0 auto;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+    .code-text h3 { font-size: 32px; color: white; margin-bottom: 20px; }
+    .code-text p { color: #A5B4FC; line-height: 1.7; margin-bottom: 30px; font-size: 16px; }
+    .code-checks { display: flex; gap: 20px; flex-wrap: wrap; }
+    .code-check { display: flex; align-items: center; gap: 8px; color: white; font-weight: 600; font-size: 14px; }
+    .code-check i { color: #3B82F6; font-size: 18px; }
+
+    .mac-window {
+        background: #0F172A; border-radius: 12px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         border: 1px solid rgba(255,255,255,0.1);
-        text-align: left;
+        overflow: hidden;
     }
-    .stars { color: #F59E0B; margin-bottom: 15px; font-size: 14px; }
-    .testi-card p { font-size: 15px; color: #CBD5E1; line-height: 1.6; margin-bottom: 25px; font-style: italic; }
-    .testi-user { display: flex; align-items: center; gap: 15px; }
-    .testi-avatar { width: 50px; height: 50px; border-radius: 50%; background: #94A3B8; }
-    .testi-user h5 { margin: 0; color: white; font-size: 16px; }
-    .testi-user span { font-size: 12px; color: #94A3B8; }
+    .mac-header {
+        background: #1E293B; padding: 12px 16px;
+        display: flex; gap: 8px; align-items: center;
+    }
+    .mac-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .mac-dot.red { background: #EF4444; } .mac-dot.yellow { background: #EAB308; } .mac-dot.green { background: #22C55E; }
+    .mac-title { flex: 1; text-align: center; color: #94A3B8; font-size: 12px; font-weight: 600; }
+    
+    .mac-body { padding: 24px; font-family: 'Courier New', Courier, monospace; font-size: 14px; line-height: 1.6; color: #A5B4FC; }
+    .c-purple { color: #C084FC; } .c-green { color: #4ADE80; } .c-blue { color: #60A5FA; } .c-orange { color: #FB923C; }
+    .code-line { display: flex; gap: 15px; }
+    .line-num { color: #475569; user-select: none; }
+
+    /* =========================================
+       ACCORDION & QUOTE FORM
+    ========================================= */
+    .acc-form-sec {
+        background: #F8FAFC; padding: 100px 24px;
+    }
+    .acc-form-container {
+        max-width: 1200px; margin: 0 auto;
+        display: grid; grid-template-columns: 1fr 1fr; gap: 50px;
+    }
+    
+    .acc-wrapper h2 { font-size: 28px; margin-bottom: 30px; color: var(--text-dark); }
+    details {
+        background: white; border: 1px solid var(--border); margin-bottom: 15px;
+        border-radius: 8px; overflow: hidden;
+    }
+    summary {
+        padding: 18px 20px; font-weight: 700; cursor: pointer;
+        display: flex; justify-content: space-between; align-items: center;
+        background: white; list-style: none; color: var(--text-dark);
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '\f078'; font-family: "Font Awesome 6 Free"; font-weight: 900; color: #0066FF; }
+    details[open] summary::after { content: '\f077'; }
+    .details-content { padding: 0 20px 20px; color: var(--text-muted); font-size: 15px; line-height: 1.6; }
+
+    .quote-card {
+        background: #E2E8F0; padding: 40px; border-radius: 12px;
+    }
+    .quote-card h3 { text-align: center; font-size: 20px; margin-bottom: 30px; color: var(--text-dark); }
+    .quote-form-grid { display: grid; gap: 15px; }
+    .quote-input {
+        width: 100%; padding: 14px 16px; border: none; border-radius: 6px;
+        font-size: 14px; background: white;
+    }
+    .quote-input:focus { outline: 2px solid #0066FF; }
+    .quote-btn {
+        background: #0066FF; color: white; width: 100%; padding: 16px;
+        border: none; border-radius: 6px; font-weight: 800; font-size: 16px;
+        cursor: pointer; margin-top: 10px; transition: background 0.3s;
+    }
+    .quote-btn:hover { background: #0052CC; }
 
     @media (max-width: 1024px) {
-        .hero-container { grid-template-columns: 1fr; text-align: center; }
-        .hero-badge { margin: 0 auto 25px; }
-        .hero-sub { margin: 0 auto 30px; }
-        .hero-features { justify-content: center; }
-        .hero-actions { justify-content: center; }
-        .hero-visual { justify-content: center; margin-top: 40px; }
-        .about-container { grid-template-columns: 1fr; }
-        .cat-grid, .process-grid, .testi-grid { grid-template-columns: repeat(2, 1fr); }
+        .hero-container, .code-about-grid, .acc-form-container { grid-template-columns: 1fr; }
+        .blue-stats-container { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 640px) {
-        .cat-grid, .process-grid, .testi-grid { grid-template-columns: 1fr; }
+        .blue-stats-container { grid-template-columns: 1fr; }
     }
 </style>
 {% endblock %}
 
 {% block wrapper %}
 
-    <!-- HERO SECTION (Clean Vector Style) -->
+    <!-- SPLASH SCREEN PRELOADER -->
+    <div id="preloader">
+        <div class="preloader-logo">EasyLearn</div>
+    </div>
+
+    <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero-container">
             <div class="hero-content">
-                
                 <div class="hero-badge">
                     <i class="fa-solid fa-graduation-cap"></i> ALL TECH STACKS SUPPORTED
                 </div>
                 
                 <h1>Start your preparation<br>with Easy Learn:<br>
-                    <span class="rotator-wrapper">
-                        <span class="rotator-inner">
-                            <span>Job Placements.</span>
-                            <span>Full Stack Apps.</span>
-                            <span>Mock Interviews.</span>
-                            <span>Live Courses.</span>
-                            <span>Job Placements.</span>
-                        </span>
-                    </span>
+                    <span class="typing-text" id="typewriter"></span>
                 </h1>
                 
                 <p class="hero-sub">
@@ -381,249 +257,234 @@
                 </div>
 
                 <div class="hero-actions">
-                    <a href="{% url 'login' %}" class="hero-btn btn-primary">
+                    <a href="{% url 'login' %}" class="btn btn-primary">
                         <i class="fa-solid fa-rocket"></i> Get Started
-                    </a>
-                    <a href="#courses" class="hero-btn btn-outline">
-                        <i class="fa-solid fa-play"></i> Learn More
                     </a>
                 </div>
             </div>
             
-            <div class="hero-visual">
-                <!-- Locally generated vector illustration -->
+            <div class="hero-visual" data-aos="fade-left">
                 <img src="{% static 'core/images/hero_student.png' %}" alt="Student Developer Workspace">
             </div>
         </div>
     </section>
 
-    <!-- SIMPLE STATS BAR (Exact Match to Screenshot) -->
-    <div class="stats-bar">
-        <div class="stats-bar-container">
-            <div class="sb-item">
-                <h3>15+</h3>
-                <p>Tech Stacks</p>
-            </div>
-            <div class="sb-item">
-                <h3>500+</h3>
-                <p>Enrolled Students</p>
-            </div>
-            <div class="sb-item">
-                <h3>5+</h3>
-                <p>Expert Trainers</p>
-            </div>
-            <div class="sb-item">
-                <h3>10k+</h3>
-                <p>Mocks Done</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- ABOUT US SECTION -->
-    <section class="about-sec" id="about">
-        <div class="about-container">
-            <div class="about-img">
-                <i class="fa-solid fa-laptop-code"></i>
-            </div>
-            <div class="about-content">
-                <h2>Bridging the Gap Between College and Silicon Valley.</h2>
-                <p>Easy Learn Academy was founded on a simple principle: traditional college curriculums are not preparing students for the rigorous demands of top-tier product companies.</p>
-                <p>We provide Silicon Valley standard tech bootcamps directly in college campuses. By partnering with leading universities, we deliver intensive, hands-on training that focuses on real-world application, not just theory.</p>
+    <!-- AI TOOLS MARQUEE -->
+    <section class="tools-sec">
+        <p>The right AI tools integrated into your curriculum</p>
+        <div class="marquee-wrapper">
+            <div class="marquee-track">
+                <!-- Doubled for infinite scroll -->
+                <div class="marquee-item"><i class="fa-brands fa-python" style="color:#3B82F6;"></i> Python</div>
+                <div class="marquee-item"><i class="fa-brands fa-node-js" style="color:#22C55E;"></i> Node JS</div>
+                <div class="marquee-item"><i class="fa-brands fa-react" style="color:#0EA5E9;"></i> React</div>
+                <div class="marquee-item"><i class="fa-solid fa-robot" style="color:#A855F7;"></i> Chat GPT</div>
+                <div class="marquee-item"><i class="fa-solid fa-brain" style="color:#F97316;"></i> PyTorch</div>
+                <div class="marquee-item"><i class="fa-solid fa-cube" style="color:#EF4444;"></i> CrewAI</div>
                 
-                <ul class="feature-list">
-                    <li>
-                        <div class="feature-icon"><i class="fa-solid fa-code"></i></div>
-                        <div class="feature-text">
-                            <h4>Industry-vetted Curriculum</h4>
-                            <p>Our syllabus is continuously updated to match the exact tech stacks being used by companies like Google, Amazon, and Microsoft today.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
-                        <div class="feature-text">
-                            <h4>100% Online Support</h4>
-                            <p>Stuck on a bug? Our mentors are available 24/7 to help you debug and understand complex system design problems.</p>
-                        </div>
-                    </li>
-                </ul>
+                <div class="marquee-item"><i class="fa-brands fa-python" style="color:#3B82F6;"></i> Python</div>
+                <div class="marquee-item"><i class="fa-brands fa-node-js" style="color:#22C55E;"></i> Node JS</div>
+                <div class="marquee-item"><i class="fa-brands fa-react" style="color:#0EA5E9;"></i> React</div>
+                <div class="marquee-item"><i class="fa-solid fa-robot" style="color:#A855F7;"></i> Chat GPT</div>
+                <div class="marquee-item"><i class="fa-solid fa-brain" style="color:#F97316;"></i> PyTorch</div>
+                <div class="marquee-item"><i class="fa-solid fa-cube" style="color:#EF4444;"></i> CrewAI</div>
             </div>
         </div>
     </section>
 
-    <!-- LEARNING PROCESS -->
-    <section class="process-sec" id="process">
-        <h2 style="font-size:36px; margin-bottom:10px;">Our Proven Learning Process</h2>
-        <p style="color:var(--text-muted); margin-bottom:50px;">A structured pathway designed to take you from a beginner to a hired professional.</p>
-        
-        <div class="process-grid">
-            <div class="process-step">
-                <div class="step-num">1</div>
-                <h4>Enroll & Assess</h4>
-                <p>We assess your current coding level and tailor a customized roadmap specific to your career goals.</p>
+    <!-- BLUE GRADIENT STATS CARDS (Rolling Numbers) -->
+    <section class="blue-stats-sec">
+        <div class="blue-stats-container">
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="0">
+                <h3><span class="counter" data-target="5000">0</span>+</h3>
+                <p>Active Students</p>
             </div>
-            <div class="process-step">
-                <div class="step-num">2</div>
-                <h4>Live Training</h4>
-                <p>Attend intensive live sessions focusing on hands-on project building and core CS fundamentals.</p>
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                <h3><span class="counter" data-target="10500">0</span>+</h3>
+                <p>Classes Completed</p>
             </div>
-            <div class="process-step">
-                <div class="step-num">3</div>
-                <h4>Mock Interviews</h4>
-                <p>Go through rigorous mock technical and HR interviews with our network of industry experts.</p>
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                <h3><span class="counter" data-target="1000">0</span>+</h3>
+                <p>Partnered Companies</p>
             </div>
-            <div class="process-step">
-                <div class="step-num">4</div>
-                <h4>Job Placements</h4>
-                <p>Gain exclusive access to our hiring partners and secure a high-paying role in a top tech company.</p>
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                <h3><span class="counter" data-target="15000">0</span>+</h3>
+                <p>Placed Students</p>
             </div>
         </div>
     </section>
 
-    <!-- SOFTWARE CATEGORIES GRID -->
-    <section class="categories-sec" id="courses">
-        <h2 class="cat-title">Explore Tech Categories</h2>
-        <p class="cat-sub">We prepare students for 10+ core tech domains. Scroll down to find your path.</p>
+    <!-- ABOUT US (Code Editor Design) -->
+    <section class="code-about-sec">
+        <div class="code-about-header" data-aos="fade-up">
+            <h4>About Us</h4>
+            <h2>Built for developers who learn best by doing.</h2>
+            <p>In the AI era, answers are cheap — but true understanding matters more than ever. Easy Learn exists to help software developers build the understanding they need to remain indispensable.</p>
+        </div>
         
-        <div class="cat-grid">
-            <!-- Card 1 -->
-            <div class="cat-card">
-                <h4>Java Full Stack</h4>
-                <div class="cat-pills">
-                    <div class="cat-pill">Spring Boot</div>
-                    <div class="cat-pill">React JS</div>
-                    <div class="cat-pill">Microservices</div>
-                </div>
-                <a href="{% url 'login' %}" class="cat-explore">Explore Category <i class="fa-solid fa-arrow-right"></i></a>
-                
-                <div class="cat-illustration">
-                    <div class="cat-circle-bg pink"></div>
-                    <i class="fa-brands fa-java" style="color: #E11D48;"></i>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="cat-card">
-                <h4>Python & AI Full Stack</h4>
-                <div class="cat-pills">
-                    <div class="cat-pill">Django</div>
-                    <div class="cat-pill">GenAI Integrations</div>
-                    <div class="cat-pill">Next JS</div>
-                </div>
-                <a href="{% url 'login' %}" class="cat-explore">Explore Category <i class="fa-solid fa-arrow-right"></i></a>
-                
-                <div class="cat-illustration">
-                    <div class="cat-circle-bg yellow"></div>
-                    <i class="fa-brands fa-python" style="color: #D97706;"></i>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="cat-card">
-                <h4>Data Science & ML</h4>
-                <div class="cat-pills">
-                    <div class="cat-pill">Pandas</div>
-                    <div class="cat-pill">TensorFlow</div>
-                    <div class="cat-pill">LLM Fine-tuning</div>
-                </div>
-                <a href="{% url 'login' %}" class="cat-explore">Explore Category <i class="fa-solid fa-arrow-right"></i></a>
-                
-                <div class="cat-illustration">
-                    <div class="cat-circle-bg blue"></div>
-                    <i class="fa-solid fa-brain" style="color: #0284C7;"></i>
-                </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="cat-card">
-                <h4>Cloud & DevOps</h4>
-                <div class="cat-pills">
-                    <div class="cat-pill">AWS / Azure</div>
-                    <div class="cat-pill">Docker & K8s</div>
-                    <div class="cat-pill">CI/CD Pipelines</div>
-                </div>
-                <a href="{% url 'login' %}" class="cat-explore">Explore Category <i class="fa-solid fa-arrow-right"></i></a>
-                
-                <div class="cat-illustration">
-                    <div class="cat-circle-bg orange"></div>
-                    <i class="fa-solid fa-cloud" style="color: #EA580C;"></i>
+        <div class="code-about-grid">
+            <div class="code-text" data-aos="fade-right">
+                <h3>Learn by building, not watching</h3>
+                <p>You can't learn to skateboard by watching someone else. Same goes for building technical skills. Every course is loaded with in-browser quizzes, challenges, and projects - no setup, no config, no passive learning.</p>
+                <div class="code-checks">
+                    <div class="code-check"><i class="fa-solid fa-circle-check"></i> In-browser learning</div>
+                    <div class="code-check"><i class="fa-solid fa-circle-check"></i> No setup, no videos</div>
                 </div>
             </div>
             
-            <!-- Card 5 -->
-            <div class="cat-card" style="border-color: #0066FF;">
-                <h4 style="color: #0066FF;">Campus Placement Prep</h4>
-                <div class="cat-pills">
-                    <div class="cat-pill">DSA Mastery</div>
-                    <div class="cat-pill">Aptitude</div>
-                    <div class="cat-pill">Mock Interviews</div>
+            <div class="mac-window" data-aos="fade-left">
+                <div class="mac-header">
+                    <div class="mac-dot red"></div>
+                    <div class="mac-dot yellow"></div>
+                    <div class="mac-dot green"></div>
+                    <div class="mac-title">Console</div>
                 </div>
-                <a href="{% url 'login' %}" class="cat-explore">Explore Category <i class="fa-solid fa-arrow-right"></i></a>
-                
-                <div class="cat-illustration">
-                    <div class="cat-circle-bg" style="background: rgba(0, 102, 255, 0.1);"></div>
-                    <i class="fa-solid fa-users" style="color: #0066FF;"></i>
-                </div>
-            </div>
-
-            <!-- Card 6 -->
-            <div class="cat-card">
-                <h4>Cybersecurity</h4>
-                <div class="cat-pills">
-                    <div class="cat-pill">Ethical Hacking</div>
-                    <div class="cat-pill">Network Sec</div>
-                    <div class="cat-pill">CompTIA+</div>
-                </div>
-                <a href="{% url 'login' %}" class="cat-explore">Explore Category <i class="fa-solid fa-arrow-right"></i></a>
-                
-                <div class="cat-illustration">
-                    <div class="cat-circle-bg pink"></div>
-                    <i class="fa-solid fa-shield-halved" style="color: #DB2777;"></i>
+                <div class="mac-body">
+                    <div class="code-line"><span class="line-num">1</span> <span><span class="c-purple">class</span> <span class="c-green">Task</span>:</span></div>
+                    <div class="code-line"><span class="line-num">2</span> <span>&nbsp;&nbsp;&nbsp;&nbsp;skills = [<span class="c-orange">"coding"</span>, <span class="c-orange">"logic"</span>]</span></div>
+                    <div class="code-line"><span class="line-num">3</span> <span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="c-purple">while</span> <span class="c-orange">"indispensable"</span> <span class="c-purple">not in</span> skills:</span></div>
+                    <div class="code-line"><span class="line-num">4</span> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;skills.append(practice())</span></div>
+                    <div class="code-line"><span class="line-num">5</span> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(<span class="c-orange">"Leveling up..."</span>)</span></div>
+                    <div class="code-line"><span class="line-num">6</span> <span></span></div>
+                    <div class="code-line"><span class="line-num">7</span> <span>print(<span class="c-orange">"Indispensable Developer: Activated"</span>)</span></div>
+                    <br>
+                    <div class="code-line"><span>Output:</span></div>
+                    <div class="code-line"><span>Leveling up...</span></div>
+                    <div class="code-line"><span>Leveling up...</span></div>
+                    <div class="code-line"><span><span class="c-green">Indispensable Developer: Activated</span></span></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- TESTIMONIALS -->
-    <section class="testi-sec">
-        <h2 class="testi-title">What Our Alumni Say</h2>
-        
-        <div class="testi-grid">
-            <div class="testi-card">
-                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                <p>"The Java Full Stack program completely transformed my understanding of backend architecture. The mock interviews were rigorous but essential. I secured a placement at an MNC within 2 months of graduation."</p>
-                <div class="testi-user">
-                    <div class="testi-avatar" style="background: url('https://randomuser.me/api/portraits/men/32.jpg') center/cover;"></div>
-                    <div>
-                        <h5>Rahul Sharma</h5>
-                        <span>Software Engineer @ Amazon</span>
+    <!-- ACCORDION & QUOTE FORM -->
+    <section class="acc-form-sec">
+        <div class="acc-form-container">
+            
+            <div class="acc-wrapper" data-aos="fade-right">
+                <h2>EasyLearn - Leading Software Training</h2>
+                
+                <details open>
+                    <summary>Introduction About Easy Learn</summary>
+                    <div class="details-content">
+                        Our training centers are supported by experienced trainers, dedicated coordinators, and a structured learning approach that ensures every learner receives the guidance needed throughout their journey. From course planning to hands-on practice, we deliver a comprehensive learning experience.
                     </div>
-                </div>
+                </details>
+                
+                <details>
+                    <summary>Our Features</summary>
+                    <div class="details-content">
+                        - 100% Placement Assistance<br>
+                        - 24/7 Expert Mentorship<br>
+                        - Real-world Industry Projects<br>
+                        - Flexible Timings & Weekend Batches
+                    </div>
+                </details>
+
+                <details>
+                    <summary>Certification Courses</summary>
+                    <div class="details-content">
+                        We provide globally recognized certifications upon successful completion of your training modules. Add significant weight to your resume with our rigorous evaluation metrics.
+                    </div>
+                </details>
             </div>
 
-            <div class="testi-card">
-                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                <p>"Learning Python and AI integration here was the best decision. The mentors actually care about your progress and the 24/7 online support is incredible for debugging late at night."</p>
-                <div class="testi-user">
-                    <div class="testi-avatar" style="background: url('https://randomuser.me/api/portraits/women/44.jpg') center/cover;"></div>
-                    <div>
-                        <h5>Priya Patel</h5>
-                        <span>AI Developer @ StartUp</span>
-                    </div>
-                </div>
+            <div class="quote-card" data-aos="fade-left">
+                <h3>Request for Class Room & Online Training Quotation</h3>
+                <form class="quote-form-grid">
+                    <input type="text" class="quote-input" placeholder="Enter Your Name" required>
+                    <input type="email" class="quote-input" placeholder="Enter Your Email" required>
+                    <input type="text" class="quote-input" placeholder="Enter Your Mobile No." required>
+                    <select class="quote-input" required>
+                        <option value="">Select Course</option>
+                        <option>Java Full Stack</option>
+                        <option>Python & AI Full Stack</option>
+                        <option>Data Science</option>
+                        <option>Cloud & DevOps</option>
+                    </select>
+                    <select class="quote-input" required>
+                        <option value="">Select Your City</option>
+                        <option>Bangalore</option>
+                        <option>Chennai</option>
+                        <option>Hyderabad</option>
+                        <option>Pune</option>
+                        <option>Online</option>
+                    </select>
+                    <button type="submit" class="quote-btn">Get Quotes</button>
+                </form>
             </div>
 
-            <div class="testi-card">
-                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
-                <p>"The campus training bootcamps are intense. They don't just teach code; they teach you how to think like an engineer. The 100% placement support gave me so much confidence."</p>
-                <div class="testi-user">
-                    <div class="testi-avatar" style="background: url('https://randomuser.me/api/portraits/men/67.jpg') center/cover;"></div>
-                    <div>
-                        <h5>Arjun Desai</h5>
-                        <span>Cloud Architect @ TCS</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // PRELOADER LOGIC
+    window.addEventListener('load', function() {
+        const preloader = document.getElementById('preloader');
+        setTimeout(() => {
+            preloader.style.opacity = '0';
+            preloader.style.visibility = 'hidden';
+        }, 1200); // Hold for 1.2s to show animation
+    });
+
+    // SMOOTH TYPEWRITER LOGIC
+    const words = ["Job Placements.", "Full Stack Apps.", "Mock Interviews.", "Live Courses."];
+    let i = 0; let j = 0; let currentWord = ""; let isDeleting = false;
+    const typeTarget = document.getElementById("typewriter");
+    
+    function type() {
+        currentWord = words[i];
+        if (isDeleting) {
+            typeTarget.textContent = currentWord.substring(0, j - 1);
+            j--;
+        } else {
+            typeTarget.textContent = currentWord.substring(0, j + 1);
+            j++;
+        }
+
+        if (!isDeleting && j === currentWord.length) {
+            setTimeout(() => isDeleting = true, 1500); // Pause at end
+        } else if (isDeleting && j === 0) {
+            isDeleting = false;
+            i = (i + 1) % words.length;
+        }
+        setTimeout(type, isDeleting ? 40 : 100);
+    }
+    // Start typing slightly after load
+    setTimeout(type, 1500);
+
+    // ROLLING NUMBERS LOGIC
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200; // lower = faster
+
+    const startCounters = (entries, observer) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                const counter = entry.target;
+                const target = +counter.getAttribute('data-target');
+                
+                const updateCount = () => {
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 15);
+                    } else {
+                        // Format numbers > 999 with commas
+                        counter.innerText = target.toLocaleString();
+                    }
+                };
+                updateCount();
+                observer.unobserve(counter); // Run once
+            }
+        });
+    };
+    
+    const counterObserver = new IntersectionObserver(startCounters, { threshold: 0.5 });
+    counters.forEach(counter => counterObserver.observe(counter));
+
+</script>
 {% endblock %}
