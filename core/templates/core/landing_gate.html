@@ -297,7 +297,7 @@
     /* =========================================
        COMMUNITY SLIDER
     ========================================= */
-    .community-sec { padding: 80px 0; background: #FEF6F6; text-align: center; overflow: hidden; border-top: 1px solid #FFE4E4;}
+    .community-sec { padding: 80px 0 40px; background: #FEF6F6; text-align: center; overflow: hidden; border-top: 1px solid #FFE4E4;}
     .community-sec h2 { font-size: 28px; margin-bottom: 60px; color: #1E293B; font-weight: 800; }
     .photo-marquee { display: flex; gap: 40px; animation: scrollPhotos 30s linear infinite; }
     .photo-item { 
@@ -305,6 +305,14 @@
         object-fit: contain; /* Ensure logo is never cropped */
     }
     @keyframes scrollPhotos { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* =========================================
+       STUDENT GALLERY SLIDER
+    ========================================= */
+    .gallery-sec { padding: 20px 0 80px; background: #FEF6F6; text-align: center; overflow: hidden;}
+    .gallery-marquee { display: flex; gap: 30px; animation: scrollGallery 45s linear infinite; }
+    .gallery-item { height: 250px; border-radius: 12px; object-fit: cover; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+    @keyframes scrollGallery { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
     /* =========================================
        GOOGLE REVIEWS SLIDER
@@ -663,6 +671,26 @@
                 <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
                 <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
                 <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
+            </div>
+        </div>
+    </section>
+
+    <!-- STUDENT GALLERY SLIDER -->
+    <section class="gallery-sec">
+        <div class="marquee-wrapper">
+            <!-- Using the student photos you provided earlier -->
+            <div class="gallery-marquee">
+                <img src="{% static 'core/images/community1.jpg' %}" class="gallery-item" alt="Student Batch">
+                <img src="{% static 'core/images/community2.jpg' %}" class="gallery-item" alt="Student Training">
+                <img src="{% static 'core/images/community3.jpg' %}" class="gallery-item" alt="Classroom Session">
+                
+                <img src="{% static 'core/images/community1.jpg' %}" class="gallery-item" alt="Student Batch">
+                <img src="{% static 'core/images/community2.jpg' %}" class="gallery-item" alt="Student Training">
+                <img src="{% static 'core/images/community3.jpg' %}" class="gallery-item" alt="Classroom Session">
+                
+                <img src="{% static 'core/images/community1.jpg' %}" class="gallery-item" alt="Student Batch">
+                <img src="{% static 'core/images/community2.jpg' %}" class="gallery-item" alt="Student Training">
+                <img src="{% static 'core/images/community3.jpg' %}" class="gallery-item" alt="Classroom Session">
             </div>
         </div>
     </section>
