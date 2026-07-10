@@ -302,14 +302,15 @@
     .photo-marquee { display: flex; gap: 40px; animation: scrollPhotos 30s linear infinite; }
     .photo-item { 
         width: 150px; height: 150px; 
-        object-fit: contain; /* Ensure logo is never cropped */
+        object-fit: contain;
     }
     @keyframes scrollPhotos { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
     /* =========================================
        STUDENT GALLERY SLIDER
     ========================================= */
-    .gallery-sec { padding: 20px 0 80px; background: #FEF6F6; text-align: center; overflow: hidden;}
+    .gallery-sec { padding: 80px 0 80px; background: #FEF6F6; text-align: center; overflow: hidden; border-top: 1px solid #FFE4E4;}
+    .gallery-sec h2 { font-size: 32px; margin-bottom: 60px; color: #1E293B; font-weight: 800; }
     .gallery-marquee { display: flex; gap: 30px; animation: scrollGallery 45s linear infinite; }
     .gallery-item { height: 250px; border-radius: 12px; object-fit: cover; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
     @keyframes scrollGallery { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -656,50 +657,9 @@
         </div>
     </section>
 
-    <!-- THRIVING COMMUNITY SLIDER -->
-    <section class="community-sec">
-        <h2 data-aos="fade-up">Be A Part Of Our Thriving Community</h2>
-        <div class="marquee-wrapper">
-            <div class="photo-marquee" style="gap: 50px;">
-                <!-- Duplicated many times so it easily covers ultra-wide 4k screens -->
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-                <img src="{% static 'core/images/logo.png' %}" class="photo-item" alt="EasyLearn">
-            </div>
-        </div>
-    </section>
-
     <!-- STUDENT GALLERY SLIDER -->
     <section class="gallery-sec">
+        <h2 data-aos="fade-up">Be A Part Of Our Thriving Community</h2>
         <div class="marquee-wrapper">
             <!-- Using the student photos you provided earlier -->
             <div class="gallery-marquee">
