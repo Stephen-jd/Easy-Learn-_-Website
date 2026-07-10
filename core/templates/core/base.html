@@ -4,73 +4,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Easy Learn Academy Portal{% endblock %}</title>
+    <title>{% block title %}Easy Learn Academy{% endblock %}</title>
     
-    <link rel="icon" type="image/png" href="{% static 'core/images/logo.png' %}">
-    
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome for Icons -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- AOS Animation Library -->
+    <!-- AOS Library for Animations -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
         :root {
-            /* Bright White & Orange Theme */
-            --bg-base: #F8FAFC; 
-            --bg-card: #FFFFFF;
-            --bg-dark: #1E293B; /* For dark footer/sections */
+            /* 4JS Bright White & Orange Theme Variables */
+            --primary: #FF7605; /* Vibrant Orange */
+            --primary-light: #FFF1E6; 
+            --secondary: #0B4385; /* Trust Blue */
+            --secondary-light: #EBF3FA;
             
-            --primary: #FF7605; /* Main Brand Orange */
-            --primary-light: rgba(255, 118, 5, 0.1);
-            --primary-gradient: linear-gradient(135deg, #FF7605 0%, #FF9B42 100%);
+            --bg-base: #F8FAFC; /* Light gray background */
+            --bg-dark: #1E293B; /* Slate dark for accents/footer */
+            --bg-footer: #222B38; /* Exact dark from screenshot */
             
-            --secondary: #0B4385; /* Brand Blue */
-            --secondary-light: rgba(11, 67, 133, 0.1);
+            --text-dark: #0F172A; /* Slate 900 */
+            --text-main: #334155; /* Slate 700 */
+            --text-muted: #64748B; /* Slate 500 */
             
-            --text-main: #334155; 
-            --text-dark: #0F172A;
-            --text-muted: #64748B; 
-            --border: #E2E8F0; 
+            --border: #E2E8F0;
+            --radius-md: 12px;
+            --radius-sm: 8px;
             
             --font-main: 'Inter', sans-serif;
-            --font-head: 'Plus Jakarta Sans', sans-serif;
-
-            /* Status Accents */
-            --status-active-bg: #E0F2FE;
-            --status-active-color: #0369A1;
-            --status-completed-bg: #DCFCE7;
-            --status-completed-color: #15803D;
-            --status-pending-bg: #FEF3C7;
-            --status-pending-color: #B45309;
-            --status-paid-bg: #ECFDF5;
-            --status-paid-color: #047857;
-            
-            --radius-sm: 8px;
-            --radius-md: 16px;
-            --radius-lg: 24px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            font-family: var(--font-main); 
-            color: var(--text-main); 
-            background: var(--bg-base); 
-            line-height: 1.6; 
-            min-height: 100vh;
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: var(--font-main);
+        }
+
+        body {
+            background-color: #FFFFFF;
+            color: var(--text-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        h1, h2, h3, h4, h5, h6 { font-family: var(--font-head); color: var(--text-dark); }
+        main { flex: 1; }
+
+        /* Typography */
+        h1, h2, h3, h4, h5 { color: var(--text-dark); font-weight: 800; line-height: 1.2; }
         a { text-decoration: none; color: inherit; }
+
+        /* Utility Classes */
+        .container { max-width: 1250px; margin: 0 auto; padding: 0 24px; }
+        
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 12px 24px; border-radius: var(--radius-sm); font-weight: 700;
+            font-size: 15px; cursor: pointer; transition: all 0.3s ease; border: none;
+        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: #E66A00; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 118, 5, 0.3); }
+        .btn-secondary { background: var(--secondary); color: white; }
+        .btn-secondary:hover { background: #083466; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(11, 67, 133, 0.3); }
+        .btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text-dark); }
+        .btn-outline:hover { border-color: var(--text-muted); }
+
+        /* Form Elements */
+        .form-label {
+            display: block; font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px;
+        }
+        .form-control {
+            width: 100%; padding: 12px 16px; font-size: 15px;
+            border: 2px solid var(--border); border-radius: var(--radius-sm);
+            background: #FFFFFF; color: var(--text-dark); transition: all 0.3s;
+        }
+        .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light); }
 
         /* ------------------ NAVIGATION BAR ------------------ */
         .navbar {
@@ -82,207 +97,206 @@
         }
 
         .nav-container {
-            max-width: 1400px; margin: 0 auto; padding: 15px 24px;
             display: flex; justify-content: space-between; align-items: center;
+            height: 80px; max-width: 1400px; margin: 0 auto; padding: 0 24px;
         }
 
-        .nav-brand { display: flex; align-items: center; gap: 12px; }
-        .nav-brand img { height: 40px; object-fit: contain; }
-        .brand-text { font-family: var(--font-head); font-weight: 800; font-size: 1.5rem; color: var(--secondary); letter-spacing: -0.5px; }
-        .brand-text span { color: var(--primary); }
-
-        .nav-menu { display: flex; align-items: center; gap: 24px; list-style: none; }
-        .nav-link { color: var(--text-main); font-size: 15px; font-weight: 600; transition: color 0.3s ease; }
-        .nav-link:hover, .nav-link.active { color: var(--primary); }
-
-        .nav-btn {
-            background: var(--text-dark); color: white !important;
-            padding: 10px 24px; border-radius: 50px; font-weight: 700; transition: all 0.3s;
+        .nav-logo {
+            display: flex; align-items: center; gap: 10px;
         }
-        .nav-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 118, 5, 0.3); }
-
-        .nav-btn-outline {
-            background: transparent; color: var(--text-dark) !important;
-            border: 2px solid var(--text-dark);
-            padding: 8px 22px; border-radius: 50px; font-weight: 700; transition: all 0.3s;
-        }
-        .nav-btn-outline:hover { background: var(--text-dark); color: white !important; }
-
-        .user-pill {
-            display: flex; align-items: center; gap: 8px;
-            background: var(--bg-base); border: 1px solid var(--border);
-            padding: 8px 16px; border-radius: 50px; font-size: 14px; font-weight: 600; color: var(--secondary);
+        .nav-logo img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
         }
 
-        /* ------------------ GLOBAL WRAPPERS ------------------ */
-        .main-content {
-            flex: 1; max-width: 1400px; width: 100%; margin: 0 auto; padding: 40px 24px; position: relative; z-index: 1;
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-link {
+            font-size: 15px; font-weight: 600; color: var(--text-main);
+            transition: color 0.3s;
+        }
+        .nav-link:hover { color: var(--primary); }
+
+        .nav-actions { display: flex; align-items: center; gap: 16px; }
+
+        /* ------------------ CUSTOM DARK FOOTER ------------------ */
+        .site-footer {
+            background-color: var(--bg-footer);
+            color: #94A3B8;
+            padding: 60px 0 30px;
+            position: relative;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        /* ------------------ FLOATING ALERTS ------------------ */
-        .alert-container { margin-bottom: 24px; }
-        .alert {
-            padding: 16px 20px; border-radius: var(--radius-sm); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; font-weight: 600; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: var(--bg-card);
+        .footer-brand {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 24px; font-weight: 800; color: #FFFFFF;
+            margin-bottom: 20px;
         }
-        .alert-success { border-left: 4px solid #34D399; }
-        .alert-error, .alert-danger { border-left: 4px solid #EF4444; }
-        .alert-warning { border-left: 4px solid #FBBF24; }
-        .alert-info { border-left: 4px solid var(--secondary); }
-        .alert-close { background: none; border: none; color: inherit; cursor: pointer; font-size: 16px; }
+        .footer-brand span { color: var(--primary); font-size: 28px; line-height: 0;}
+        .footer-brand img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover;}
 
-        /* ------------------ REUSABLE PREMIUM UI COMPONENTS ------------------ */
-        .glass-card {
-            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 40px; box-shadow: 0 10px 40px rgba(0,0,0,0.04); transition: all 0.3s ease;
+        .footer-desc {
+            font-size: 14px; line-height: 1.6; max-width: 400px;
         }
-        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,0.08); border-color: var(--primary-light); }
 
-        .section-header { margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        .section-title { font-size: 28px; font-weight: 800; color: var(--text-dark); }
-
-        /* Premium Buttons */
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-            padding: 14px 28px; font-size: 15px; font-weight: 700; border-radius: 50px; border: none; cursor: pointer; transition: all 0.3s ease; text-decoration: none;
+        .footer-title {
+            font-size: 16px; font-weight: 800; color: #FFFFFF;
+            margin-bottom: 20px;
         }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: #E06300; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,118,5,0.3); }
-        .btn-secondary { background: var(--secondary); color: white; }
-        .btn-secondary:hover { background: #083467; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(11,67,133,0.3); }
-        .btn-outline { background: transparent; border: 2px solid var(--text-dark); color: var(--text-dark); }
-        .btn-outline:hover { background: var(--text-dark); color: white; }
 
-        /* Form Controls for Internal Pages */
-        .form-control {
-            width: 100%; padding: 14px 18px; border-radius: var(--radius-sm); border: 1px solid var(--border); font-family: inherit; font-size: 15px; background: var(--bg-card); color: var(--text-dark); transition: all 0.2s;
-        }
-        .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light); }
-        .form-label { display: block; font-weight: 700; font-size: 14px; color: var(--text-main); margin-bottom: 8px; }
-
-        /* ------------------ FOOTER ------------------ */
-        .footer { background: var(--bg-dark); padding: 80px 24px 30px 24px; margin-top: auto; color: #FFFFFF; }
-        .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 50px; }
-        .footer-logo { font-family: var(--font-head); font-size: 28px; font-weight: 800; color: #FFFFFF; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        .footer-logo span { color: var(--primary); }
-        .footer-desc { font-size: 15px; line-height: 1.6; color: #94A3B8; }
-        .footer-title { color: #FFFFFF; font-size: 18px; font-family: var(--font-head); margin-bottom: 25px; font-weight: 800; }
         .footer-links { list-style: none; }
         .footer-links li { margin-bottom: 12px; }
-        .footer-links a { color: #94A3B8; font-size: 15px; transition: color 0.2s; font-weight: 500; }
-        .footer-links a:hover { color: var(--primary); }
-        .footer-bottom { max-width: 1400px; margin: 0 auto; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 14px; color: #94A3B8; }
+        .footer-links a {
+            font-size: 14px; color: #94A3B8; transition: color 0.3s;
+        }
+        .footer-links a:hover { color: #FFFFFF; }
+
+        .footer-contact p { font-size: 14px; margin-bottom: 15px; }
+        .footer-input {
+            width: 100%; max-width: 250px;
+            padding: 12px 16px;
+            border-radius: 50px;
+            border: none;
+            background: #FFFFFF;
+            font-size: 14px;
+        }
+        .footer-input:focus { outline: none; box-shadow: 0 0 0 3px rgba(255,255,255,0.2); }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            font-size: 13px;
+            color: #64748B;
+        }
+
+        /* ------------------ WHATSAPP WIDGET (Footer Based) ------------------ */
+        .whatsapp-widget-fixed {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            transition: transform 0.3s;
+            text-decoration: none;
+        }
+        .whatsapp-btn:hover { transform: scale(1.1); color: white;}
 
         @media (max-width: 768px) {
-            .nav-container { flex-direction: column; gap: 15px; }
-            .nav-menu { flex-wrap: wrap; justify-content: center; gap: 10px; }
-            .main-content { padding: 20px 16px; }
+            .nav-links { display: none; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
         }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar" data-aos="fade-down" data-aos-duration="800">
+    <!-- NAVBAR -->
+    <header class="navbar">
         <div class="nav-container">
-            <a href="{% url 'landing' %}" class="nav-brand">
-                <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn">
-                <div class="brand-text">EasyLearn<span>.</span></div>
+            <a href="{% url 'landing_gate' %}" class="nav-logo">
+                <!-- User's exact logo should be placed here -->
+                <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn Academy Logo" onerror="this.src='https://via.placeholder.com/150x50?text=Logo.png+Missing'">
             </a>
             
-            <ul class="nav-menu">
-                <li><a href="{% url 'landing' %}" class="nav-link">Home</a></li>
-                
-                {% if request.user.is_authenticated %}
-                    {% if request.user.is_superuser %}
-                        <li><a href="{% url 'admin_dashboard' %}" class="nav-link nav-btn">Operations</a></li>
-                    {% else %}
-                        <li><a href="{% url 'trainer_dashboard' %}" class="nav-link nav-btn">Trainer Hub</a></li>
-                    {% endif %}
-                    
-                    <li class="user-pill">
-                        <i class="fa-solid fa-user"></i>
-                        <span>{{ request.user.first_name|default:request.user.username }}</span>
-                    </li>
-                    <li><a href="{% url 'logout' %}" class="nav-link"><i class="fa-solid fa-power-off"></i> Exit</a></li>
-                {% else %}
-                    <li><a href="{% url 'trainer_signup' %}" class="nav-link nav-btn-outline">Apply to Teach</a></li>
-                    <li><a href="{% url 'login' %}" class="nav-link nav-btn">Portal Access</a></li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
+            <nav class="nav-links">
+                <a href="#courses" class="nav-link">Syllabus</a>
+                <a href="#about" class="nav-link">About Us</a>
+                <a href="#process" class="nav-link">Our Process</a>
+                <a href="{% url 'trainer_signup' %}" class="nav-link">Apply as Trainer</a>
+            </nav>
 
-    <!-- Main Content Container -->
-    {% block wrapper %}
-    <main class="main-content">
-        <!-- Alerts & Notifications -->
-        {% if messages %}
-            <div class="alert-container">
-                {% for message in messages %}
-                    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" data-aos="fade-left">
-                        <span>
-                            <i class="fa-solid {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' or message.tags == 'danger' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %}" style="margin-right: 8px;"></i>
-                            {{ message }}
-                        </span>
-                        <button class="alert-close" onclick="this.parentElement.style.display='none';"><i class="fa-solid fa-xmark"></i></button>
-                    </div>
-                {% endfor %}
+            <div class="nav-actions">
+                <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
             </div>
-        {% endif %}
+        </div>
+    </header>
 
-        {% block content %}
+    <!-- MESSAGES -->
+    {% if messages %}
+    <div style="position: fixed; top: 100px; right: 24px; z-index: 2000; width: 300px;">
+        {% for message in messages %}
+        <div style="background: white; border-left: 4px solid {% if message.tags == 'error' %}#EF4444{% else %}#10B981{% endif %}; padding: 16px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); margin-bottom: 10px; animation: slideIn 0.3s ease;">
+            <p style="font-size: 14px; font-weight: 600; color: var(--text-dark);">{{ message }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- MAIN CONTENT -->
+    <main>
+        {% block wrapper %}
+        {% block content %}{% endblock %}
         {% endblock %}
     </main>
-    {% endblock %}
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div data-aos="fade-up" data-aos-delay="100">
-                <div class="footer-logo">
-                    <img src="{% static 'core/images/logo.png' %}" alt="Easy Learn" style="height:35px;">
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            
+            <!-- Column 1 -->
+            <div>
+                <div class="footer-brand">
+                    <img src="{% static 'core/images/logo.png' %}" alt="Icon" onerror="this.src='https://via.placeholder.com/30'">
                     EasyLearn<span>.</span>
                 </div>
-                <p class="footer-desc">
-                    Silicon Valley standard tech bootcamps directly in college campuses. Providing 100% online support and placements.
-                </p>
+                <p class="footer-desc">Silicon Valley standard tech bootcamps directly in college campuses. Providing 100% online support and placements.</p>
             </div>
-            <div data-aos="fade-up" data-aos-delay="200">
+
+            <!-- Column 2 -->
+            <div>
                 <h4 class="footer-title">Platform Access</h4>
                 <ul class="footer-links">
-                    <li><a href="{% url 'landing' %}">Home</a></li>
-                    {% if not request.user.is_authenticated %}
-                        <li><a href="{% url 'login' %}">Portal Login</a></li>
-                        <li><a href="{% url 'trainer_signup' %}">Apply to Teach</a></li>
-                    {% else %}
-                        {% if request.user.is_superuser %}
-                            <li><a href="{% url 'admin_dashboard' %}">Operations Center</a></li>
-                        {% else %}
-                            <li><a href="{% url 'trainer_dashboard' %}">Trainer Hub</a></li>
-                        {% endif %}
-                    {% endif %}
+                    <li><a href="{% url 'landing_gate' %}">Home</a></li>
+                    <li><a href="{% url 'login' %}">Portal Login</a></li>
+                    <li><a href="{% url 'trainer_signup' %}">Apply to Teach</a></li>
                 </ul>
             </div>
-            <div data-aos="fade-up" data-aos-delay="300">
+
+            <!-- Column 3 -->
+            <div class="footer-contact">
                 <h4 class="footer-title">System Contact</h4>
-                <p class="footer-desc" style="margin-bottom: 12px;">For internal system queries:</p>
-                <a href="mailto:manager.projects@easy-learn-academy.com" class="btn btn-outline" style="border-color: rgba(255,255,255,0.2); color: #FFF; padding: 10px 20px;">
-                    <i class="fa-solid fa-envelope"></i> admin@easylearn
-                </a>
+                <p>For internal system queries:</p>
+                <input type="text" class="footer-input" placeholder="Type here...">
             </div>
         </div>
+
         <div class="footer-bottom">
-            <p>&copy; 2026 Easy Learn Academy. Built for Students.</p>
+            © 2026 Easy Learn Academy. Built for Students.
+        </div>
+
+        <!-- WhatsApp Floating Widget -->
+        <div class="whatsapp-widget-fixed">
+            <a href="https://wa.me/917996255693" target="_blank" class="whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
         </div>
     </footer>
 
-    <!-- AOS JS -->
+    <!-- AOS Script -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
             once: true,
             offset: 50,
-            duration: 800,
+            duration: 600,
+            easing: 'ease-out-cubic',
         });
     </script>
     {% block extra_js %}{% endblock %}

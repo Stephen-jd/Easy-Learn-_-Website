@@ -39,7 +39,7 @@
         margin-bottom: 25px;
     }
 
-    /* Headline & Typing Effect */
+    /* Headline & CSS Rotator */
     .hero-content h1 {
         font-size: clamp(2.5rem, 4vw, 3.8rem);
         font-weight: 900;
@@ -48,19 +48,29 @@
         margin-bottom: 20px;
     }
     
-    .typing-wrapper {
-        color: var(--secondary); /* Brand Blue */
-        display: inline-block;
-        position: relative;
+    .rotator-wrapper {
+        display: inline-flex;
+        overflow: hidden;
+        vertical-align: bottom;
+        height: 1.2em;
+        color: #0066FF;
     }
-    .typing-wrapper::after {
-        content: '|';
-        position: absolute;
-        right: -8px;
-        color: var(--secondary);
-        animation: blink 0.8s infinite;
+    .rotator-inner {
+        display: flex;
+        flex-direction: column;
+        animation: rotateWords 8s cubic-bezier(0.25, 1, 0.5, 1) infinite;
     }
-    @keyframes blink { 50% { opacity: 0; } }
+    .rotator-inner span {
+        height: 1.2em;
+        line-height: 1.2;
+    }
+    @keyframes rotateWords {
+        0%, 20% { transform: translateY(0); }
+        25%, 45% { transform: translateY(-1.2em); }
+        50%, 70% { transform: translateY(-2.4em); }
+        75%, 95% { transform: translateY(-3.6em); }
+        100% { transform: translateY(-4.8em); }
+    }
 
     /* Subtitle */
     .hero-sub {
@@ -70,7 +80,7 @@
         line-height: 1.6;
         max-width: 600px;
     }
-    .hero-sub strong { color: var(--secondary); }
+    .hero-sub strong { color: #0066FF; }
 
     /* Feature Pills */
     .hero-features {
@@ -111,7 +121,7 @@
         transition: all 0.3s;
     }
     .btn-primary {
-        background: #0066FF; /* Bright Blue */
+        background: #0066FF;
         color: white;
         border: none;
         box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
@@ -142,13 +152,13 @@
     }
 
     /* =========================================
-       SIMPLE STATS BAR (Below Hero)
+       SIMPLE STATS BAR (Exact Match to Screenshot)
     ========================================= */
     .stats-bar {
-        background: #F8FAFC; /* Very light gray */
+        background: #F8FAFC; 
         border-top: 1px solid var(--border);
         border-bottom: 1px solid var(--border);
-        padding: 40px 24px;
+        padding: 50px 24px;
     }
     .stats-bar-container {
         max-width: 1200px;
@@ -162,30 +172,66 @@
         text-align: center;
     }
     .sb-item h3 {
-        font-size: 32px;
+        font-size: 38px;
         font-weight: 900;
         color: #0066FF;
-        margin-bottom: 4px;
+        margin-bottom: 8px;
     }
     .sb-item p {
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--text-muted);
+        font-size: 12px;
+        font-weight: 800;
+        color: #64748B;
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
 
+    /* =========================================
+       ABOUT US SECTION
+    ========================================= */
+    .about-sec {
+        padding: 100px 24px;
+        background: #FFFFFF;
+    }
+    .about-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+    }
+    .about-img {
+        background: var(--bg-base);
+        border-radius: 24px;
+        padding: 40px;
+        text-align: center;
+    }
+    .about-img i { font-size: 120px; color: var(--primary); }
+    .about-content h2 { font-size: 36px; margin-bottom: 20px; color: var(--text-dark); }
+    .about-content p { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; }
+    
+    .feature-list { list-style: none; margin-top: 30px; }
+    .feature-list li {
+        display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px;
+    }
+    .feature-icon {
+        background: var(--secondary-light); color: var(--secondary);
+        width: 40px; height: 40px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
+    }
+    .feature-text h4 { font-size: 16px; margin-bottom: 5px; color: var(--text-dark); }
+    .feature-text p { font-size: 14px; color: var(--text-muted); margin: 0; line-height: 1.5; }
 
     /* =========================================
        SOFTWARE CATEGORIES (Grid with Pills)
     ========================================= */
     .categories-sec {
         padding: 100px 24px;
-        background: #FFFFFF;
+        background: #F8FAFC;
         text-align: center;
     }
-    .cat-title { font-size: 32px; font-weight: 900; color: var(--text-dark); margin-bottom: 10px; }
-    .cat-sub { font-size: 16px; color: var(--text-muted); margin-bottom: 50px; }
+    .cat-title { font-size: 36px; font-weight: 900; color: var(--text-dark); margin-bottom: 10px; }
+    .cat-sub { font-size: 16px; color: var(--text-muted); margin-bottom: 60px; }
 
     .cat-grid {
         display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
@@ -193,7 +239,7 @@
     }
 
     .cat-card {
-        background: #FFFFFF; border-radius: 12px; padding: 24px;
+        background: #FFFFFF; border-radius: 16px; padding: 30px;
         border: 1px solid var(--border); text-align: left;
         position: relative; overflow: hidden;
         transition: transform 0.3s, box-shadow 0.3s;
@@ -203,20 +249,19 @@
         border-color: var(--primary-light);
     }
     
-    .cat-card h4 { font-size: 22px; font-weight: 800; color: var(--text-dark); margin-bottom: 15px; }
+    .cat-card h4 { font-size: 24px; font-weight: 800; color: var(--text-dark); margin-bottom: 15px; }
     
     .cat-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; position: relative; z-index: 2; }
     .cat-pill {
-        background: #FFFFFF; border: 1px solid var(--border); color: var(--text-muted);
+        background: #F8FAFC; border: 1px solid var(--border); color: var(--text-muted);
         padding: 6px 14px; border-radius: 50px; font-size: 12px; font-weight: 600;
     }
 
     .cat-explore {
         display: inline-flex; align-items: center; gap: 8px;
-        font-size: 14px; font-weight: 700; color: var(--text-dark);
+        font-size: 14px; font-weight: 700; color: #0066FF;
         position: relative; z-index: 2;
     }
-    .cat-card:hover .cat-explore { color: var(--primary); }
 
     .cat-illustration {
         position: absolute; right: -20px; bottom: 0;
@@ -234,27 +279,54 @@
     .cat-circle-bg.orange { background: #FFEDD5; } 
     .cat-illustration i { font-size: 40px; position: relative; z-index: 2; }
 
+    /* =========================================
+       LEARNING PROCESS
+    ========================================= */
+    .process-sec {
+        padding: 100px 24px;
+        background: #FFFFFF;
+        text-align: center;
+    }
+    .process-grid {
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px;
+        max-width: 1200px; margin: 60px auto 0;
+    }
+    .process-step { position: relative; }
+    .step-num {
+        width: 60px; height: 60px; background: var(--primary-light); color: var(--primary);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        font-size: 24px; font-weight: 900; margin: 0 auto 20px;
+    }
+    .process-step h4 { font-size: 18px; margin-bottom: 10px; }
+    .process-step p { font-size: 14px; color: var(--text-muted); }
 
     /* =========================================
-       WHATSAPP WIDGET
+       TESTIMONIALS
     ========================================= */
-    .whatsapp-widget {
-        position: fixed; bottom: 30px; right: 30px; z-index: 9999;
-        display: flex; align-items: center; gap: 15px; text-decoration: none;
+    .testi-sec {
+        padding: 100px 24px;
+        background: var(--bg-dark);
+        color: white;
+        text-align: center;
     }
-    .whatsapp-bubble {
-        background: #FFFFFF; color: var(--text-dark);
-        padding: 10px 20px; border-radius: 50px; font-weight: 700; font-size: 14px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.1); border: 1px solid var(--border);
-        opacity: 0; transform: translateX(20px); transition: all 0.3s;
+    .testi-title { color: white; margin-bottom: 60px; font-size: 36px;}
+    .testi-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+        max-width: 1200px; margin: 0 auto;
     }
-    .whatsapp-widget:hover .whatsapp-bubble { opacity: 1; transform: translateX(0); }
-    .whatsapp-icon {
-        background: #25D366; color: white; width: 60px; height: 60px;
-        border-radius: 50%; display: flex; align-items: center; justify-content: center;
-        font-size: 34px; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4); transition: transform 0.3s;
+    .testi-card {
+        background: rgba(255,255,255,0.05);
+        padding: 40px 30px;
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.1);
+        text-align: left;
     }
-    .whatsapp-widget:hover .whatsapp-icon { transform: scale(1.1); }
+    .stars { color: #F59E0B; margin-bottom: 15px; font-size: 14px; }
+    .testi-card p { font-size: 15px; color: #CBD5E1; line-height: 1.6; margin-bottom: 25px; font-style: italic; }
+    .testi-user { display: flex; align-items: center; gap: 15px; }
+    .testi-avatar { width: 50px; height: 50px; border-radius: 50%; background: #94A3B8; }
+    .testi-user h5 { margin: 0; color: white; font-size: 16px; }
+    .testi-user span { font-size: 12px; color: #94A3B8; }
 
     @media (max-width: 1024px) {
         .hero-container { grid-template-columns: 1fr; text-align: center; }
@@ -263,11 +335,11 @@
         .hero-features { justify-content: center; }
         .hero-actions { justify-content: center; }
         .hero-visual { justify-content: center; margin-top: 40px; }
-        .cat-grid { grid-template-columns: repeat(2, 1fr); }
+        .about-container { grid-template-columns: 1fr; }
+        .cat-grid, .process-grid, .testi-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 640px) {
-        .cat-grid { grid-template-columns: 1fr; }
-        .whatsapp-bubble { display: none; }
+        .cat-grid, .process-grid, .testi-grid { grid-template-columns: 1fr; }
     }
 </style>
 {% endblock %}
@@ -277,20 +349,28 @@
     <!-- HERO SECTION (Clean Vector Style) -->
     <section class="hero">
         <div class="hero-container">
-            <div class="hero-content" data-aos="fade-right">
+            <div class="hero-content">
                 
                 <div class="hero-badge">
                     <i class="fa-solid fa-graduation-cap"></i> ALL TECH STACKS SUPPORTED
                 </div>
                 
                 <h1>Start your preparation<br>with Easy Learn:<br>
-                    <span class="typing-wrapper" id="typing-text">Job Placements.</span>
+                    <span class="rotator-wrapper">
+                        <span class="rotator-inner">
+                            <span>Job Placements.</span>
+                            <span>Full Stack Apps.</span>
+                            <span>Mock Interviews.</span>
+                            <span>Live Courses.</span>
+                            <span>Job Placements.</span>
+                        </span>
+                    </span>
                 </h1>
                 
                 <p class="hero-sub">
                     <strong>Interactive Full-Stack Courses</strong>, Top-notch DSA Assessments,<br>
                     High-yield Mock Interviews, and guaranteed Placements at your fingertips.<br>
-                    <span style="font-size: 14px; margin-top: 10px; display: inline-block;">Master everything from Python and React to advanced GenAI models with our 1:1 mentorship program designed for university students.</span>
+                    <span style="font-size: 14px; margin-top: 10px; display: inline-block;">Master everything from Python and React to advanced GenAI models with our 1:1 mentorship program.</span>
                 </p>
                 
                 <div class="hero-features">
@@ -310,16 +390,16 @@
                 </div>
             </div>
             
-            <div class="hero-visual" data-aos="fade-left">
+            <div class="hero-visual">
                 <!-- Locally generated vector illustration -->
                 <img src="{% static 'core/images/hero_student.png' %}" alt="Student Developer Workspace">
             </div>
         </div>
     </section>
 
-    <!-- SIMPLE STATS BAR -->
+    <!-- SIMPLE STATS BAR (Exact Match to Screenshot) -->
     <div class="stats-bar">
-        <div class="stats-bar-container" data-aos="fade-up">
+        <div class="stats-bar-container">
             <div class="sb-item">
                 <h3>15+</h3>
                 <p>Tech Stacks</p>
@@ -339,14 +419,74 @@
         </div>
     </div>
 
+    <!-- ABOUT US SECTION -->
+    <section class="about-sec" id="about">
+        <div class="about-container">
+            <div class="about-img">
+                <i class="fa-solid fa-laptop-code"></i>
+            </div>
+            <div class="about-content">
+                <h2>Bridging the Gap Between College and Silicon Valley.</h2>
+                <p>Easy Learn Academy was founded on a simple principle: traditional college curriculums are not preparing students for the rigorous demands of top-tier product companies.</p>
+                <p>We provide Silicon Valley standard tech bootcamps directly in college campuses. By partnering with leading universities, we deliver intensive, hands-on training that focuses on real-world application, not just theory.</p>
+                
+                <ul class="feature-list">
+                    <li>
+                        <div class="feature-icon"><i class="fa-solid fa-code"></i></div>
+                        <div class="feature-text">
+                            <h4>Industry-vetted Curriculum</h4>
+                            <p>Our syllabus is continuously updated to match the exact tech stacks being used by companies like Google, Amazon, and Microsoft today.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
+                        <div class="feature-text">
+                            <h4>100% Online Support</h4>
+                            <p>Stuck on a bug? Our mentors are available 24/7 to help you debug and understand complex system design problems.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEARNING PROCESS -->
+    <section class="process-sec" id="process">
+        <h2 style="font-size:36px; margin-bottom:10px;">Our Proven Learning Process</h2>
+        <p style="color:var(--text-muted); margin-bottom:50px;">A structured pathway designed to take you from a beginner to a hired professional.</p>
+        
+        <div class="process-grid">
+            <div class="process-step">
+                <div class="step-num">1</div>
+                <h4>Enroll & Assess</h4>
+                <p>We assess your current coding level and tailor a customized roadmap specific to your career goals.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">2</div>
+                <h4>Live Training</h4>
+                <p>Attend intensive live sessions focusing on hands-on project building and core CS fundamentals.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">3</div>
+                <h4>Mock Interviews</h4>
+                <p>Go through rigorous mock technical and HR interviews with our network of industry experts.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-num">4</div>
+                <h4>Job Placements</h4>
+                <p>Gain exclusive access to our hiring partners and secure a high-paying role in a top tech company.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- SOFTWARE CATEGORIES GRID -->
     <section class="categories-sec" id="courses">
-        <h2 class="cat-title" data-aos="fade-up">Tech & Software Categories</h2>
-        <p class="cat-sub" data-aos="fade-up" data-aos-delay="100">We prepare students for 10+ core tech domains. Scroll down to find your path.</p>
+        <h2 class="cat-title">Explore Tech Categories</h2>
+        <p class="cat-sub">We prepare students for 10+ core tech domains. Scroll down to find your path.</p>
         
         <div class="cat-grid">
             <!-- Card 1 -->
-            <div class="cat-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="cat-card">
                 <h4>Java Full Stack</h4>
                 <div class="cat-pills">
                     <div class="cat-pill">Spring Boot</div>
@@ -362,7 +502,7 @@
             </div>
 
             <!-- Card 2 -->
-            <div class="cat-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="cat-card">
                 <h4>Python & AI Full Stack</h4>
                 <div class="cat-pills">
                     <div class="cat-pill">Django</div>
@@ -378,7 +518,7 @@
             </div>
 
             <!-- Card 3 -->
-            <div class="cat-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="cat-card">
                 <h4>Data Science & ML</h4>
                 <div class="cat-pills">
                     <div class="cat-pill">Pandas</div>
@@ -394,7 +534,7 @@
             </div>
 
             <!-- Card 4 -->
-            <div class="cat-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="cat-card">
                 <h4>Cloud & DevOps</h4>
                 <div class="cat-pills">
                     <div class="cat-pill">AWS / Azure</div>
@@ -410,23 +550,23 @@
             </div>
             
             <!-- Card 5 -->
-            <div class="cat-card" style="border-color: var(--secondary);" data-aos="fade-up" data-aos-delay="500">
-                <h4 style="color: var(--secondary);">Campus Placement Prep</h4>
+            <div class="cat-card" style="border-color: #0066FF;">
+                <h4 style="color: #0066FF;">Campus Placement Prep</h4>
                 <div class="cat-pills">
                     <div class="cat-pill">DSA Mastery</div>
                     <div class="cat-pill">Aptitude</div>
                     <div class="cat-pill">Mock Interviews</div>
                 </div>
-                <a href="{% url 'login' %}" class="cat-explore" style="color: var(--secondary);">Explore Category <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="{% url 'login' %}" class="cat-explore">Explore Category <i class="fa-solid fa-arrow-right"></i></a>
                 
                 <div class="cat-illustration">
-                    <div class="cat-circle-bg" style="background: rgba(11, 67, 133, 0.1);"></div>
-                    <i class="fa-solid fa-users" style="color: var(--secondary);"></i>
+                    <div class="cat-circle-bg" style="background: rgba(0, 102, 255, 0.1);"></div>
+                    <i class="fa-solid fa-users" style="color: #0066FF;"></i>
                 </div>
             </div>
 
             <!-- Card 6 -->
-            <div class="cat-card" data-aos="fade-up" data-aos-delay="600">
+            <div class="cat-card">
                 <h4>Cybersecurity</h4>
                 <div class="cat-pills">
                     <div class="cat-pill">Ethical Hacking</div>
@@ -443,51 +583,47 @@
         </div>
     </section>
 
-    <!-- WHATSAPP WIDGET -->
-    <a href="https://wa.me/917996255693?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20training%20programs." target="_blank" class="whatsapp-widget">
-        <div class="whatsapp-bubble">Chat with us 👋</div>
-        <div class="whatsapp-icon"><i class="fa-brands fa-whatsapp"></i></div>
-    </a>
-
-{% endblock %}
-
-{% block extra_js %}
-<script>
-    // Simple Typing Effect Script
-    const words = ["Job Placements.", "Full Stack Apps.", "Mock Interviews.", "Live Courses."];
-    let wordIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    const typingElement = document.getElementById("typing-text");
-
-    function typeEffect() {
-        const currentWord = words[wordIndex];
+    <!-- TESTIMONIALS -->
+    <section class="testi-sec">
+        <h2 class="testi-title">What Our Alumni Say</h2>
         
-        if (isDeleting) {
-            typingElement.textContent = currentWord.substring(0, charIndex - 1);
-            charIndex--;
-        } else {
-            typingElement.textContent = currentWord.substring(0, charIndex + 1);
-            charIndex++;
-        }
+        <div class="testi-grid">
+            <div class="testi-card">
+                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p>"The Java Full Stack program completely transformed my understanding of backend architecture. The mock interviews were rigorous but essential. I secured a placement at an MNC within 2 months of graduation."</p>
+                <div class="testi-user">
+                    <div class="testi-avatar" style="background: url('https://randomuser.me/api/portraits/men/32.jpg') center/cover;"></div>
+                    <div>
+                        <h5>Rahul Sharma</h5>
+                        <span>Software Engineer @ Amazon</span>
+                    </div>
+                </div>
+            </div>
 
-        let typeSpeed = isDeleting ? 50 : 100;
+            <div class="testi-card">
+                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p>"Learning Python and AI integration here was the best decision. The mentors actually care about your progress and the 24/7 online support is incredible for debugging late at night."</p>
+                <div class="testi-user">
+                    <div class="testi-avatar" style="background: url('https://randomuser.me/api/portraits/women/44.jpg') center/cover;"></div>
+                    <div>
+                        <h5>Priya Patel</h5>
+                        <span>AI Developer @ StartUp</span>
+                    </div>
+                </div>
+            </div>
 
-        if (!isDeleting && charIndex === currentWord.length) {
-            typeSpeed = 2000; // Pause at end of word
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            wordIndex = (wordIndex + 1) % words.length;
-            typeSpeed = 500; // Pause before typing new word
-        }
+            <div class="testi-card">
+                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p>"The campus training bootcamps are intense. They don't just teach code; they teach you how to think like an engineer. The 100% placement support gave me so much confidence."</p>
+                <div class="testi-user">
+                    <div class="testi-avatar" style="background: url('https://randomuser.me/api/portraits/men/67.jpg') center/cover;"></div>
+                    <div>
+                        <h5>Arjun Desai</h5>
+                        <span>Cloud Architect @ TCS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        setTimeout(typeEffect, typeSpeed);
-    }
-
-    // Start typing effect on load
-    document.addEventListener("DOMContentLoaded", function() {
-        setTimeout(typeEffect, 1000);
-    });
-</script>
 {% endblock %}
