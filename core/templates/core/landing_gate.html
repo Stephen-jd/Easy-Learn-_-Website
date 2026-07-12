@@ -50,7 +50,10 @@
         font-size: clamp(3rem, 5vw, 4.5rem); font-weight: 800;
         color: white; line-height: 1.1; margin-bottom: 25px; letter-spacing: -1px;
     }
-    .hero-highlight { color: #3B82F6; }
+    .hero-highlight { color: #0066FF; }
+    .typing-text { border-right: 3px solid #0066FF; padding-right: 5px; animation: blinkCursor .75s step-end infinite; }
+    @keyframes blinkCursor { from, to { border-color: transparent } 50% { border-color: #0066FF; } }
+    
     .hero-sub {
         font-size: 1.25rem; color: #94A3B8; margin-bottom: 40px; line-height: 1.6; max-width: 600px;
     }
@@ -494,10 +497,10 @@
             <div class="hero-content" data-aos="fade-right">
                 <div class="hero-prehead">LEARN WHAT THE INDUSTRY DEMANDS</div>
                 
-                <h1>Unlock your<br>dream <span class="hero-highlight">tech job</span></h1>
+                <h1>Start your journey to<br>a dream <span class="typing-text hero-highlight" id="typewriter"></span></h1>
                 
                 <p class="hero-sub">
-                    AI-driven, industry-focused courses in software development and data science to secure your dream tech job.
+                    AI-driven, industry-focused courses for college students and graduates looking for guaranteed placements.
                 </p>
                 
                 <div class="hero-actions">
@@ -668,8 +671,8 @@
                 <a href="#courses" class="cta-banner-btn">Start Learning</a>
             </div>
             <div class="cta-banner-image" data-aos="fade-left">
-                <!-- Fallback image, will use hero_student.png for now -->
-                <img src="{% static 'core/images/hero_student.png' %}" alt="Students">
+                <!-- Authentic Indian student image -->
+                <img src="{% static 'core/images/placement_indian.png' %}" alt="Students">
             </div>
         </div>
     </section>
@@ -821,7 +824,7 @@
     <section class="bootcamp-sec">
         <div class="bootcamp-container">
             <div class="bc-image" data-aos="fade-right">
-                <img src="{% static 'core/images/hero_student.png' %}" alt="Students learning">
+                <img src="{% static 'core/images/bootcamp_indian.png' %}" alt="Students learning">
             </div>
             <div class="bc-content" data-aos="fade-left">
                 <div class="bc-badges">
@@ -1058,7 +1061,7 @@
     setTimeout(hidePreloader, 3500);
 
     // SMOOTH TYPEWRITER LOGIC
-    const words = ["Job Placements.", "Full Stack Apps.", "Mock Interviews.", "Live Courses."];
+    const words = ["Job.", "Placement.", "Career."];
     let i = 0; let j = 0; let currentWord = ""; let isDeleting = false;
     const typeTarget = document.getElementById("typewriter");
     
