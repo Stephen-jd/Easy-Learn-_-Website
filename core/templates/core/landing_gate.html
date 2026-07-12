@@ -31,46 +31,88 @@
     }
 
     /* =========================================
-       HERO SECTION
+       HERO SECTION (Newton Style)
     ========================================= */
     .hero {
-        position: relative; background: #FFFFFF;
-        padding: 80px 24px 60px; overflow: hidden;
+        position: relative; background: #000000;
+        padding: 100px 24px 80px; overflow: hidden;
+        color: white;
     }
     .hero-container {
         max-width: 1400px; margin: 0 auto;
-        display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 60px;
+        display: grid; grid-template-columns: 1fr 450px; gap: 80px; align-items: center;
     }
-    .hero-badge {
-        display: inline-flex; align-items: center; gap: 8px;
-        background: var(--secondary-light); color: var(--secondary);
-        padding: 6px 16px; border-radius: 50px; font-size: 11px; font-weight: 800;
-        letter-spacing: 1px; text-transform: uppercase; margin-bottom: 25px;
+    .hero-prehead {
+        color: #F97316; font-size: 14px; font-weight: 700; letter-spacing: 2px;
+        text-transform: uppercase; margin-bottom: 20px;
     }
     .hero-content h1 {
-        font-size: clamp(2.5rem, 4vw, 3.8rem); font-weight: 900;
-        color: var(--text-dark); line-height: 1.2; margin-bottom: 20px;
+        font-size: clamp(3rem, 5vw, 4.5rem); font-weight: 800;
+        color: white; line-height: 1.1; margin-bottom: 25px; letter-spacing: -1px;
     }
-    .typing-text { color: #0066FF; border-right: 3px solid #0066FF; padding-right: 5px; animation: blinkCursor .75s step-end infinite; }
-    @keyframes blinkCursor { from, to { border-color: transparent } 50% { border-color: #0066FF; } }
-    
+    .hero-highlight { color: #3B82F6; }
     .hero-sub {
-        font-size: 1.1rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; max-width: 600px;
+        font-size: 1.25rem; color: #94A3B8; margin-bottom: 40px; line-height: 1.6; max-width: 600px;
     }
-    .hero-features { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
-    .h-feature-pill {
-        display: inline-flex; align-items: center; gap: 8px;
-        background: #FFFFFF; border: 1px solid var(--border);
-        padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 700; color: var(--text-main);
-    }
-    .h-feature-pill i { color: var(--text-muted); }
-    .hero-actions { display: flex; gap: 16px; }
+    .hero-actions { display: flex; gap: 20px; margin-bottom: 40px; }
     .hero-btn {
-        display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-        padding: 14px 32px; border-radius: 8px; font-weight: 800; font-size: 15px; transition: all 0.3s;
+        display: inline-flex; align-items: center; justify-content: center;
+        padding: 16px 32px; border-radius: 8px; font-weight: 700; font-size: 16px; transition: all 0.3s;
+        border: none; cursor: pointer; text-decoration: none;
     }
-    .hero-visual { display: flex; justify-content: flex-end; }
-    .hero-visual img { width: 100%; max-width: 550px; height: auto; }
+    .hero-btn-primary { background: #3B82F6; color: white; }
+    .hero-btn-primary:hover { background: #2563EB; }
+    .hero-btn-secondary { background: white; color: #0F172A; }
+    .hero-btn-secondary:hover { background: #F8FAFC; }
+    
+    .hero-stats {
+        display: flex; flex-direction: column; gap: 15px; margin-top: 20px;
+    }
+    .hero-stat-item {
+        display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600;
+    }
+    .hero-rating { font-size: 28px; font-weight: 800; display: flex; align-items: center; gap: 15px; }
+    .stars i { color: #F59E0B; font-size: 16px; }
+    
+    /* Hero Lead Form */
+    .hero-form-card {
+        background: white; border-radius: 16px; padding: 40px 30px;
+        color: #0F172A; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+    .hero-form-card h3 {
+        text-align: center; font-size: 22px; font-weight: 600; margin-bottom: 20px;
+    }
+    .google-btn {
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        width: 100%; padding: 12px; border: 1px solid #E2E8F0; border-radius: 8px;
+        background: white; font-weight: 600; font-size: 14px; cursor: pointer; margin-bottom: 20px;
+    }
+    .form-divider {
+        text-align: center; color: #64748B; font-size: 14px; position: relative; margin-bottom: 20px; font-style: italic;
+    }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 12px; color: #64748B; margin-bottom: 5px; }
+    .form-group label span { color: #EF4444; }
+    .form-input {
+        width: 100%; padding: 12px 16px; border: 1px solid #CBD5E1; border-radius: 8px;
+        font-size: 14px; font-family: 'Inter', sans-serif;
+    }
+    .form-input:focus { outline: 2px solid #3B82F6; border-color: transparent; }
+    .phone-group { display: flex; border: 1px solid #CBD5E1; border-radius: 8px; overflow: hidden; }
+    .phone-prefix { background: #F8FAFC; padding: 12px; font-size: 14px; font-weight: 600; border-right: 1px solid #CBD5E1; }
+    .phone-group input { border: none; padding: 12px; width: 100%; outline: none; font-size: 14px; font-family: 'Inter', sans-serif; }
+    .phone-group:focus-within { outline: 2px solid #3B82F6; border-color: transparent; }
+    
+    .course-radio-group { display: flex; gap: 20px; margin-bottom: 20px; margin-top: 10px; }
+    .radio-label { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
+    .checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 12px; margin-bottom: 20px; cursor: pointer; }
+    .submit-btn {
+        width: 100%; background: #93C5FD; color: white; border: none; padding: 16px;
+        border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: 0.3s;
+    }
+    .submit-btn:hover { background: #60A5FA; }
+    .form-terms { text-align: center; font-size: 11px; color: #64748B; margin-top: 15px; }
+    .form-terms a { color: #3B82F6; text-decoration: none; }
 
     /* =========================================
        AI TOOLS MARQUEE (Scrolling)
@@ -217,35 +259,86 @@
     .quote-btn:hover { background: #0052CC; }
 
     /* =========================================
-       POPULAR COURSES GRID
+       NEW COURSES SECTION
     ========================================= */
-    .courses-sec { padding: 80px 24px; background: #FEF6F6; } 
-    .courses-sec h2 { text-align: center; font-size: 32px; margin-bottom: 50px; color: #0F172A; }
-    .courses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto; }
+    .courses-sec { padding: 80px 24px; background: #FDFDF6; } 
+    .courses-sec h2 { text-align: left; font-size: 38px; margin-bottom: 50px; color: #33213A; max-width: 1200px; margin: 0 auto 50px; font-weight: 500; }
+    .courses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; }
     
     .course-card { 
-        background: white; border-radius: 16px; overflow: hidden; 
-        box-shadow: 0 10px 30px rgba(0,0,0,0.04); text-align: center;
-        border: 1px solid #f1f5f9; position: relative;
+        background: white; border-radius: 12px; overflow: hidden; 
+        padding: 30px; border: 2px solid transparent; display: flex; flex-direction: column;
     }
-    .course-img-wrapper {
-        width: 100%; height: 180px; position: relative;
-        background: #f8fafc url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="2" fill="%23cbd5e1"/></svg>');
+    .course-card.blue { border-color: #38BDF8; }
+    .course-card.green { border-color: #4ADE80; }
+    .course-card.pink { border-color: #F472B6; }
+    .course-card.purple { border-color: #C084FC; }
+    .course-card.orange { border-color: #FB923C; }
+    
+    .course-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+    .course-icon { width: 35px; height: 35px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; }
+    .blue .course-icon { background: #38BDF8; }
+    .green .course-icon { background: #4ADE80; }
+    .pink .course-icon { background: #F472B6; }
+    .course-title { font-size: 22px; font-weight: 600; color: #33213A; }
+    
+    .course-desc { font-size: 15px; color: #475569; font-weight: 600; margin-bottom: 20px; line-height: 1.4; }
+    
+    .coding-badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 800; color: white; margin-bottom: 20px; letter-spacing: 0.5px;}
+    .blue .coding-badge { background: #C084FC; }
+    .green .coding-badge { background: #4ADE80; }
+    .pink .coding-badge { background: #4ADE80; }
+    
+    .course-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 25px; }
+    .tag { padding: 4px 10px; border: 1px solid; border-radius: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+    .blue .tag { border-color: #38BDF8; color: #0284C7; }
+    .green .tag { border-color: #4ADE80; color: #16A34A; }
+    .pink .tag { border-color: #F472B6; color: #DB2777; }
+    
+    .course-content-text { font-size: 14px; color: #64748B; line-height: 1.6; margin-bottom: 30px; flex-grow: 1; }
+    
+    .course-req { border-top: 1px solid #E2E8F0; padding-top: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: #475569; cursor: pointer; }
+    
+    .course-actions { display: flex; gap: 15px; }
+    .btn-apply { padding: 10px 20px; border-radius: 50px; font-size: 14px; font-weight: 600; color: white; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+    .blue .btn-apply { background: #38BDF8; }
+    .green .btn-apply { background: #4ADE80; }
+    .pink .btn-apply { background: #F472B6; }
+    
+    .btn-info { padding: 10px 20px; border-radius: 50px; font-size: 14px; font-weight: 500; color: #475569; border: 1px solid #64748B; background: transparent; cursor: pointer; display: flex; align-items: center; gap: 5px;}
+    
+    /* =========================================
+       INSTRUCTOR BOOTCAMP SECTION
+    ========================================= */
+    .bootcamp-sec { background: #3B1B47; padding: 100px 24px; color: white; }
+    .bootcamp-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    
+    .bc-image { position: relative; border-radius: 20px; overflow: hidden; }
+    .bc-image img { width: 100%; display: block; border-radius: 20px; }
+    /* Transformative Speech Bubble Arrow */
+    .bc-image::after {
+        content: ''; position: absolute; right: -1px; top: 50%; transform: translateY(-50%);
+        border-width: 25px 25px 25px 0; border-style: solid; border-color: transparent #3B1B47 transparent transparent;
     }
-    .course-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.1; }
-    .course-logo { 
-        position: absolute; bottom: -25px; right: 25px; 
-        width: 50px; height: 50px; background: white; 
-        border-radius: 10px; padding: 5px; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08); object-fit: contain; border: 1px solid #f1f5f9;
+    
+    .bc-content h2 { font-size: 42px; font-weight: 500; line-height: 1.2; margin-bottom: 25px; color: white; }
+    .bc-content p { font-size: 16px; color: #E2E8F0; line-height: 1.6; margin-bottom: 40px; }
+    
+    .bc-badges { display: flex; gap: 10px; margin-bottom: 30px; animation: badgeSwap 6s infinite alternate; }
+    .bc-badge { padding: 6px 15px; border-radius: 4px; font-size: 15px; font-weight: 500; color: #3B1B47; }
+    .b-purple { background: #C084FC; }
+    .b-green { background: #4ADE80; }
+    .b-yellow { background: #FBBF24; }
+    .b-blue { background: #38BDF8; }
+    
+    @keyframes badgeSwap {
+        0%, 45% { opacity: 1; transform: translateY(0); }
+        50%, 100% { opacity: 0.8; transform: translateY(-5px); filter: hue-rotate(90deg); }
     }
-    .course-card-content { padding: 35px 25px 25px; }
-    .course-org { color: #E11D48; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px; }
-    .course-title { font-size: 16px; font-weight: 800; color: #0F172A; margin-bottom: 25px; min-height: 45px; }
-    .course-meta { display: flex; justify-content: center; gap: 20px; color: #3b82f6; font-size: 12px; margin-bottom: 25px; font-weight: 600; }
-    .course-meta i { margin-right: 5px; color: #3b82f6; }
-    .course-batch { font-size: 11px; color: #64748B; padding-top: 15px; border-top: 1px solid #f1f5f9; }
-    .course-batch strong { color: #0F172A; font-weight: 800; }
+    
+    .bc-actions { display: flex; gap: 15px; }
+    .bc-btn-green { background: #4ADE80; color: #16A34A; padding: 12px 24px; border-radius: 50px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; color: #064E3B;}
+    .bc-btn-dark { background: transparent; color: white; padding: 12px 24px; border-radius: 50px; font-weight: 500; border: 1px solid rgba(255,255,255,0.3); text-decoration: none; cursor: pointer; }
 
     /* =========================================
        DARK SYLLABUS SECTION
@@ -293,6 +386,52 @@
     .syl-image { width: 100%; border-radius: 12px; object-fit: cover; }
     .syl-logos { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
     .syl-logos i { font-size: 30px; color: #64748B; }
+
+    /* =========================================
+       CTA BANNER SECTION
+    ========================================= */
+    .cta-banner-sec {
+        background: #FEF9C3; /* very light yellow */
+        overflow: hidden;
+        margin-top: 60px;
+        position: relative;
+    }
+    .cta-banner-container {
+        max-width: 1200px; margin: 0 auto;
+        display: grid; grid-template-columns: 1fr 1fr;
+        align-items: stretch; min-height: 350px;
+    }
+    .cta-banner-text { padding: 60px 40px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;}
+    .cta-banner-text h2 {
+        font-size: 42px; font-weight: 700; color: #0F172A;
+        line-height: 1.2; margin-bottom: 30px; letter-spacing: -1px;
+    }
+    .cta-banner-btn {
+        background: #0066FF; color: white; padding: 14px 28px;
+        border-radius: 8px; font-weight: 600; font-size: 16px;
+        border: none; cursor: pointer; text-decoration: none;
+        display: inline-block; transition: 0.3s;
+    }
+    .cta-banner-btn:hover { background: #0052CC; }
+    
+    .cta-banner-image {
+        position: relative; 
+        background: #FBBF24; /* yellow right side */
+        clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+        display: flex; align-items: flex-end; justify-content: center;
+    }
+    /* Adding the slightly lighter angled shape behind it like in the screenshot */
+    .cta-banner-image::before {
+        content: ''; position: absolute;
+        top: 0; left: -100px; width: 100%; height: 100%;
+        background: #FDE047; z-index: -1;
+        clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+    
+    .cta-banner-image img {
+        width: 100%; max-width: 450px; object-fit: contain;
+        position: absolute; bottom: 0; right: 20px;
+    }
 
     /* =========================================
        COMMUNITY SLIDER
@@ -352,37 +491,83 @@
     <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <i class="fa-solid fa-graduation-cap"></i> ALL TECH STACKS SUPPORTED
-                </div>
+            <div class="hero-content" data-aos="fade-right">
+                <div class="hero-prehead">LEARN WHAT THE INDUSTRY DEMANDS</div>
                 
-                <h1>Start your preparation<br>with Easy Learn:<br>
-                    <span class="typing-text" id="typewriter"></span>
-                </h1>
+                <h1>Unlock your<br>dream <span class="hero-highlight">tech job</span></h1>
                 
                 <p class="hero-sub">
-                    <strong>Interactive Full-Stack Courses</strong>, Top-notch DSA Assessments,<br>
-                    High-yield Mock Interviews, and guaranteed Placements at your fingertips.<br>
-                    <span style="font-size: 14px; margin-top: 10px; display: inline-block;">Master everything from Python and React to advanced GenAI models with our 1:1 mentorship program.</span>
+                    AI-driven, industry-focused courses in software development and data science to secure your dream tech job.
                 </p>
                 
-                <div class="hero-features">
-                    <div class="h-feature-pill"><i class="fa-solid fa-video"></i> Mock Interview</div>
-                    <div class="h-feature-pill"><i class="fa-solid fa-clipboard-list"></i> Test Series</div>
-                    <div class="h-feature-pill"><i class="fa-solid fa-book-open"></i> Live Courses</div>
-                    <div class="h-feature-pill"><i class="fa-solid fa-briefcase"></i> Job Placements</div>
-                </div>
-
                 <div class="hero-actions">
-                    <a href="#courses" class="btn btn-primary">
-                        <i class="fa-solid fa-rocket"></i> Explore Courses
-                    </a>
+                    <a href="#contact" class="hero-btn hero-btn-primary">Talk to an Expert</a>
+                    <a href="#courses" class="hero-btn hero-btn-secondary">Explore Courses</a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="hero-stat-item">
+                        🔥 15K+ Students Already Enrolled
+                    </div>
+                    <div class="hero-rating" style="margin-top: 30px;">
+                        4.9/5 
+                        <div style="display:flex; flex-direction:column; gap:4px; margin-left: 5px;">
+                            <div class="stars">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                            </div>
+                            <span style="font-size: 12px; font-weight:400; color:#94A3B8;">from 2000+ reviews</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             
-            <div class="hero-visual" data-aos="fade-left">
-                <img src="{% static 'core/images/hero_student.png' %}" alt="Student Developer Workspace">
+            <div class="hero-form-wrapper" data-aos="fade-left">
+                <div class="hero-form-card">
+                    <h3>Book a Live Class, For Free!</h3>
+                    <button class="google-btn">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="18" alt="Google"> Sign up with Google
+                    </button>
+                    <div class="form-divider">OR</div>
+                    
+                    <form>
+                        <div class="form-group">
+                            <label>Name <span>*</span></label>
+                            <input type="text" class="form-input" placeholder="Enter Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email <span>*</span></label>
+                            <input type="email" class="form-input" placeholder="Enter Email">
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number <span>*</span></label>
+                            <div class="phone-group">
+                                <div class="phone-prefix">IN +91</div>
+                                <input type="text" placeholder="Enter Phone Number">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 20px;">
+                            <label>Your Course of Interest</label>
+                            <div class="course-radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="course" checked> Data Science & AI
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="course"> Full Stack Development
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> Send me updates on WhatsApp
+                        </label>
+                        
+                        <button type="button" class="submit-btn">Send OTP</button>
+                        <div class="form-terms">
+                            By continuing, you agree to <a href="#">Terms & Conditions</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -475,6 +660,20 @@
         </div>
     </section>
 
+    <!-- CTA BANNER -->
+    <section class="cta-banner-sec">
+        <div class="cta-banner-container">
+            <div class="cta-banner-text" data-aos="fade-right">
+                <h2>Your first step to find your dream<br>tech job.</h2>
+                <a href="#courses" class="cta-banner-btn">Start Learning</a>
+            </div>
+            <div class="cta-banner-image" data-aos="fade-left">
+                <!-- Fallback image, will use hero_student.png for now -->
+                <img src="{% static 'core/images/hero_student.png' %}" alt="Students">
+            </div>
+        </div>
+    </section>
+
     <!-- ACCORDION & QUOTE FORM -->
     <section class="acc-form-sec">
         <div class="acc-form-container">
@@ -535,56 +734,109 @@
         </div>
     </section>
 
-    <!-- POPULAR & TRENDING COURSES -->
+    <!-- OUR COURSES -->
     <section class="courses-sec" id="courses">
-        <h2 data-aos="fade-up">Popular & Trending Courses</h2>
+        <h2 data-aos="fade-up">Our Courses</h2>
         <div class="courses-grid">
             
-            <div class="course-card" data-aos="fade-up" data-aos-delay="0">
-                <div class="course-img-wrapper">
-                    <img src="{% static 'core/images/logo.png' %}" alt="EasyLearn Logo" class="course-logo">
+            <div class="course-card blue" data-aos="fade-up">
+                <div class="course-header">
+                    <div class="course-icon"><i class="fa-solid fa-microchip"></i></div>
+                    <div class="course-title">Digital Innovator</div>
                 </div>
-                <div class="course-card-content">
-                    <div class="course-org">EASY LEARN ACADEMY</div>
-                    <h3 class="course-title">Java Full Stack Development</h3>
-                    <div class="course-meta">
-                        <span><i class="fa-regular fa-clock"></i> 06 months</span>
-                        <span><i class="fa-solid fa-laptop"></i> Online</span>
-                    </div>
-                    <div class="course-batch">Batch Starts on <strong>15 Jul 2026</strong></div>
+                <div class="course-desc">Learn the latest technology you need in business</div>
+                <div class="coding-badge">CODING: LOW</div>
+                <div class="course-tags">
+                    <span class="tag">10 WEEKS</span>
+                    <span class="tag">PART TIME</span>
+                    <span class="tag">2 DAYS/P.W</span>
+                    <span class="tag">LEVEL 4</span>
                 </div>
-            </div>
-            
-            <div class="course-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="course-img-wrapper">
-                    <img src="{% static 'core/images/logo.png' %}" alt="EasyLearn Logo" class="course-logo">
+                <div class="course-content-text">
+                    Learn the latest digital tools and technologies you need, from collaborative whiteboards to data visualisation, to thrive in and bring new ideas to the modern workplace.
                 </div>
-                <div class="course-card-content">
-                    <div class="course-org">EASY LEARN ACADEMY</div>
-                    <h3 class="course-title">Python & AI Certification</h3>
-                    <div class="course-meta">
-                        <span><i class="fa-regular fa-clock"></i> 6 Months</span>
-                        <span><i class="fa-solid fa-laptop"></i> Online</span>
-                    </div>
-                    <div class="course-batch">Batch Starts on <strong>29 Aug 2026</strong></div>
+                <div class="course-req">
+                    Requirements <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="course-actions">
+                    <button class="btn-apply">Apply Now <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn-info">Course Info <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
             </div>
 
-            <div class="course-card" data-aos="fade-up" data-aos-delay="200">
-                <div class="course-img-wrapper">
-                    <img src="{% static 'core/images/logo.png' %}" alt="EasyLearn Logo" class="course-logo">
+            <div class="course-card green" data-aos="fade-up" data-aos-delay="100">
+                <div class="course-header">
+                    <div class="course-icon"><i class="fa-solid fa-bullseye"></i></div>
+                    <div class="course-title">Digital Marketing with AI</div>
                 </div>
-                <div class="course-card-content">
-                    <div class="course-org">EASY LEARN ACADEMY</div>
-                    <h3 class="course-title">MERN Stack & Cloud DevOps</h3>
-                    <div class="course-meta">
-                        <span><i class="fa-regular fa-clock"></i> 06 months</span>
-                        <span><i class="fa-solid fa-laptop"></i> Online</span>
-                    </div>
-                    <div class="course-batch">Batch Starts on <strong>17 Oct 2026</strong></div>
+                <div class="course-desc">Create and deliver marketing that converts</div>
+                <div class="coding-badge">CODING: NONE</div>
+                <div class="course-tags">
+                    <span class="tag">13 WEEKS</span>
+                    <span class="tag">PART TIME</span>
+                    <span class="tag">1 DAY/P.W</span>
+                    <span class="tag">LEVEL 4</span>
+                </div>
+                <div class="course-content-text">
+                    Covering all the fundamentals you would expect on a class-leading Digital Marketing course and enhance it with an AI foundation that will enable you to increase efficiency with quality content.
+                </div>
+                <div class="course-req">
+                    Requirements <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="course-actions">
+                    <button class="btn-apply">Apply Now <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn-info">Course Info <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
             </div>
-            
+
+            <div class="course-card pink" data-aos="fade-up" data-aos-delay="200">
+                <div class="course-header">
+                    <div class="course-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="course-title">AI Literacy</div>
+                </div>
+                <div class="course-desc">Unlock AI and its potential in business</div>
+                <div class="coding-badge">CODING: NONE</div>
+                <div class="course-tags">
+                    <span class="tag">9 WEEKS</span>
+                    <span class="tag">PART TIME</span>
+                    <span class="tag">1 DAY/P.W</span>
+                    <span class="tag">LEVEL 3</span>
+                </div>
+                <div class="course-content-text">
+                    This course will teach individuals from all backgrounds to utilise AI effectively. Learn AI best practices and unlock business efficiency and a career using future skills.
+                </div>
+                <div class="course-req">
+                    Requirements <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="course-actions">
+                    <button class="btn-apply">Apply Now <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn-info">Course Info <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- INSTRUCTOR LED BOOTCAMPS -->
+    <section class="bootcamp-sec">
+        <div class="bootcamp-container">
+            <div class="bc-image" data-aos="fade-right">
+                <img src="{% static 'core/images/hero_student.png' %}" alt="Students learning">
+            </div>
+            <div class="bc-content" data-aos="fade-left">
+                <div class="bc-badges">
+                    <span class="bc-badge b-purple">Humanity</span>
+                    <span class="bc-badge b-green">Software</span>
+                    <span class="bc-badge b-yellow">Inclusive</span>
+                    <span class="bc-badge b-blue">Teamwork</span>
+                </div>
+                <h2>Instructor-led<br>skills bootcamps<br>for everyone.</h2>
+                <p>We help people from all backgrounds learn the practical skills necessary for a long, successful career—preparing individuals for the future of work with courses covering Digital Marketing, AI and leading edge digital skills.</p>
+                <div class="bc-actions">
+                    <button class="bc-btn-green">Book your space <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="bc-btn-dark">Discover more <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
         </div>
     </section>
 
