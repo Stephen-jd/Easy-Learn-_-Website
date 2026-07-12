@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Easy Learn Academy{% endblock %}</title>
     
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -37,7 +37,7 @@
             --radius-md: 12px;
             --radius-sm: 8px;
             
-            --font-main: 'Inter', sans-serif;
+            --font-main: 'Outfit', sans-serif;
         }
 
         * {
@@ -93,8 +93,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 15px 40px;
-            background: #FFFFFF;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: #3B1B47;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -105,45 +104,47 @@
             align-items: center;
         }
         .nav-brand img {
-            height: 50px;
+            height: 40px;
+            filter: brightness(0) invert(1);
         }
         
         .nav-links {
             display: flex;
-            gap: 40px;
+            gap: 25px;
             align-items: center;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
         }
         .nav-link {
             text-decoration: none;
-            color: #334155;
-            font-weight: 700;
+            color: #FFFFFF;
+            font-weight: 400;
             font-size: 15px;
             transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         .nav-link:hover {
-            color: #FF7605;
+            color: #4ADE80;
         }
+        .nav-link i { font-size: 10px; margin-top: 2px;}
         
         .nav-actions {
             display: flex;
             align-items: center;
+            gap: 20px;
         }
-        .btn-contact {
-            background-color: #FF7605;
-            color: white;
+        .btn-book {
+            background-color: #4ADE80;
+            color: #064E3B;
             text-decoration: none;
             padding: 10px 24px;
-            border-radius: 6px;
-            font-weight: 800;
+            border-radius: 50px;
+            font-weight: 500;
             font-size: 15px;
             transition: background 0.3s;
         }
-        .btn-contact:hover {
-            background-color: #e66a05;
-            color: white;
+        .btn-book:hover {
+            background-color: #22c55e;
         }
 
         /* ------------------ CUSTOM DARK FOOTER ------------------ */
@@ -279,12 +280,16 @@
             <img src="{% static 'core/images/logo.png' %}" alt="EasyLearn">
         </a>
         <nav class="nav-links">
-            <a href="#courses" class="nav-link">Syllabus</a>
-            <a href="#about" class="nav-link">About Us</a>
-            <a href="#process" class="nav-link">Our Process</a>
+            <a href="#courses" class="nav-link">Courses <i class="fa-solid fa-chevron-down"></i></a>
+            <a href="#" class="nav-link">Student <i class="fa-solid fa-chevron-down"></i></a>
+            <a href="#" class="nav-link">For Business</a>
+            <a href="#" class="nav-link">TechFirst <i class="fa-solid fa-chevron-down"></i></a>
+            <a href="#" class="nav-link">Who We Are <i class="fa-solid fa-chevron-down"></i></a>
         </nav>
         <div class="nav-actions">
-            <a href="#contact" class="btn-contact">Contact Us</a>
+            <a href="#" class="nav-link">Blog</a>
+            <a href="#contact" class="nav-link">Contact</a>
+            <a href="#courses" class="btn-book">Book</a>
         </div>
     </header>
 
