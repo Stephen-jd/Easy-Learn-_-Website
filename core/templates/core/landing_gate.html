@@ -272,31 +272,41 @@
         background: white; border-radius: 12px; overflow: hidden; 
         padding: 30px; border: 2px solid transparent; display: flex; flex-direction: column;
     }
-    .course-card.blue { border-color: #38BDF8; }
-    .course-card.green { border-color: #4ADE80; }
-    .course-card.pink { border-color: #F472B6; }
-    .course-card.purple { border-color: #C084FC; }
-    .course-card.orange { border-color: #FB923C; }
+    .course-card.c-blue { border-color: #0066FF; }
+    .course-card.c-orange { border-color: #FF7605; }
+    .course-card.c-navy { border-color: #0B4385; }
+    .course-card.c-gold { border-color: #F59E0B; }
+    .course-card.c-cyan { border-color: #06B6D4; }
+    .course-card.c-coral { border-color: #EA580C; }
     
     .course-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
     .course-icon { width: 35px; height: 35px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: white; }
-    .blue .course-icon { background: #38BDF8; }
-    .green .course-icon { background: #4ADE80; }
-    .pink .course-icon { background: #F472B6; }
+    .c-blue .course-icon { background: #0066FF; }
+    .c-orange .course-icon { background: #FF7605; }
+    .c-navy .course-icon { background: #0B4385; }
+    .c-gold .course-icon { background: #F59E0B; }
+    .c-cyan .course-icon { background: #06B6D4; }
+    .c-coral .course-icon { background: #EA580C; }
     .course-title { font-size: 22px; font-weight: 600; color: #33213A; }
     
     .course-desc { font-size: 15px; color: #475569; font-weight: 600; margin-bottom: 20px; line-height: 1.4; }
     
     .coding-badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 800; color: white; margin-bottom: 20px; letter-spacing: 0.5px;}
-    .blue .coding-badge { background: #C084FC; }
-    .green .coding-badge { background: #4ADE80; }
-    .pink .coding-badge { background: #4ADE80; }
+    .c-blue .coding-badge { background: #0066FF; }
+    .c-orange .coding-badge { background: #FF7605; }
+    .c-navy .coding-badge { background: #0B4385; }
+    .c-gold .coding-badge { background: #F59E0B; }
+    .c-cyan .coding-badge { background: #06B6D4; }
+    .c-coral .coding-badge { background: #EA580C; }
     
     .course-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 25px; }
     .tag { padding: 4px 10px; border: 1px solid; border-radius: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
-    .blue .tag { border-color: #38BDF8; color: #0284C7; }
-    .green .tag { border-color: #4ADE80; color: #16A34A; }
-    .pink .tag { border-color: #F472B6; color: #DB2777; }
+    .c-blue .tag { border-color: #0066FF; color: #0066FF; }
+    .c-orange .tag { border-color: #FF7605; color: #FF7605; }
+    .c-navy .tag { border-color: #0B4385; color: #0B4385; }
+    .c-gold .tag { border-color: #F59E0B; color: #D97706; }
+    .c-cyan .tag { border-color: #06B6D4; color: #0891B2; }
+    .c-coral .tag { border-color: #EA580C; color: #C2410C; }
     
     .course-content-text { font-size: 14px; color: #64748B; line-height: 1.6; margin-bottom: 30px; flex-grow: 1; }
     
@@ -304,9 +314,12 @@
     
     .course-actions { display: flex; gap: 15px; }
     .btn-apply { padding: 10px 20px; border-radius: 50px; font-size: 14px; font-weight: 600; color: white; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px; }
-    .blue .btn-apply { background: #38BDF8; }
-    .green .btn-apply { background: #4ADE80; }
-    .pink .btn-apply { background: #F472B6; }
+    .c-blue .btn-apply { background: #0066FF; }
+    .c-orange .btn-apply { background: #FF7605; }
+    .c-navy .btn-apply { background: #0B4385; }
+    .c-gold .btn-apply { background: #F59E0B; }
+    .c-cyan .btn-apply { background: #06B6D4; }
+    .c-coral .btn-apply { background: #EA580C; }
     
     .btn-info { padding: 10px 20px; border-radius: 50px; font-size: 14px; font-weight: 500; color: #475569; border: 1px solid #64748B; background: transparent; cursor: pointer; display: flex; align-items: center; gap: 5px;}
     
@@ -528,7 +541,7 @@
                 <div class="hero-form-card">
                     <h3>Book a Live Class, For Free!</h3>
                     <button class="google-btn">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="18" alt="Google"> Sign up with Google
+                        <i class="fa-brands fa-google" style="color: #DB4437; margin-right: 10px; font-size: 18px;"></i> Sign up with Google
                     </button>
                     <div class="form-divider">OR</div>
                     
@@ -742,7 +755,8 @@
         <h2 data-aos="fade-up">Our Courses</h2>
         <div class="courses-grid">
             
-            <div class="course-card blue" data-aos="fade-up">
+            <!-- 1. Java Full Stack -->
+            <div class="course-card c-blue" data-aos="fade-up">
                 <div class="course-header">
                     <div class="course-icon"><i class="fa-solid fa-code"></i></div>
                     <div class="course-title">Java Full Stack Development</div>
@@ -752,7 +766,6 @@
                 <div class="course-tags">
                     <span class="tag">6 MONTHS</span>
                     <span class="tag">100% PLACEMENT</span>
-                    <span class="tag">LIVE PROJECTS</span>
                     <span class="tag">CERTIFICATION</span>
                 </div>
                 <div class="course-content-text">
@@ -767,7 +780,33 @@
                 </div>
             </div>
 
-            <div class="course-card green" data-aos="fade-up" data-aos-delay="100">
+            <!-- 2. Python Full Stack -->
+            <div class="course-card c-orange" data-aos="fade-up" data-aos-delay="100">
+                <div class="course-header">
+                    <div class="course-icon"><i class="fa-brands fa-python"></i></div>
+                    <div class="course-title">Python Full Stack</div>
+                </div>
+                <div class="course-desc">Build modern web apps with Python</div>
+                <div class="coding-badge">CODING: HIGH</div>
+                <div class="course-tags">
+                    <span class="tag">5 MONTHS</span>
+                    <span class="tag">100% PLACEMENT</span>
+                    <span class="tag">LIVE PROJECTS</span>
+                </div>
+                <div class="course-content-text">
+                    Learn Python, Django, REST APIs, and modern frontend frameworks. Understand database design and deploy fully functional web applications integrated with powerful AI APIs.
+                </div>
+                <div class="course-req">
+                    Requirements <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="course-actions">
+                    <button class="btn-apply">Apply Now <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn-info">Course Info <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- 3. Data Science & AI -->
+            <div class="course-card c-navy" data-aos="fade-up" data-aos-delay="200">
                 <div class="course-header">
                     <div class="course-icon"><i class="fa-solid fa-brain"></i></div>
                     <div class="course-title">Data Science & AI</div>
@@ -777,7 +816,6 @@
                 <div class="course-tags">
                     <span class="tag">4 MONTHS</span>
                     <span class="tag">100% PLACEMENT</span>
-                    <span class="tag">PYTHON</span>
                     <span class="tag">ML/DL</span>
                 </div>
                 <div class="course-content-text">
@@ -791,8 +829,34 @@
                     <button class="btn-info">Course Info <i class="fa-solid fa-arrow-right"></i></button>
                 </div>
             </div>
-
-            <div class="course-card pink" data-aos="fade-up" data-aos-delay="200">
+            
+            <!-- 4. Data Analytics -->
+            <div class="course-card c-gold" data-aos="fade-up">
+                <div class="course-header">
+                    <div class="course-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="course-title">Data Analytics</div>
+                </div>
+                <div class="course-desc">Turn raw data into business insights</div>
+                <div class="coding-badge">CODING: LOW</div>
+                <div class="course-tags">
+                    <span class="tag">3 MONTHS</span>
+                    <span class="tag">100% PLACEMENT</span>
+                    <span class="tag">POWER BI</span>
+                </div>
+                <div class="course-content-text">
+                    Master SQL, Excel, Power BI, and Tableau. Learn to extract actionable insights from big data and use AI tools like ChatGPT for advanced data manipulation and instant visualizations.
+                </div>
+                <div class="course-req">
+                    Requirements <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="course-actions">
+                    <button class="btn-apply">Apply Now <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn-info">Course Info <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- 5. Cloud Computing & DevOps -->
+            <div class="course-card c-cyan" data-aos="fade-up" data-aos-delay="100">
                 <div class="course-header">
                     <div class="course-icon"><i class="fa-solid fa-cloud"></i></div>
                     <div class="course-title">Cloud Computing & DevOps</div>
@@ -803,10 +867,34 @@
                     <span class="tag">3 MONTHS</span>
                     <span class="tag">100% PLACEMENT</span>
                     <span class="tag">AWS/AZURE</span>
-                    <span class="tag">DOCKER</span>
                 </div>
                 <div class="course-content-text">
                     Master cloud architecture, CI/CD pipelines, Docker, Kubernetes, and AWS/Azure. Learn how to automate infrastructure provisioning using modern AI-assisted scripting and Terraform.
+                </div>
+                <div class="course-req">
+                    Requirements <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="course-actions">
+                    <button class="btn-apply">Apply Now <i class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn-info">Course Info <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- 6. UI/UX & Web Design -->
+            <div class="course-card c-coral" data-aos="fade-up" data-aos-delay="200">
+                <div class="course-header">
+                    <div class="course-icon"><i class="fa-solid fa-palette"></i></div>
+                    <div class="course-title">UI/UX & Web Design</div>
+                </div>
+                <div class="course-desc">Design beautiful, intuitive interfaces</div>
+                <div class="coding-badge">CODING: NONE</div>
+                <div class="course-tags">
+                    <span class="tag">3 MONTHS</span>
+                    <span class="tag">100% PLACEMENT</span>
+                    <span class="tag">FIGMA</span>
+                </div>
+                <div class="course-content-text">
+                    Master Figma, Adobe XD, user research, and wireframing. Learn to integrate AI design tools like Midjourney and Galileo AI to drastically speed up your prototyping and creative process.
                 </div>
                 <div class="course-req">
                     Requirements <i class="fa-solid fa-chevron-down"></i>
