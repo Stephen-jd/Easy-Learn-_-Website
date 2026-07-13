@@ -359,9 +359,9 @@
             <div class="dropdown">
                 <a href="#" class="nav-link">Login <i class="fa-solid fa-chevron-down"></i></a>
                 <div class="dropdown-menu" style="right: 0; left: auto; min-width: 150px;">
-                    <a href="#" class="dropdown-item"><i class="fa-solid fa-shield-halved" style="margin-right:8px; color:var(--primary);"></i>Admin Login</a>
-                    <a href="#" class="dropdown-item"><i class="fa-solid fa-user-graduate" style="margin-right:8px; color:#3B82F6;"></i>Student Login</a>
-                    <a href="#" class="dropdown-item"><i class="fa-solid fa-chalkboard-user" style="margin-right:8px; color:#10B981;"></i>Trainer Login</a>
+                    <a href="{% url 'login' %}" class="dropdown-item"><i class="fa-solid fa-shield-halved" style="margin-right:8px; color:var(--primary);"></i>Admin Login</a>
+                    <a href="{% url 'login' %}" class="dropdown-item"><i class="fa-solid fa-user-graduate" style="margin-right:8px; color:#3B82F6;"></i>Student Login</a>
+                    <a href="{% url 'login' %}" class="dropdown-item"><i class="fa-solid fa-chalkboard-user" style="margin-right:8px; color:#10B981;"></i>Trainer Login</a>
                 </div>
             </div>
             <a href="#courses" class="btn-book">Book</a>

@@ -556,42 +556,42 @@
                     </button>
                     <div class="form-divider">OR</div>
                     
-                    <form>
+                    <form id="heroForm">
                         <div class="form-group">
                             <label>Name <span>*</span></label>
-                            <input type="text" class="form-input" placeholder="Enter Name">
+                            <input type="text" id="heroName" class="form-input" placeholder="Enter Name" required>
                         </div>
                         <div class="form-group">
                             <label>Email <span>*</span></label>
-                            <input type="email" class="form-input" placeholder="Enter Email">
+                            <input type="email" id="heroEmail" class="form-input" placeholder="Enter Email" required>
                         </div>
                         <div class="form-group">
                             <label>Phone Number <span>*</span></label>
                             <div class="phone-group">
                                 <div class="phone-prefix">IN +91</div>
-                                <input type="text" placeholder="Enter Phone Number">
+                                <input type="text" id="heroPhone" placeholder="Enter Phone Number" required>
                             </div>
                         </div>
                         
                         <div class="form-group" style="margin-top: 20px;">
                             <label>Your Course of Interest</label>
                             <div class="select-wrapper">
-                                <select class="form-select">
+                                <select id="heroCourse" class="form-select" required>
                                     <option value="" disabled selected>Select a course</option>
-                                    <option value="data-science">Data Science & AI</option>
-                                    <option value="full-stack">Full Stack Development</option>
-                                    <option value="cloud">Cloud Computing</option>
-                                    <option value="cyber">Cybersecurity</option>
-                                    <option value="uiux">UI/UX Design</option>
+                                    <option value="Data Science & AI">Data Science & AI</option>
+                                    <option value="Full Stack Development">Full Stack Development</option>
+                                    <option value="Cloud Computing">Cloud Computing</option>
+                                    <option value="Cybersecurity">Cybersecurity</option>
+                                    <option value="UI/UX Design">UI/UX Design</option>
                                 </select>
                             </div>
                         </div>
                         
                         <label class="checkbox-label">
-                            <input type="checkbox" checked> Send me updates on WhatsApp
+                            <input type="checkbox" id="heroWhatsappUpdates" checked> Send me updates on WhatsApp
                         </label>
                         
-                        <button type="button" class="submit-btn">Send OTP</button>
+                        <button type="button" class="submit-btn" onclick="sendToWhatsApp()">Send OTP</button>
                         <div class="form-terms">
                             By continuing, you agree to <a href="#">Terms & Conditions</a>
                         </div>
@@ -600,6 +600,31 @@
             </div>
         </div>
     </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 50
+        });
+
+        function sendToWhatsApp() {
+            var name = document.getElementById('heroName').value;
+            var email = document.getElementById('heroEmail').value;
+            var phone = document.getElementById('heroPhone').value;
+            var course = document.getElementById('heroCourse').value;
+            
+            if(!name || !email || !phone || !course) {
+                alert('Please fill out all fields before submitting.');
+                return;
+            }
+
+            var message = `Hi EasyLearn, I would like to book a free live class!\n\n*Name:* ${name}\n*Email:* ${email}\n*Phone:* +91 ${phone}\n*Course:* ${course}`;
+            var whatsappUrl = `https://wa.me/918220032456?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
 
     <!-- AI TOOLS MARQUEE -->
     <section class="tools-sec">
