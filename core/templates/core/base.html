@@ -105,8 +105,8 @@
             align-items: center;
         }
         .nav-brand img {
-            height: 70px;
-            margin: 0;
+            height: 90px;
+            margin: -10px 0;
         }
         
         .nav-links {
@@ -128,6 +128,44 @@
             color: var(--primary);
         }
         .nav-link i { font-size: 10px; margin-top: 2px;}
+
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #FFFFFF;
+            min-width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            padding: 10px 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .dropdown-item {
+            display: block;
+            padding: 10px 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dropdown-item:hover {
+            background: #f8fafc;
+            color: var(--primary);
+        }
         
         .nav-actions {
             display: flex;
@@ -283,15 +321,49 @@
             <img src="{% static 'core/images/easylearn_logo_transparent.png' %}" alt="EasyLearn">
         </a>
         <nav class="nav-links">
-            <a href="#courses" class="nav-link">Courses <i class="fa-solid fa-chevron-down"></i></a>
-            <a href="#" class="nav-link">Student <i class="fa-solid fa-chevron-down"></i></a>
+            <div class="dropdown">
+                <a href="#courses" class="nav-link">Courses <i class="fa-solid fa-chevron-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item">Data Science & AI</a>
+                    <a href="#" class="dropdown-item">Full Stack Development</a>
+                    <a href="#" class="dropdown-item">Cloud Computing</a>
+                    <a href="#" class="dropdown-item">UI/UX Design</a>
+                    <a href="#" class="dropdown-item">Cybersecurity</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" class="nav-link">Student <i class="fa-solid fa-chevron-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item">Student Dashboard</a>
+                    <a href="#" class="dropdown-item">My Courses</a>
+                </div>
+            </div>
             <a href="#" class="nav-link">For Business</a>
-            <a href="#" class="nav-link">TechFirst <i class="fa-solid fa-chevron-down"></i></a>
-            <a href="#" class="nav-link">Who We Are <i class="fa-solid fa-chevron-down"></i></a>
+            <div class="dropdown">
+                <a href="#" class="nav-link">TechFirst <i class="fa-solid fa-chevron-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item">Our Mission</a>
+                    <a href="#" class="dropdown-item">Campus Partnerships</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <a href="#" class="nav-link">Who We Are <i class="fa-solid fa-chevron-down"></i></a>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item">About Us</a>
+                    <a href="#" class="dropdown-item">Careers</a>
+                </div>
+            </div>
         </nav>
         <div class="nav-actions">
             <a href="#" class="nav-link">Blog</a>
-            <a href="#contact" class="nav-link">Contact</a>
+            <div class="dropdown">
+                <a href="#" class="nav-link">Login <i class="fa-solid fa-chevron-down"></i></a>
+                <div class="dropdown-menu" style="right: 0; left: auto; min-width: 150px;">
+                    <a href="#" class="dropdown-item"><i class="fa-solid fa-shield-halved" style="margin-right:8px; color:var(--primary);"></i>Admin Login</a>
+                    <a href="#" class="dropdown-item"><i class="fa-solid fa-user-graduate" style="margin-right:8px; color:#3B82F6;"></i>Student Login</a>
+                    <a href="#" class="dropdown-item"><i class="fa-solid fa-chalkboard-user" style="margin-right:8px; color:#10B981;"></i>Trainer Login</a>
+                </div>
+            </div>
             <a href="#courses" class="btn-book">Book</a>
         </div>
     </header>
