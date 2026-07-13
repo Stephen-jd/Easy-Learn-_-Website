@@ -173,7 +173,7 @@
             margin-bottom: 20px;
         }
         .footer-brand span { color: var(--primary); font-size: 28px; line-height: 0;}
-        .footer-brand img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover;}
+        .footer-brand img { height: 60px; object-fit: contain;}
 
         .footer-desc {
             font-size: 14px; line-height: 1.6; max-width: 400px;
@@ -280,7 +280,7 @@
     <!-- NAVBAR -->
     <header class="navbar">
         <a href="/" class="nav-brand">
-            <img src="{% static 'core/images/easylearn_logo_final3.png' %}" alt="EasyLearn">
+            <img src="{% static 'core/images/easylearn_logo_transparent.png' %}" alt="EasyLearn">
         </a>
         <nav class="nav-links">
             <a href="#courses" class="nav-link">Courses <i class="fa-solid fa-chevron-down"></i></a>
@@ -321,8 +321,7 @@
             <!-- Column 1 -->
             <div>
                 <div class="footer-brand">
-                    <img src="{% static 'core/images/logo.png' %}" alt="Icon" onerror="this.src='https://via.placeholder.com/30'">
-                    EasyLearn<span>.</span>
+                    <img src="{% static 'core/images/easylearn_logo_transparent.png' %}" alt="EasyLearn">
                 </div>
                 <p class="footer-desc">Silicon Valley standard tech bootcamps directly in college campuses. Providing 100% online support and placements.</p>
             </div>
